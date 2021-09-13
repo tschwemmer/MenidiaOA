@@ -2,7 +2,9 @@
 title: "Practice RMarkdown with GitHub"
 author: "Teresa G. Schwemmer"
 date: "9/13/2021"
-output: html_document
+output: 
+  html_document: 
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
