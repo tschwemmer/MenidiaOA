@@ -7,12 +7,19 @@ output:
     keep_md: yes
 ---
 
+**Flax Pond**
+First load the libraries and enter the data we have from the VINDTA into dataframes. 
 ```{r}
 library(seacarb)
 library(ggplot2)
 
-#FLAX POND DATA#################################################################################################################
 
+flax_TA<-data.frame(c("TS-F-1-1-061021","TS-F-2-1-061021","TS-F-3-1-061021","TS-F-1-1-061621","TS-F-2-1-061621","TS-F-3-1-061621","TS-F-1-1-062121","TS-F-2-1-062121","TS-F-3-1-062121"),
+                    c(2037.4,2053.5,2050.0,2106.7,2144.9,2162.3,2147.0,2190.3,2207.0))
+names(flax_TA)<-c("SampleID","TA")
+
+flax_DIC<-data.frame(c("TS-F-1-1-061021","TS-F-2-1-061021","TS-F-3-1-061021","TS-F-1-1-061621","TS-F-2-1-061621","TS-F-3-1-061621","TS-F-1-1-062121","TS-F-2-1-062121","TS-F-3-1-062121"),
+                    c(1871.4,2051.3,2136.4,1925.2,2172.3,2289.9,1965.9,2187.3,2225.1))
 
 pCO2<-matrix(nrow=9,ncol=1)
 
