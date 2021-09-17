@@ -8,8 +8,8 @@ output:
 ---
 
 **Flax Pond**
-First load the libraries and enter the data we have from the VINDTA into dataframes. 
-```{r}
+First load the libraries and enter the data we have from the VINDTA and other data into dataframes. 
+```{r include=FALSE}
 library(seacarb)
 library(ggplot2)
 
@@ -20,31 +20,50 @@ names(flax_TA)<-c("SampleID","TA")
 
 flax_DIC<-data.frame(c("TS-F-1-1-061021","TS-F-2-1-061021","TS-F-3-1-061021","TS-F-1-1-061621","TS-F-2-1-061621","TS-F-3-1-061621","TS-F-1-1-062121","TS-F-2-1-062121","TS-F-3-1-062121"),
                     c(1871.4,2051.3,2136.4,1925.2,2172.3,2289.9,1965.9,2187.3,2225.1))
+names(flax_DIC)<-c("SampleID","DIC")
 
-pCO2<-matrix(nrow=9,ncol=1)
+flax_salinity<-data.frame(c("TS-F-1-1-061021","TS-F-2-1-061021","TS-F-3-1-061021","TS-F-1-1-061621","TS-F-2-1-061621","TS-F-3-1-061621","TS-F-1-1-062121","TS-F-2-1-062121","TS-F-3-1-062121"),
+                          c(26.4,26.5,26.6,28.35,28.46,28.51,28.89,29.18,29.20))
+names(flax_salinity)<-c("SampleID","Salinity")
 
+flax_pH<-data.frame(c("TS-F-1-1-061021","TS-F-2-1-061021","TS-F-3-1-061021","TS-F-1-1-061621","TS-F-2-1-061621","TS-F-3-1-061621","TS-F-1-1-062121","TS-F-2-1-062121","TS-F-3-1-062121"),
+                    c(8.06,7.5,7.16,8.09,7.37,7.07,8.08,7.31,7.04))
+names(flax_pH)<-c("SampleID","pH")
+
+flax_temp<-data.frame(c("TS-F-1-1-061021","TS-F-2-1-061021","TS-F-3-1-061021","TS-F-1-1-061621","TS-F-2-1-061621","TS-F-3-1-061621","TS-F-1-1-062121","TS-F-2-1-062121","TS-F-3-1-062121"),
+                      c(22.6,22.2,22.0,22.5,22.4,22.8,22.2,22.4,21.9))
+names(flax_temp)<-c("SampleID","Temperature")
+```
+
+Next, use the `carb()` function from the *seacarb* package to store the calculated pCO2 values in a dataframe with their corresponding Sample ID. 
+
+```{r}
+flax_pCO2<-matrix(nrow=9,ncol=2)
+flax_pCO2<-data.frame(flax_pCO2)
+
+flax_pCO2[,1]<-c("TS-F-1-1-061021","TS-F-2-1-061021","TS-F-3-1-061021","TS-F-1-1-061621","TS-F-2-1-061621","TS-F-3-1-061621","TS-F-1-1-062121","TS-F-2-1-062121","TS-F-3-1-062121")
 
 #06/10/2021
-pCO2[1,1]<-as.numeric(carb(flag=15,var1=0.0020374,var2=0.0018714,S=26.4,T=22.6)[9]) #Tank 1
-pCO2[2,1]<-as.numeric(carb(flag=15,var1=0.0020535,var2=0.0020513,S=26.5,T=22.2)[9]) #Tank 2
-pCO2[3,1]<-as.numeric(carb(flag=15,var1=0.0020500,var2=0.0021364,S=26.6,T=22.0)[9]) #Tank 3
+flax_pCO2[1,2]<-as.numeric(carb(flag=15,var1=0.0020374,var2=0.0018714,S=26.4,T=22.6)[9]) #Tank 1
+flax_pCO2[2,2]<-as.numeric(carb(flag=15,var1=0.0020535,var2=0.0020513,S=26.5,T=22.2)[9]) #Tank 2
+flax_pCO2[3,2]<-as.numeric(carb(flag=15,var1=0.0020500,var2=0.0021364,S=26.6,T=22.0)[9]) #Tank 3
 
 #06/16/2021
-pCO2[4,1]<-as.numeric(carb(flag=15,var1=0.0021067,var2=0.0019252,S=28.35,T=22.5)[9]) #Tank 1
-pCO2[5,1]<-as.numeric(carb(flag=15,var1=0.0021449,var2=0.0021723,S=28.46,T=22.4)[9]) #Tank 2
-pCO2[6,1]<-as.numeric(carb(flag=15,var1=0.0021623,var2=0.0022899,S=28.51,T=22.8)[9]) #Tank 3
+flax_pCO2[4,2]<-as.numeric(carb(flag=15,var1=0.0021067,var2=0.0019252,S=28.35,T=22.5)[9]) #Tank 1
+flax_pCO2[5,2]<-as.numeric(carb(flag=15,var1=0.0021449,var2=0.0021723,S=28.46,T=22.4)[9]) #Tank 2
+flax_pCO2[6,2]<-as.numeric(carb(flag=15,var1=0.0021623,var2=0.0022899,S=28.51,T=22.8)[9]) #Tank 3
 
 #06/21/2021
-pCO2[7,1]<-as.numeric(carb(flag=15,var1=0.0021470,var2=0.0019659,S=28.89,T=22.2)[9]) #Tank 1
-pCO2[8,1]<-as.numeric(carb(flag=15,var1=0.0021943,var2=0.0021973,S=29.18,T=22.4)[9]) #Tank 2
-pCO2[9,1]<-as.numeric(carb(flag=15,var1=0.0022110,var2=0.0022351,S=29.20,T=21.9)[9]) #Tank 3
+flax_pCO2[7,2]<-as.numeric(carb(flag=15,var1=0.0021470,var2=0.0019659,S=28.89,T=22.2)[9]) #Tank 1
+flax_pCO2[8,2]<-as.numeric(carb(flag=15,var1=0.0021903,var2=0.0021873,S=29.18,T=22.4)[9]) #Tank 2
+flax_pCO2[9,2]<-as.numeric(carb(flag=15,var1=0.0022070,var2=0.0022251,S=29.20,T=21.9)[9]) #Tank 3
 
-row.names(pCO2)<-c("TS-F-1-1-061021","TS-F-2-1-061021","TS-F-3-1-061021",
-                   "TS-F-1-1-061621","TS-F-2-1-061621","TS-F-3-1-061621",
-                   "TS-F-1-1-062121","TS-F-2-1-062121","TS-F-3-1-062121")
-pCO2<-data.frame(pCO2)
-names(pCO2)<-"pCO2 (uatm)"
 
+names(flax_pCO2)<-c("SampleID","pCO2")
+```
+
+
+```{r}
 #calculate the pCO2 and DIC from TA and pH. ALK is now var2 and pH is var1; DIC is result [16] and pCO2 is result [9]; convert DIC to umol/kg by multiplying by 1,000,000
 from_pH<-matrix(nrow=9,ncol=2)
 from_pH<-data.frame(from_pH)
