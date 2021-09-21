@@ -65,55 +65,49 @@ names(flax_pCO2)<-c("SampleID","pCO2")
 
 ```{r}
 #calculate the pCO2 and DIC from TA and pH. ALK is now var2 and pH is var1; DIC is result [16] and pCO2 is result [9]; convert DIC to umol/kg by multiplying by 1,000,000
-from_pH<-matrix(nrow=9,ncol=2)
-from_pH<-data.frame(from_pH)
+flax_from_pH<-matrix(nrow=9,ncol=2)
+flax_from_pH<-data.frame(flax_from_pH)
 
 ###pCO2
 #06/10/2021 - pCO2
-from_pH[1,1]<-as.numeric(carb(flag=8,var1=8.06,var2=0.0020374,S=26.4,T=22.6)[9]) #Tank 1
-from_pH[2,1]<-as.numeric(carb(flag=8,var1=7.50,var2=0.0020535,S=26.5,T=22.2)[9]) #Tank 2
-from_pH[3,1]<-as.numeric(carb(flag=8,var1=7.16,var2=0.0020500,S=26.6,T=22.0)[9]) #Tank 3
+flax_from_pH[1,1]<-as.numeric(carb(flag=8,var1=8.06,var2=0.0020374,S=26.4,T=22.6)[9]) #Tank 1
+flax_from_pH[2,1]<-as.numeric(carb(flag=8,var1=7.50,var2=0.0020535,S=26.5,T=22.2)[9]) #Tank 2
+flax_from_pH[3,1]<-as.numeric(carb(flag=8,var1=7.16,var2=0.0020500,S=26.6,T=22.0)[9]) #Tank 3
 
 #06/16/2021 - pCO2
-from_pH[4,1]<-as.numeric(carb(flag=8,var1=8.09,var2=0.0021067,S=28.35,T=22.5)[9]) #Tank 1
-from_pH[5,1]<-as.numeric(carb(flag=8,var1=7.37,var2=0.0021449,S=28.46,T=22.4)[9]) #Tank 2
-from_pH[6,1]<-as.numeric(carb(flag=8,var1=7.07,var2=0.0021623,S=28.51,T=22.8)[9]) #Tank 3
+flax_from_pH[4,1]<-as.numeric(carb(flag=8,var1=8.09,var2=0.0021067,S=28.35,T=22.5)[9]) #Tank 1
+flax_from_pH[5,1]<-as.numeric(carb(flag=8,var1=7.37,var2=0.0021449,S=28.46,T=22.4)[9]) #Tank 2
+flax_from_pH[6,1]<-as.numeric(carb(flag=8,var1=7.07,var2=0.0021623,S=28.51,T=22.8)[9]) #Tank 3
 
 #06/21/2021 - pCO2
-from_pH[7,1]<-as.numeric(carb(flag=8,var1=8.08,var2=0.0021470,S=28.89,T=22.2)[9]) #Tank 1
-from_pH[8,1]<-as.numeric(carb(flag=8,var1=7.31,var2=0.0021943,S=29.18,T=22.4)[9]) #Tank 2
-from_pH[9,1]<-as.numeric(carb(flag=8,var1=7.04,var2=0.0022110,S=29.20,T=21.9)[9]) #Tank 3
+flax_from_pH[7,1]<-as.numeric(carb(flag=8,var1=8.08,var2=0.0021470,S=28.89,T=22.2)[9]) #Tank 1
+flax_from_pH[8,1]<-as.numeric(carb(flag=8,var1=7.31,var2=0.0021943,S=29.18,T=22.4)[9]) #Tank 2
+flax_from_pH[9,1]<-as.numeric(carb(flag=8,var1=7.04,var2=0.0022110,S=29.20,T=21.9)[9]) #Tank 3
 
 ###DIC
 #06/10/2021 - DIC
-from_pH[1,2]<-as.numeric(carb(flag=8,var1=8.06,var2=0.0020374,S=26.4,T=22.6)[16])*1000000 #Tank 1
-from_pH[2,2]<-as.numeric(carb(flag=8,var1=7.50,var2=0.0020535,S=26.5,T=22.2)[16])*1000000 #Tank 2
-from_pH[3,2]<-as.numeric(carb(flag=8,var1=7.16,var2=0.0020500,S=26.6,T=22.0)[16])*1000000 #Tank 3
+flax_from_pH[1,2]<-as.numeric(carb(flag=8,var1=8.06,var2=0.0020374,S=26.4,T=22.6)[16])*1000000 #Tank 1
+flax_from_pH[2,2]<-as.numeric(carb(flag=8,var1=7.50,var2=0.0020535,S=26.5,T=22.2)[16])*1000000 #Tank 2
+flax_from_pH[3,2]<-as.numeric(carb(flag=8,var1=7.16,var2=0.0020500,S=26.6,T=22.0)[16])*1000000 #Tank 3
 
 #06/16/2021 - DIC
-from_pH[4,2]<-as.numeric(carb(flag=8,var1=8.09,var2=0.0021067,S=28.35,T=22.5)[16])*1000000 #Tank 1
-from_pH[5,2]<-as.numeric(carb(flag=8,var1=7.37,var2=0.0021449,S=28.46,T=22.4)[16])*1000000 #Tank 2
-from_pH[6,2]<-as.numeric(carb(flag=8,var1=7.07,var2=0.0021623,S=28.51,T=22.8)[16])*1000000 #Tank 3
+flax_from_pH[4,2]<-as.numeric(carb(flag=8,var1=8.09,var2=0.0021067,S=28.35,T=22.5)[16])*1000000 #Tank 1
+flax_from_pH[5,2]<-as.numeric(carb(flag=8,var1=7.37,var2=0.0021449,S=28.46,T=22.4)[16])*1000000 #Tank 2
+flax_from_pH[6,2]<-as.numeric(carb(flag=8,var1=7.07,var2=0.0021623,S=28.51,T=22.8)[16])*1000000 #Tank 3
 
 #06/21/2021 - DIC
-from_pH[7,2]<-as.numeric(carb(flag=8,var1=8.08,var2=0.0021470,S=28.89,T=22.2)[16])*1000000 #Tank 1
-from_pH[8,2]<-as.numeric(carb(flag=8,var1=7.31,var2=0.0021943,S=29.18,T=22.4)[16])*1000000 #Tank 2
-from_pH[9,2]<-as.numeric(carb(flag=8,var1=7.04,var2=0.0022110,S=29.20,T=21.9)[16])*1000000 #Tank 3
+flax_from_pH[7,2]<-as.numeric(carb(flag=8,var1=8.08,var2=0.0021470,S=28.89,T=22.2)[16])*1000000 #Tank 1
+flax_from_pH[8,2]<-as.numeric(carb(flag=8,var1=7.31,var2=0.0021943,S=29.18,T=22.4)[16])*1000000 #Tank 2
+flax_from_pH[9,2]<-as.numeric(carb(flag=8,var1=7.04,var2=0.0022110,S=29.20,T=21.9)[16])*1000000 #Tank 3
 
-row.names(from_pH)<-c("TS-F-1-1-061021","TS-F-2-1-061021","TS-F-3-1-061021",
-                      "TS-F-1-1-061621","TS-F-2-1-061621","TS-F-3-1-061621",
-                      "TS-F-1-1-062121","TS-F-2-1-062121","TS-F-3-1-062121")
+row.names(flax_from_pH)<-c("TS-F-1-1-061021","TS-F-2-1-061021","TS-F-3-1-061021",
+                           "TS-F-1-1-061621","TS-F-2-1-061621","TS-F-3-1-061621",
+                           "TS-F-1-1-062121","TS-F-2-1-062121","TS-F-3-1-062121")
 
-names(from_pH)<-c("pCO2_frompH","DIC_frompH")
+names(flax_from_pH)<-c("pCO2_from_pH","DIC_from_pH")
+```
 
-#make vectors of the alkalinity, DIC (VINDTA), pH, temperature, and salinity data
-flax_TA<-c(2037.4,2053.5,2050.0,2106.7,2144.9,2162.3,2147.0,2194.3,2211.0)
-flax_DIC_VINDTA<-c(1871.4,2051.3,2136.4,1925.2,2172.3,2289.9,1965.9,2197.3,2235.1)
-flax_pH<-c(8.06,7.5,7.16,8.09,7.37,7.07,8.08,7.31,7.04)
-flax_temperature<-c(22.6,22.2,22.0,22.5,22.4,22.8,22.2,22.4,21.9)
-flax_salinity<-c(26.4,26.5,26.6,28.35,28.46,28.51,28.89,29.18,29.20)
-
-
+```{r}
 #make a dataframe that contains all of the carbonate chemistry data, tank numbers (and treatments), and dates.
 pCO2_forplot<-data.frame("Tank"<-c("Tank 1 - Ambient CO2","Tank 2 - Medium CO2","Tank 3 - High CO2","Tank 1 - Ambient CO2","Tank 2 - Medium CO2","Tank 3 - High CO2","Tank 1 - Ambient CO2","Tank 2 - Medium CO2","Tank 3 - High CO2"),
                          "Date"<-c("06/10/2021","06/10/2021","06/10/2021","06/16/2021","06/16/2021","06/16/2021","06/21/2021","06/21/2021","06/21/2021"),
