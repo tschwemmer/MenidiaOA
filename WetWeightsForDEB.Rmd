@@ -1,0 +1,38 @@
+---
+title: "Wet Weights for DEB"
+author: "Teresa G. Schwemmer"
+date: "10/4/2021"
+output: html_document
+---
+
+The purpose of this script is to calculate the means, standard errors, and sample sizes of the wet weight data on 122 dph *Menidia menidia* from Murray et al (2017, *ICES Journal of Marine Science*). The paper contains the means by treatment but I also wanted to see the standard error and sample sizes, and separate it by tank to see the differences between tanks. 
+
+Import the data from bco-dmo.org and make sure the relevant variables are the right data type. I want CO2_treatment and tank to be factors with two and four levels, respectively, and wet_weight to be numeric.
+```{r}
+wetwt<-read.csv(file.choose(),header=TRUE)
+str(wetwt)
+
+wetwt$CO2_treatment<-factor(wetwt$CO2_treatment,levels=c("500","2150"))
+wetwt$tank<-factor(wetwt$tank,levels=c("A","B","C","D"))
+wetwt$wet_weight<-as.numeric(wetwt$wet_weight)
+
+str(wetwt)
+
+```
+
+Create summary tables of means, standard errors, and sample sizes for each treatment. Then repeat for each tank. 
+```{r}
+library(plyr)
+treatmentsummary<-ddply(wetwt,"CO2_treatment",summarise,MeanWW=mean(wet_weight),StErr=sd(wet_weight)/sqrt(length(wet_weight)),N=length(wet_weight))
+treatmentsummary
+
+tanksummary<-ddply(wetwt,"tank",summarise,MeanWW=mean(wet_weight),StErr=sd(wet_weight)/sqrt(length(wet_weight)),N=length(wet_weight))
+tanksummary
+
+```
+
+**References**
+
+Murray, C. S., L. A. Fuiman, and H. Baumann. 2017. Consequences of elevated CO2 exposure across multiple life stages in a coastal forage fish. *ICES Journal of Marine Science.* 74(4), 1051-1061. 
+
+Baumann, H., Nye, J. (2016) Laboratory study of long-term growth in juvenile Menidia menidia (Atlantic silverside) at contrasting CO2 levels for 16 to 122 days in 2015. Biological and Chemical Oceanography Data Management Office (BCO-DMO). (Version final) Version Date 2016-07-07. doi:10.1575/1912/bco-dmo.652124 [accessed 2021-04-10]. 
