@@ -20,7 +20,7 @@ str(wetwt)
 
 ```
 
-Create summary tables of means, standard errors, and sample sizes for each treatment. Then repeat for each tank. 
+Create summary tables of means, standard errors, and sample sizes for each treatment. Then repeat for each tank. The means should match the means reported in the paper if this code worked right. 
 ```{r}
 library(plyr)
 treatmentsummary<-ddply(wetwt,"CO2_treatment",summarise,MeanWW=mean(wet_weight),StErr=sd(wet_weight)/sqrt(length(wet_weight)),N=length(wet_weight))
