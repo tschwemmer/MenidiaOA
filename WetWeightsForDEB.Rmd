@@ -17,7 +17,6 @@ wetwt$tank<-factor(wetwt$tank,levels=c("A","B","C","D"))
 wetwt$wet_weight<-as.numeric(wetwt$wet_weight)
 
 str(wetwt)
-#jkjklfjdskljflkds
 
 ```
 
