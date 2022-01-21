@@ -1,0 +1,20 @@
+---
+title: "Ionocyte Analysis Log"
+author: "Teresa G. Schwemmer"
+date: "1/21/2022"
+output: html_document
+---
+
+January 21, 2022
+-I added the csvs for embryo, 1dph, and 10mm to the environment and saved the environment so I can easily pull it up each time. 
+-First overall goal is to analyze the standard deviations between duplicate counts to see which ones need to be recounted. 
+    -I think these data sheets don't include that having already been done at all but I'll have to check for sure. 
+    -Embryo definitely doesn't because I pulled it right from the raw data sheets. 
+    -Relatedly, I need to figure out how to address outliers (both the overall outliers and outliers identified in the statistical analysis). 
+-Next overall goal will be to analyze the average densities for each section and the total fish, with respect to the treatments. 
+    -Temperature: 17C, 20C, 24C, 28C
+    -CO2: 400, 2200, 4200 uatm
+    -Experiment: 1, 2, 3, 4 
+    -Section: front, back, total OR yolk, body, total
+    -I will have to decide whether to include all and analyze as continuous data, or exclude unbalanced data and use LME models. 
+-Third overall goal will be to analyze relationships between ionocyte density and metabolism and gene expression, within and across treatments. 
