@@ -6,6 +6,7 @@ output: html_document
 ---
 
 January 21, 2022
+
 -I added the csvs for embryo, 1dph, and 10mm to the environment and saved the environment so I can easily pull it up each time. 
 -First overall goal is to analyze the standard deviations between duplicate counts to see which ones need to be recounted. 
     -I think these data sheets don't include that having already been done at all but I'll have to check for sure. 
@@ -18,3 +19,17 @@ January 21, 2022
     -Section: front, back, total OR yolk, body, total
     -I will have to decide whether to include all and analyze as continuous data, or exclude unbalanced data and use LME models. 
 -Third overall goal will be to analyze relationships between ionocyte density and metabolism and gene expression, within and across treatments. 
+
+-Units: for now I will use square mm as the area units. 
+
+-Embryo SD analysis
+    -Yolk:There are 4 above 400, 7 above 300
+      -Try putting a line at 3 SDs away from the mean SD
+      -This line is around 300
+    -Body: There is 1 above 800, 2 above 300
+      -the line at 3SDs away from the mean SD is also around 300
+    -Total: Actually there's no need to do this because I just want to compare duplicate count pairs. 
+
+
+
+
