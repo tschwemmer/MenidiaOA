@@ -27,8 +27,10 @@ January 21, 2022
       -Try putting a line at 3 SDs away from the mean SD
       -This line is around 300
       -Samples: 2016-373, 2016-456, 2016-457, 2016-458, 2016-525, 2016-542, 2016-544
-        -2016-373: The second count is lower and area is higher so density is much lower. Analyzed R side both times. Actually looks like the second count was for the L side but entered into R side columns by accident. I will use the L side instead since that was counted twice. 
-        -2016-456: Yolk Density 2 is much lower than 1, count is lower and area is higher. Used L for 1 and R for 2. Should probably pick one to redo so sides match. Replace R with L for 2nd count. 
+        -2016-373: The second count is lower and area is higher so density is much lower. Analyzed R side both times. Actually looks like the second count was for the L side but entered into R side columns by accident. I will use the L side instead since that was counted twice. Done.
+        -2016-456: Yolk Density 2 is much lower than 1, count is lower and area is higher. Used L for 1 and R for 2. Should probably pick one to redo so sides match. Replaced R with L for 2nd count. Done. 
+        -2016-457: Yolk density 2 is much lower than 1, probably because first is R and second is L. L side has better view and less squished so I will redo that one. Done. 
+        -2016-458: Yolk density 2 is much lower than 1, probably because first is R and second is L. The staining is really faint on L so I will redo R. Done. 
     -Body: There is 1 above 800, 2 above 300
       -the line at 3SDs away from the mean SD is also around 300
       -Samples: 2016-380, 2016-517
