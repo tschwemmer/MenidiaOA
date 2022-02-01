@@ -31,9 +31,14 @@ January 21, 2022
         -2016-456: Yolk Density 2 is much lower than 1, count is lower and area is higher. Used L for 1 and R for 2. Should probably pick one to redo so sides match. Replaced R with L for 2nd count. Done. 
         -2016-457: Yolk density 2 is much lower than 1, probably because first is R and second is L. L side has better view and less squished so I will redo that one. Done. 
         -2016-458: Yolk density 2 is much lower than 1, probably because first is R and second is L. The staining is really faint on L so I will redo R. Done. 
-    -Body: There is 1 above 800, 2 above 300
-      -the line at 3SDs away from the mean SD is also around 300
+        -2016-525: Yolk Density 2 is much lower than 1, and R was used for first, L for second. Redo using L side since it is the better view. 
+        -2016-542: Yolk Density 2 is much lower than 1, and R was used for first, L for second. Redo R using L side since it is the better view. 
+        -2016-544: Yolk Density 2 is much lower than 1, and L was used for first, R for second. Redo R using L side since it is the better view. 
+    -Body: There is 1 above 800, 1 above 300
+      -The line at 3SDs away from the mean SD is also around 300. 
       -Samples: 2016-380, 2016-517
+        -2016-380: Body Density 1 is about 10x higher than 2. The area seems to be off by a factor of 10 (missing a digit). Recount 1st one. Done. 
+        -2016-517: Body Density 1 is way higher than 2, suspiciously high (701). The count is about 2x the second one, while area is lower. Body Area 2 is too high, likely forgot to subtract yolk. Redo this one. Done. 
     -Total: Actually there's no need to do this because I just want to compare duplicate count pairs. 
     
 -Note on Git: The local repository set up through GitHub Desktop (Documents/GitHub/MenidiaOA) is separate from the R Project repository (Documents/MenidiaOA). Do not make changes to both at the same time, just work in one or the other, and remember to pull when getting started in either one. 
