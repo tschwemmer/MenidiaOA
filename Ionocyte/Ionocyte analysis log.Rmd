@@ -32,8 +32,8 @@ January 21, 2022
         -2016-457: Yolk density 2 is much lower than 1, probably because first is R and second is L. L side has better view and less squished so I will redo that one. Done. 
         -2016-458: Yolk density 2 is much lower than 1, probably because first is R and second is L. The staining is really faint on L so I will redo R. Done. 
         -2016-525: Yolk Density 2 is much lower than 1, and R was used for first, L for second. Redo using L side since it is the better view. 
-        -2016-542: Yolk Density 2 is much lower than 1, and R was used for first, L for second. Redo R using L side since it is the better view. 
-        -2016-544: Yolk Density 2 is much lower than 1, and L was used for first, R for second. Redo R using L side since it is the better view. 
+        -2016-542: Yolk Density 2 is much lower than 1, and R was used for first, L for second. Redo R using L side since it is the better view. Done. 
+        -2016-544: Yolk Density 2 is much lower than 1, and L was used for first, R for second. Redo R using L side since it is the better view. Done. 
     -Body: There is 1 above 800, 1 above 300
       -The line at 3SDs away from the mean SD is also around 300. 
       -Samples: 2016-380, 2016-517
