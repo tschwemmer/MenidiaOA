@@ -58,9 +58,16 @@ January 21, 2022
     -Also this data shows duplicate counts for all samples. 
     -Some of the samples seem to be fixed and others aren't (see analysis script for details). 
     -So I will need to check the spreadsheet in Google Drive when I go through them more thoroughly and make sure that version isn't fixed so I don't duplicate effort. 
-    -Front: 2016-105t, 2016-165t
-      -2016-105t: Front Density 1 is 10x greater than 2. 
-      -2016-165t:
+    -Front: 2016-105t, 2016-163t
+      -2016-105t: Front Density 1 is 10x greater than 2. Front Area 1 seems to be missing a digit. In the Google Sheet it says I changed it last April, just need to fix in csv and recalculate everything. Done. 
+      -2016-163t: Front Density 2 is about 5x greater than 1. Front Area 2 seems to be missing a digit. I fixed it in April in the Google Sheet, just need to fix in the csv and recalculate everything. Done. 
     -Back: 2016-56t, 2016-57t, 2016-75t, 2016-77t, 2016-233t, 2016-307t, 2016-390t
+      -2016-56t: Back Density 2 is less than half of 1. Back area 2 is much greater but counts are similar. It's because second count included ripped part of tail. I redid 2nd count in April, just need to fix data sheet. 
+      -2016-57t: Back Density 1 is more than double 2, because the area is about half but counts are similar-ish. I redid 2nd count in April, just need to fix data sheet. 
+      -2016-75t: Back Density 1 is much greater than 2, because back area 2 is much greater than 1. I fixed 2nd count in April, just need to fix data sheet. 
+      -2016-77t: Back Density 1 is much greater than 2, because back area 2 is much greater than 1. I fixed 2nd count in April, just need to fix data sheet. 
+      -2016-233t: Back Density 1 is about double 2, because 1's area is smaller but count is higher. I fixed 1st count in April, just need to fix data. 
+      -2016-307t: Back Density 1 is less than half 2, because area is greater but count is lower for 1. I fixed 1st count in April, just need to fix data sheet. 
+      -2016-390t: Back Density 2 is greater than 1, because area is lower but count is greater. 1st count includes greater area, redo 2nd one using this region. Then just need to fix data sheet. 
 
 -I will directly edit the CSVs of the data when I make changes, but create a new saved environment when I reload them into R. 
