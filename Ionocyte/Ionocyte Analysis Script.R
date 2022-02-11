@@ -88,4 +88,48 @@ d1_10mm<-full_join(all_10mm,trmt_10mm,by="Sample")
 #These are the full datasets with all available information about ionocyte density, treatments, stdev, and metabolic rates. 
 
 #Now create smaller dataframes with only the necessary information for the analysis (everything else is just in case we want it for later analyses).
+d2_emb<-d1_emb[,c(1,2,4,43,47,51,54,56,57,58,60,62)]
+d2_1dph<-d1_1dph[,c(1,2,4,37,41,45,48,50,51,52,54,56)]
+d2_10mm<-d1_10mm[,c(1,2,3,36,40,44,47,49,50,51,53,55)]
 
+
+#Analyze embryos using LMER
+
+#First check structure of dataframe
+str(d2_emb)
+d2_emb$Experiment.x<-factor(d2_emb$Experiment.x,levels=c("exp1","exp3","exp4"))
+d2_emb$CO2.level<-factor(d2_emb$CO2.level,levels=c("400uatm","2200uatm","4200uatm"))
+d2_emb$Temp.level<-factor(d2_emb$Temp.level,levels=c("17C","20C","24C","28C"))
+
+#Use plyr to make a summary of the data for yolk, body, and total
+library(plyr)
+summary_emb<-ddply(d2_emb,c("CO2.level","Temp.level"),summarise,
+                   N.yolk=length(AverageYolkDensitymm),Mean.yolk=mean(AverageYolkDensitymm),se.yolk=sd(AverageYolkDensitymm)/sqrt(N.yolk),
+                   N.body=length(AverageBodyDensitymm),Mean.body=mean(AverageBodyDensitymm),se.body=sd(AverageBodyDensitymm)/sqrt(N.body),
+                   N.total=length(AverageTotalDensitymm),Mean.total=mean(AverageTotalDensitymm),se.total=sd(AverageTotalDensitymm)/sqrt(N.total))
+summary_emb
+
+#Use a linear mixed effects model to test for significant effects for yolk, body, and total. 
+#Set Experiment.x as a random effect and CO2.level and Temp.level as fixed effects.
+library(lme4)
+library(lmerTest)
+modelyolk<-lmer(AverageYolkDensitymm~CO2.level*Temp.level+(1|Experiment.x),data=d2_emb)
+anova(modelyolk)
+
+modelbody<-lmer(AverageBodyDensitymm~CO2.level*Temp.level+(1|Experiment.x),data=d2_emb)
+anova(modelbody)
+
+modeltotal<-lmer(AverageTotalDensitymm~CO2.level*Temp.level+(1|Experiment.x),data=d2_emb)
+anova(modeltotal)
+
+#Test effect of including Experiment.x in model - create an lm without the random effect and do an anova to compare the two models. 
+modelyolk_lm<-lm(AverageYolkDensitymm~CO2.level*Temp.level,data=d2_emb)
+modelbody_lm<-lm(AverageBodyDensitymm~CO2.level*Temp.level,data=d2_emb)
+modeltotal_lm<-lm(AverageTotalDensitymm~CO2.level*Temp.level,data=d2_emb)
+
+anova(modelyolk,modelyolk_lm)
+anova(modelbody,modelbody_lm)
+anova(modeltotal,modeltotal_lm)
+#Including experiment as a random effect significantly affects all models. ranova() shows this as well. 
+
+#Run diagnostics and look for outliers
