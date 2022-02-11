@@ -3,9 +3,9 @@
 
 
 #Load data for each life stage and save as an environment so I can easily load it again
-#all_emb<-read.csv('Ionocyte/All embryo ionocyte data.csv',header=TRUE)
-#all_1dph<-read.csv('Ionocyte/All 1dph ionocyte data.csv',header=TRUE)
-#all_10mm<-read.csv('Ionocyte/All 10mm ionocyte data.csv',header=TRUE)
+all_emb<-read.csv('Ionocyte/All embryo ionocyte data.csv',header=TRUE)
+all_1dph<-read.csv('Ionocyte/All 1dph ionocyte data.csv',header=TRUE)
+all_10mm<-read.csv('Ionocyte/All 10mm ionocyte data.csv',header=TRUE)
 
 
 #Examine the data and create factors when necessary
@@ -72,5 +72,20 @@ data1$BackSD[data1$Sample=="390t"]
 #So the ones that need to be checked are 2016-56t, 2016-57t, 2016-75t, 2016-77t, 2016-233t, 2016-307t, and 2016-390t. 
 
 
+#As of 2/11/22 after fixing the ones pointed out above, the SDs are all below the original threshold calculated as 3 SDs from mean. Proceed with analysis. 
 
+#__________________________________________________________________________________________________________________
+
+#Load the treatment spreadsheets and merge the dataframes using dplyr::full_join
+trmt_emb<-read.csv('Ionocyte/Embryo treatments.csv',header=TRUE)
+trmt_1dph<-read.csv('Ionocyte/1dph treatments.csv',header=TRUE)
+trmt_10mm<-read.csv('Ionocyte/10mm treatments.csv',header=TRUE)
+
+library(dplyr)
+d1_emb<-full_join(all_emb,trmt_emb,by="Sample")
+d1_1dph<-full_join(all_1dph,trmt_1dph,by="Sample")
+d1_10mm<-full_join(all_10mm,trmt_10mm,by="Sample")
+#These are the full datasets with all available information about ionocyte density, treatments, stdev, and metabolic rates. 
+
+#Now create smaller dataframes with only the necessary information for the analysis (everything else is just in case we want it for later analyses).
 
