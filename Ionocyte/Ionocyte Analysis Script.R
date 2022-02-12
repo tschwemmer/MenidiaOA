@@ -189,9 +189,34 @@ abline(h=4/(length(d2_emb$AverageTotalDensitymm)-3-1), col="red")
 text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageTotalDensitymm)-3-1),names(cook),""),col="red")
 #similar to other two
 
-#make plots for yolk, body, and total; then do separate ones for each experiment. 
+#make plots for yolk and body; then do separate ones for each experiment. 
+library(ggplot2)
+library(grid)
+yolkplot<-ggplot(summary_emb,aes(x=Temp.level,y=Mean.yolk,group=CO2.level,color=CO2.level))+
+  scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  geom_errorbar(aes(ymin=Mean.yolk-se.yolk,ymax=Mean.yolk+se.yolk),width=0.2,position=position_dodge(0.1))+
+  geom_point(size=3,position=position_dodge(0.1),shape=16)+
+  geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
+  scale_x_discrete(labels=c("17","20","24","28"))+
+  annotation_custom(grobTree(textGrob("Yolk Sac Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,500))+
+  xlab("Temperature (C)")+
+  ylab("Ionocyte Density (ionocytes/mm^2)")+
+  theme_classic()
+print(yolkplot)
 
+bodyplot<-ggplot(summary_emb,aes(x=Temp.level,y=Mean.body,group=CO2.level,color=CO2.level))+
+  scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  geom_errorbar(aes(ymin=Mean.body-se.body,ymax=Mean.body+se.body),width=0.2,position=position_dodge(0.1))+
+  geom_point(size=3,position=position_dodge(0.1),shape=16)+
+  geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
+  scale_x_discrete(labels=c("17","20","24","28"))+
+  annotation_custom(grobTree(textGrob("Body (non-yolk) Ionocytes",x=0.1,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,500))+
+  xlab("Temperature (C)")+
+  ylab("Ionocyte Density (ionocytes/mm^2)")+
+  theme_classic()
+print(bodyplot)
 
-
-
+#to separate by experiment need to make plyr summaries for each experiment
 
