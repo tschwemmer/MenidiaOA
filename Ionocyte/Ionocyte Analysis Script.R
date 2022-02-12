@@ -329,9 +329,27 @@ yolkplot2<-ggplot(d2_emb,aes(x=Temp,y=AverageYolkDensitymm,colour=CO2.level,shap
   labs(x="Temperature (C)",y="Ionocyte Density (ionocytes/mm^2)")+
   scale_shape_manual(values=c(16,16,16))+
   scale_colour_manual(values=c("skyblue","steelblue3","steelblue4"))+
-  coord_cartesian(ylim=c(0,500))+
-  annotation_custom(grobTree(textGrob("Yolk Sac Ionocytes",x=0.1,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))
+  coord_cartesian(ylim=c(0,750))+
+  annotation_custom(grobTree(textGrob("Yolk Sac Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))
 print(yolkplot2)
 #lines are still affected by sample sizes/the fact that exp 1 didn't have 4200uatm 
+#BUT regardless of the balance issue, there is still a different effect when you look at yolk vs body - just have to examine exp 3 and 1 separately. 
 
+bodyplot2<-ggplot(d2_emb,aes(x=Temp,y=AverageBodyDensitymm,colour=CO2.level,shape=CO2.level))+
+  theme_classic()+
+  geom_point(size=1.3,alpha=0.4)+
+  geom_smooth(method="lm",lwd=1.7,se=FALSE)+
+  labs(x="Temperature (C)",y="Ionocyte Density (ionocytes/mm^2)")+
+  scale_shape_manual(values=c(16,16,16))+
+  scale_colour_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  coord_cartesian(ylim=c(0,750))+
+  annotation_custom(grobTree(textGrob("Body (non-yolk) Ionocytes",x=0.1,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))
+print(bodyplot2)
+#actually the body one looks similar to the yolk one this way. 
 
+grid.arrange(yolkplot2,bodyplot2,ncol=2)
+
+#this also shows the positive skew of the data - try transforming. https://www.datanovia.com/en/lessons/transform-data-to-normal-distribution-in-r/
+#square-root for moderate skew: sqrt(x)
+#log10 for greater skew: log10(x) - try this first
+#inverse for severe skew: 1/x
