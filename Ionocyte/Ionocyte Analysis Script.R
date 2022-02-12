@@ -132,4 +132,66 @@ anova(modelbody,modelbody_lm)
 anova(modeltotal,modeltotal_lm)
 #Including experiment as a random effect significantly affects all models. ranova() shows this as well. 
 
+#Now use an lm and the continuous (not categorial) independent variables
+#Use emmeans to examine significance
+library(emmeans)
+lmyolk<-lm(AverageYolkDensitymm~CO2*Temp,data=d2_emb)
+summary(lmyolk)
+
+lmbody<-lm(AverageBodyDensitymm~CO2*Temp,data=d2_emb)
+summary(lmbody)
+
+lmtotal<-lm(AverageTotalDensitymm~CO2*Temp,data=d2_emb)
+summary(lmtotal)
+
 #Run diagnostics and look for outliers
+library(car)
+
+#Yolk diagnostics
+plot(lm(d2_emb$AverageYolkDensitymm~d2_emb$CO2.level*d2_emb$Temp.level),1) #Residuals vs. fitted
+plot(lm(d2_emb$AverageYolkDensitymm~d2_emb$CO2.level*d2_emb$Temp.level),2) #Q-Q plot
+yolkres<-residuals(modelyolk)
+hist(yolkres,breaks=20) #somewhat longer tail on right
+shapiro.test(yolkres) #normality test
+leveneTest(modelyolk_lm) #Homogeneity of variances test
+
+cook<-cooks.distance(modelyolk)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(d2_emb$AverageYolkDensitymm)-3-1), col="red")
+text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageYolkDensitymm)-3-1),names(cook),""),col="red")
+#I think I need to transform the data, there are a ton of 'outliers'
+
+#Body diagnostics
+plot(lm(d2_emb$AverageBodyDensitymm~d2_emb$CO2.level*d2_emb$Temp.level),1) #Residuals vs. fitted
+plot(lm(d2_emb$AverageBodyDensitymm~d2_emb$CO2.level*d2_emb$Temp.level),2) #Q-Q plot
+bodyres<-residuals(modelbody)
+hist(bodyres,breaks=20) #pretty symmetrical except for one observation with residual above 400. 
+shapiro.test(bodyres) #normality test
+leveneTest(modelbody_lm) #Homogeneity of variances test
+
+cook<-cooks.distance(modelbody)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(d2_emb$AverageBodyDensitymm)-3-1), col="red")
+text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageBodyDensitymm)-3-1),names(cook),""),col="red")
+#similar to yolk; exp 3 and 4 have most 'influential' observations
+
+#Total diagnostics
+plot(lm(d2_emb$AverageTotalDensitymm~d2_emb$CO2.level*d2_emb$Temp.level),1) #Residuals vs. fitted
+plot(lm(d2_emb$AverageTotalDensitymm~d2_emb$CO2.level*d2_emb$Temp.level),2) #Q-Q plot
+totalres<-residuals(modeltotal)
+hist(totalres,breaks=20) #pretty symmetrical except for two observations with residuals around 400. 
+shapiro.test(totalres) #normality test
+leveneTest(modeltotal_lm) #Homogeneity of variances test
+
+cook<-cooks.distance(modeltotal)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(d2_emb$AverageTotalDensitymm)-3-1), col="red")
+text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageTotalDensitymm)-3-1),names(cook),""),col="red")
+#similar to other two
+
+#make plots for yolk, body, and total; then do separate ones for each experiment. 
+
+
+
+
+
