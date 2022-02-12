@@ -192,6 +192,8 @@ text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageTotal
 #make plots for yolk and body; then do separate ones for each experiment. 
 library(ggplot2)
 library(grid)
+library(gridExtra)
+
 yolkplot<-ggplot(summary_emb,aes(x=Temp.level,y=Mean.yolk,group=CO2.level,color=CO2.level))+
   scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
   geom_errorbar(aes(ymin=Mean.yolk-se.yolk,ymax=Mean.yolk+se.yolk),width=0.2,position=position_dodge(0.1))+
@@ -219,4 +221,106 @@ bodyplot<-ggplot(summary_emb,aes(x=Temp.level,y=Mean.body,group=CO2.level,color=
 print(bodyplot)
 
 #to separate by experiment need to make plyr summaries for each experiment
+e1embsum<-ddply(d2_emb[d2_emb$Experiment.x=="exp1",],c("CO2.level","Temp.level"),summarise,
+                   N.yolk=length(AverageYolkDensitymm),Mean.yolk=mean(AverageYolkDensitymm),se.yolk=sd(AverageYolkDensitymm)/sqrt(N.yolk),
+                   N.body=length(AverageBodyDensitymm),Mean.body=mean(AverageBodyDensitymm),se.body=sd(AverageBodyDensitymm)/sqrt(N.body),
+                   N.total=length(AverageTotalDensitymm),Mean.total=mean(AverageTotalDensitymm),se.total=sd(AverageTotalDensitymm)/sqrt(N.total))
+e1embsum
+
+e3embsum<-ddply(d2_emb[d2_emb$Experiment.x=="exp3",],c("CO2.level","Temp.level"),summarise,
+                N.yolk=length(AverageYolkDensitymm),Mean.yolk=mean(AverageYolkDensitymm),se.yolk=sd(AverageYolkDensitymm)/sqrt(N.yolk),
+                N.body=length(AverageBodyDensitymm),Mean.body=mean(AverageBodyDensitymm),se.body=sd(AverageBodyDensitymm)/sqrt(N.body),
+                N.total=length(AverageTotalDensitymm),Mean.total=mean(AverageTotalDensitymm),se.total=sd(AverageTotalDensitymm)/sqrt(N.total))
+e3embsum
+
+e4embsum<-ddply(d2_emb[d2_emb$Experiment.x=="exp4",],c("CO2.level","Temp.level"),summarise,
+                N.yolk=length(AverageYolkDensitymm),Mean.yolk=mean(AverageYolkDensitymm),se.yolk=sd(AverageYolkDensitymm)/sqrt(N.yolk),
+                N.body=length(AverageBodyDensitymm),Mean.body=mean(AverageBodyDensitymm),se.body=sd(AverageBodyDensitymm)/sqrt(N.body),
+                N.total=length(AverageTotalDensitymm),Mean.total=mean(AverageTotalDensitymm),se.total=sd(AverageTotalDensitymm)/sqrt(N.total))
+e4embsum
+
+e1yolkplot<-ggplot(e1embsum,aes(x=Temp.level,y=Mean.yolk,group=CO2.level,color=CO2.level))+
+  scale_color_manual(values=c("skyblue","steelblue3"))+
+  geom_errorbar(aes(ymin=Mean.yolk-se.yolk,ymax=Mean.yolk+se.yolk),width=0.2,position=position_dodge(0.1))+
+  geom_point(size=3,position=position_dodge(0.1),shape=16)+
+  geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
+  scale_x_discrete(labels=c("17","24"))+
+  annotation_custom(grobTree(textGrob("Yolk Sac Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,500))+
+  xlab("Temperature (C)")+
+  ylab("Ionocyte Density (ionocytes/mm^2)")+
+  theme_classic()
+
+e1bodyplot<-ggplot(e1embsum,aes(x=Temp.level,y=Mean.body,group=CO2.level,color=CO2.level))+
+  scale_color_manual(values=c("skyblue","steelblue3"))+
+  geom_errorbar(aes(ymin=Mean.body-se.body,ymax=Mean.body+se.body),width=0.2,position=position_dodge(0.1))+
+  geom_point(size=3,position=position_dodge(0.1),shape=16)+
+  geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
+  scale_x_discrete(labels=c("17","24"))+
+  annotation_custom(grobTree(textGrob("Body (non-yolk) Ionocytes",x=0.1,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,500))+
+  xlab("Temperature (C)")+
+  ylab("Ionocyte Density (ionocytes/mm^2)")+
+  theme_classic()
+
+grid.arrange(e1yolkplot,e1bodyplot,ncol=2)
+
+e3yolkplot<-ggplot(e3embsum,aes(x=Temp.level,y=Mean.yolk,group=CO2.level,color=CO2.level))+
+  scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  geom_errorbar(aes(ymin=Mean.yolk-se.yolk,ymax=Mean.yolk+se.yolk),width=0.2,position=position_dodge(0.1))+
+  geom_point(size=3,position=position_dodge(0.1),shape=16)+
+  geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
+  scale_x_discrete(labels=c("17","20","24"))+
+  annotation_custom(grobTree(textGrob("Yolk Sac Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,500))+
+  xlab("Temperature (C)")+
+  ylab("Ionocyte Density (ionocytes/mm^2)")+
+  theme_classic()
+
+e3bodyplot<-ggplot(e3embsum,aes(x=Temp.level,y=Mean.body,group=CO2.level,color=CO2.level))+
+  scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  geom_errorbar(aes(ymin=Mean.body-se.body,ymax=Mean.body+se.body),width=0.2,position=position_dodge(0.1))+
+  geom_point(size=3,position=position_dodge(0.1),shape=16)+
+  geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
+  scale_x_discrete(labels=c("17","20","24"))+
+  annotation_custom(grobTree(textGrob("Body (non-yolk) Ionocytes",x=0.1,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,500))+
+  xlab("Temperature (C)")+
+  ylab("Ionocyte Density (ionocytes/mm^2)")+
+  theme_classic()
+
+grid.arrange(e3yolkplot,e3bodyplot,ncol=2)
+
+e4yolkplot<-ggplot(e4embsum,aes(x=Temp.level,y=Mean.yolk,group=CO2.level,color=CO2.level))+
+  scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  geom_errorbar(aes(ymin=Mean.yolk-se.yolk,ymax=Mean.yolk+se.yolk),width=0.2,position=position_dodge(0.1))+
+  geom_point(size=3,position=position_dodge(0.1),shape=16)+
+  geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
+  scale_x_discrete(labels=c("24","28"))+
+  annotation_custom(grobTree(textGrob("Yolk Sac Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,500))+
+  xlab("Temperature (C)")+
+  ylab("Ionocyte Density (ionocytes/mm^2)")+
+  theme_classic()
+
+e4bodyplot<-ggplot(e4embsum,aes(x=Temp.level,y=Mean.body,group=CO2.level,color=CO2.level))+
+  scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  geom_errorbar(aes(ymin=Mean.body-se.body,ymax=Mean.body+se.body),width=0.2,position=position_dodge(0.1))+
+  geom_point(size=3,position=position_dodge(0.1),shape=16)+
+  geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
+  scale_x_discrete(labels=c("24","28"))+
+  annotation_custom(grobTree(textGrob("Body (non-yolk) Ionocytes",x=0.1,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,500))+
+  xlab("Temperature (C)")+
+  ylab("Ionocyte Density (ionocytes/mm^2)")+
+  theme_classic()
+
+grid.arrange(e4yolkplot,e4bodyplot,ncol=2)
+
+#problem might be imbalanced sample sizes? This could be another reason it is better to present the data the way we did in the resp paper. 
+#In exp 3 the overall yolk sac densities at 17C are higher but when all of the data are combined, the lower CO2 levels get dragged down more because the
+#sample size is greater (~30 as opposed to 10) - so there are more low values from Exp 1 to bring it down compared to 4200uatm, because 4200uatm wasn't even in Exp 1. 
+
+#Make a plot for yolk and body like the ones in the resp paper, where every data point is printed but lines are fitted to show the interaction.
+
 
