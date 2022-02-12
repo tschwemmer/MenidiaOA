@@ -322,5 +322,16 @@ grid.arrange(e4yolkplot,e4bodyplot,ncol=2)
 #sample size is greater (~30 as opposed to 10) - so there are more low values from Exp 1 to bring it down compared to 4200uatm, because 4200uatm wasn't even in Exp 1. 
 
 #Make a plot for yolk and body like the ones in the resp paper, where every data point is printed but lines are fitted to show the interaction.
+yolkplot2<-ggplot(d2_emb,aes(x=Temp,y=AverageYolkDensitymm,colour=CO2.level,shape=CO2.level))+
+  theme_classic()+
+  geom_point(size=1.3,alpha=0.4)+
+  geom_smooth(method="lm",lwd=1.7,se=FALSE)+
+  labs(x="Temperature (C)",y="Ionocyte Density (ionocytes/mm^2)")+
+  scale_shape_manual(values=c(16,16,16))+
+  scale_colour_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  coord_cartesian(ylim=c(0,500))+
+  annotation_custom(grobTree(textGrob("Yolk Sac Ionocytes",x=0.1,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))
+print(yolkplot2)
+#lines are still affected by sample sizes/the fact that exp 1 didn't have 4200uatm 
 
 
