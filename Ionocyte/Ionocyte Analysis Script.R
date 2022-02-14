@@ -92,7 +92,7 @@ d2_emb<-d1_emb[,c(1,2,4,43,47,51,54,56,57,58,60,62)]
 d2_1dph<-d1_1dph[,c(1,2,4,37,41,45,48,50,51,52,54,56)]
 d2_10mm<-d1_10mm[,c(1,2,3,36,40,44,47,49,50,51,53,55)]
 
-
+#----------------------------------------------------------------------------------------------------------
 #Analyze embryos using LMER
 
 #First check structure of dataframe
@@ -132,7 +132,7 @@ anova(modelbody,modelbody_lm)
 anova(modeltotal,modeltotal_lm)
 #Including experiment as a random effect significantly affects all models. ranova() shows this as well. 
 
-#Now use an lm and the continuous (not categorial) independent variables
+#Now use an lm and the continuous (not categorical) independent variables
 #Use emmeans to examine significance
 library(emmeans)
 lmyolk<-lm(AverageYolkDensitymm~CO2*Temp,data=d2_emb)
@@ -350,6 +350,64 @@ print(bodyplot2)
 grid.arrange(yolkplot2,bodyplot2,ncol=2)
 
 #this also shows the positive skew of the data - try transforming. https://www.datanovia.com/en/lessons/transform-data-to-normal-distribution-in-r/
+
+
+#Transforming embryo data
 #square-root for moderate skew: sqrt(x)
 #log10 for greater skew: log10(x) - try this first
 #inverse for severe skew: 1/x
+sqrtmodelyolk<-lm(sqrt(AverageYolkDensitymm)~CO2*Temp,data=d2_emb)
+summary(sqrtmodelyolk)
+
+sqrtmodelbody<-lm(sqrt(AverageBodyDensitymm)~CO2*Temp,data=d2_emb)
+summary(sqrtmodelbody)
+
+#Yolk diagnostics - transformed
+plot(sqrtmodelyolk,1) #Residuals vs. fitted
+plot(sqrtmodelyolk,2) #Q-Q plot
+yolkres<-residuals(sqrtmodelyolk)
+hist(yolkres,breaks=20) #somewhat longer tail on right
+shapiro.test(yolkres) #normality test - with log transformation now it is slight negative skew
+ #Homogeneity of variances test
+ols_test_normality(sqrtmodelbody)
+ols_test_breusch_pagan(sqrtmodelbody)
+
+cook<-cooks.distance(modelyolk)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(d2_emb$AverageYolkDensitymm)-3-1), col="red")
+text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageYolkDensitymm)-3-1),names(cook),""),col="red")
+#I think I need to transform the data, there are a ton of 'outliers'
+
+#Body diagnostics - transformed
+plot(sqrtmodelbody,1) #Residuals vs. fitted
+plot(sqrtmodelbody,2) #Q-Q plot
+bodyres<-residuals(sqrtmodelbody)
+hist(bodyres,breaks=20) #pretty symmetrical except for one observation with residual above 400. 
+shapiro.test(bodyres) #normality test
+ #Homogeneity of variances test
+
+cook<-cooks.distance(modelbody)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(d2_emb$AverageBodyDensitymm)-3-1), col="red")
+text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageBodyDensitymm)-3-1),names(cook),""),col="red")
+#similar to yolk; exp 3 and 4 have most 'influential' observations
+
+#Total diagnostics
+plot(lm(d2_emb$AverageTotalDensitymm~d2_emb$CO2.level*d2_emb$Temp.level),1) #Residuals vs. fitted
+plot(lm(d2_emb$AverageTotalDensitymm~d2_emb$CO2.level*d2_emb$Temp.level),2) #Q-Q plot
+totalres<-residuals(modeltotal)
+hist(totalres,breaks=20) #pretty symmetrical except for two observations with residuals around 400. 
+shapiro.test(totalres) #normality test
+leveneTest(modeltotal_lm) #Homogeneity of variances test
+
+cook<-cooks.distance(modeltotal)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(d2_emb$AverageTotalDensitymm)-3-1), col="red")
+text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageTotalDensitymm)-3-1),names(cook),""),col="red")
+
+
+
+
+
+
+
