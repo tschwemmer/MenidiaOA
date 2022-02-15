@@ -362,6 +362,9 @@ summary(sqrtmodelyolk)
 sqrtmodelbody<-lm(sqrt(AverageBodyDensitymm)~CO2*Temp,data=d2_emb)
 summary(sqrtmodelbody)
 
+sqrtmodeltotal<-lm(sqrt(AverageTotalDensitymm)~CO2*Temp,data=d2_emb)
+summary(sqrtmodeltotal)
+
 #Yolk diagnostics - transformed
 plot(sqrtmodelyolk,1) #Residuals vs. fitted
 plot(sqrtmodelyolk,2) #Q-Q plot
