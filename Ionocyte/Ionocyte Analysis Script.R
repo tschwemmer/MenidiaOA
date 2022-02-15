@@ -1,5 +1,5 @@
 #Ionocyte Data Analysis
-#January 21, 2022
+#January 2022
 
 
 #Load data for each life stage and save as an environment so I can easily load it again
