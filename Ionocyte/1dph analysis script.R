@@ -143,7 +143,7 @@ total1plot<-ggplot(summary_1dph,aes(x=Temp.level,y=Mean.total,group=CO2.level,co
   geom_point(size=3,position=position_dodge(0.1),shape=16)+
   geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
   scale_x_discrete(labels=c("17","20","24","28"))+
-  annotation_custom(grobTree(textGrob("Total Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
+  annotation_custom(grobTree(textGrob("1dph Larvae Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
   coord_cartesian(ylim=c(0,600))+
   xlab("Temperature (C)")+
   ylab("Ionocyte Density (ionocytes/mm^2)")+
@@ -187,7 +187,7 @@ total1plot2<-ggplot(d2_1dph,aes(x=Temp,y=AverageTotalDensitymm,colour=CO2.level,
   scale_shape_manual(values=c(16,16,16))+
   scale_colour_manual(values=c("skyblue","steelblue3","steelblue4"))+
   coord_cartesian(ylim=c(0,800),xlim=c(15,30))+
-  annotation_custom(grobTree(textGrob("Total Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
+  annotation_custom(grobTree(textGrob("1dph Larvae Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
   theme(legend.position="none")
 print(total1plot2)
 #400uatm is pretty flat, then slope increases with CO2. 

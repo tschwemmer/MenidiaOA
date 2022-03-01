@@ -200,11 +200,12 @@ yolkplot<-ggplot(summary_emb,aes(x=Temp.level,y=Mean.yolk,group=CO2.level,color=
   geom_point(size=3,position=position_dodge(0.1),shape=16)+
   geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
   scale_x_discrete(labels=c("17","20","24","28"))+
-  annotation_custom(grobTree(textGrob("Yolk Sac Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
+  annotation_custom(grobTree(textGrob("Yolk Sac Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
   coord_cartesian(ylim=c(0,500))+
   xlab("Temperature (C)")+
   ylab("Ionocyte Density (ionocytes/mm^2)")+
-  theme_classic()
+  theme_classic()+
+  theme(legend.position="none")
 print(yolkplot)
 
 bodyplot<-ggplot(summary_emb,aes(x=Temp.level,y=Mean.body,group=CO2.level,color=CO2.level))+
@@ -213,11 +214,12 @@ bodyplot<-ggplot(summary_emb,aes(x=Temp.level,y=Mean.body,group=CO2.level,color=
   geom_point(size=3,position=position_dodge(0.1),shape=16)+
   geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
   scale_x_discrete(labels=c("17","20","24","28"))+
-  annotation_custom(grobTree(textGrob("Body (non-yolk) Ionocytes",x=0.1,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
+  annotation_custom(grobTree(textGrob("Body (non-yolk) Ionocytes",x=0.1,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
   coord_cartesian(ylim=c(0,500))+
   xlab("Temperature (C)")+
   ylab("Ionocyte Density (ionocytes/mm^2)")+
-  theme_classic()
+  theme_classic()+
+  theme(legend.position="none")
 print(bodyplot)
 
 #to separate by experiment need to make plyr summaries for each experiment
@@ -330,7 +332,8 @@ yolkplot2<-ggplot(d2_emb,aes(x=Temp,y=AverageYolkDensitymm,colour=CO2.level,shap
   scale_shape_manual(values=c(16,16,16))+
   scale_colour_manual(values=c("skyblue","steelblue3","steelblue4"))+
   coord_cartesian(ylim=c(0,750))+
-  annotation_custom(grobTree(textGrob("Yolk Sac Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))
+  annotation_custom(grobTree(textGrob("Yolk Sac Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
+  theme(legend.position="none")
 print(yolkplot2)
 #lines are still affected by sample sizes/the fact that exp 1 didn't have 4200uatm 
 #BUT regardless of the balance issue, there is still a different effect when you look at yolk vs body - just have to examine exp 3 and 1 separately. 
@@ -343,8 +346,9 @@ bodyplot2<-ggplot(d2_emb,aes(x=Temp,y=AverageBodyDensitymm,colour=CO2.level,shap
   scale_shape_manual(values=c(16,16,16))+
   scale_colour_manual(values=c("skyblue","steelblue3","steelblue4"))+
   coord_cartesian(ylim=c(0,750))+
-  annotation_custom(grobTree(textGrob("Body (non-yolk) Ionocytes",x=0.1,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))
-print(bodyplot2)
+  annotation_custom(grobTree(textGrob("Body (non-yolk) Ionocytes",x=0.1,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
+  theme(legend.position="none")
+  print(bodyplot2)
 #actually the body one looks similar to the yolk one this way. 
 
 grid.arrange(yolkplot2,bodyplot2,ncol=2)
@@ -409,6 +413,8 @@ abline(h=4/(length(d2_emb$AverageTotalDensitymm)-3-1), col="red")
 text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageTotalDensitymm)-3-1),names(cook),""),col="red")
 
 
+grid.arrange(yolkplot2,bodyplot2,legend1dph,ncol=3,widths=c(2,2,1))
+grid.arrange(yolkplot,bodyplot,legend1dph,ncol=3,widths=c(2,2,1))
 
 
 
