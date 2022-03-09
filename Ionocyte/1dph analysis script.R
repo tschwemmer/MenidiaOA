@@ -198,5 +198,83 @@ legend1dph<-get_legend(total1plot2)
 grid.arrange(frontplot2,backplot2,total1plot2,legend1dph,ncol=4,widths=c(2,2,2,1))
 grid.arrange(frontplot,backplot,total1plot,legend1dph,ncol=4,widths=c(2,2,2,1))
 
+#Make plots separated out by experiment - differences may be due to ages at sampling
+#First make summary tables for each experiment
+library(plyr)
+e11dphsum<-ddply(d2_1dph[d2_1dph$Experiment.x=="exp1",],c("CO2.level","Temp.level"),summarise,
+                N.total=length(AverageTotalDensitymm),Mean.total=mean(AverageTotalDensitymm),se.total=sd(AverageTotalDensitymm)/sqrt(N.total))
+e11dphsum
+
+e21dphsum<-ddply(d2_1dph[d2_1dph$Experiment.x=="exp2",],c("CO2.level","Temp.level"),summarise,
+                 N.total=length(AverageTotalDensitymm),Mean.total=mean(AverageTotalDensitymm),se.total=sd(AverageTotalDensitymm)/sqrt(N.total))
+e21dphsum
+
+e31dphsum<-ddply(d2_1dph[d2_1dph$Experiment.x=="exp3",],c("CO2.level","Temp.level"),summarise,
+                 N.total=length(AverageTotalDensitymm),Mean.total=mean(AverageTotalDensitymm),se.total=sd(AverageTotalDensitymm)/sqrt(N.total))
+e31dphsum
+
+e41dphsum<-ddply(d2_1dph[d2_1dph$Experiment.x=="exp4",],c("CO2.level","Temp.level"),summarise,
+                 N.total=length(AverageTotalDensitymm),Mean.total=mean(AverageTotalDensitymm),se.total=sd(AverageTotalDensitymm)/sqrt(N.total))
+e41dphsum
+
+#Then make a plot for each experiment and display as one row
+e11dphplot<-ggplot(e11dphsum,aes(x=Temp.level,y=Mean.total,group=CO2.level,color=CO2.level))+
+  scale_color_manual(values=c("skyblue","steelblue3"))+
+  geom_errorbar(aes(ymin=Mean.total-se.total,ymax=Mean.total+se.total),width=0.2,position=position_dodge(0.1))+
+  geom_point(size=3,position=position_dodge(0.1),shape=16)+
+  geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
+  scale_x_discrete(labels=c("17","24"))+
+  annotation_custom(grobTree(textGrob("Exp 1, 1dph",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,600))+
+  xlab("Temperature (C)")+
+  ylab("Ionocyte Density (ionocytes/mm^2)")+
+  theme_classic()+
+  theme(legend.position="none")
+print(e11dphplot)
+
+e21dphplot<-ggplot(e21dphsum,aes(x=Temp.level,y=Mean.total,group=CO2.level,color=CO2.level))+
+  scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  geom_errorbar(aes(ymin=Mean.total-se.total,ymax=Mean.total+se.total),width=0.2,position=position_dodge(0.1))+
+  geom_point(size=3,position=position_dodge(0.1),shape=16)+
+  geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
+  scale_x_discrete(labels=c("17","20","24"))+
+  annotation_custom(grobTree(textGrob("Exp 2, 1dph",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,600))+
+  xlab("Temperature (C)")+
+  ylab("Ionocyte Density (ionocytes/mm^2)")+
+  theme_classic()+
+  theme(legend.position="none")
+print(e21dphplot)
+
+e31dphplot<-ggplot(e31dphsum,aes(x=Temp.level,y=Mean.total,group=CO2.level,color=CO2.level))+
+  scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  geom_errorbar(aes(ymin=Mean.total-se.total,ymax=Mean.total+se.total),width=0.2,position=position_dodge(0.1))+
+  geom_point(size=3,position=position_dodge(0.1),shape=16)+
+  geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
+  scale_x_discrete(labels=c("17","20","24"))+
+  annotation_custom(grobTree(textGrob("Exp 3, 1dph",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,600))+
+  xlab("Temperature (C)")+
+  ylab("Ionocyte Density (ionocytes/mm^2)")+
+  theme_classic()+
+  theme(legend.position="none")
+print(e31dphplot)
+
+e41dphplot<-ggplot(e41dphsum,aes(x=Temp.level,y=Mean.total,group=CO2.level,color=CO2.level))+
+  scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  geom_errorbar(aes(ymin=Mean.total-se.total,ymax=Mean.total+se.total),width=0.2,position=position_dodge(0.1))+
+  geom_point(size=3,position=position_dodge(0.1),shape=16)+
+  geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
+  scale_x_discrete(labels=c("24","28"))+
+  annotation_custom(grobTree(textGrob("Exp 4, 1dph",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,600))+
+  xlab("Temperature (C)")+
+  ylab("Ionocyte Density (ionocytes/mm^2)")+
+  theme_classic()+
+  theme(legend.position="none")
+print(e41dphplot)
+
+legend1dph<-get_legend(e31dphplot)
+grid.arrange(e11dphplot,e21dphplot,e31dphplot,e41dphplot,legend1dph,ncol=5,widths=c(2,2,2,2,1))
 
 

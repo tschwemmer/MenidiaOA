@@ -201,3 +201,50 @@ grid.arrange(front10plot,back10plot,total10plot,legend1dph,ncol=4,widths=c(2,2,2
 
 grid.arrange(total1plot2,total10plot2,legend1dph,ncol=3,widths=c(2,2,1))
 grid.arrange(total1plot,total10plot,legend1dph,ncol=3,widths=c(2,2,1))
+
+
+#Make plots separated out by experiment - differences may be due to ages at sampling
+#First make summary tables for each experiment
+library(plyr)
+e210mmsum<-ddply(d2_10mm[d2_10mm$Experiment.x=="exp2",],c("CO2.level","Temp.level"),summarise,
+                 N.total=length(AverageTotalDensitymm),Mean.total=mean(AverageTotalDensitymm),se.total=sd(AverageTotalDensitymm)/sqrt(N.total))
+e210mmsum
+
+e310mmsum<-ddply(d2_10mm[d2_10mm$Experiment.x=="exp3",],c("CO2.level","Temp.level"),summarise,
+                 N.total=length(AverageTotalDensitymm),Mean.total=mean(AverageTotalDensitymm),se.total=sd(AverageTotalDensitymm)/sqrt(N.total))
+e310mmsum
+
+
+#Then make a plot for each experiment and display as one row
+e210mmplot<-ggplot(e210mmsum,aes(x=Temp.level,y=Mean.total,group=CO2.level,color=CO2.level))+
+  scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  geom_errorbar(aes(ymin=Mean.total-se.total,ymax=Mean.total+se.total),width=0.2,position=position_dodge(0.1))+
+  geom_point(size=3,position=position_dodge(0.1),shape=16)+
+  geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
+  scale_x_discrete(labels=c("17","20","24"))+
+  annotation_custom(grobTree(textGrob("Exp 2, 10mm",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,500))+
+  xlab("Temperature (C)")+
+  ylab("Ionocyte Density (ionocytes/mm^2)")+
+  theme_classic()+
+  theme(legend.position="none")
+print(e210mmplot)
+
+e310mmplot<-ggplot(e310mmsum,aes(x=Temp.level,y=Mean.total,group=CO2.level,color=CO2.level))+
+  scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  geom_errorbar(aes(ymin=Mean.total-se.total,ymax=Mean.total+se.total),width=0.2,position=position_dodge(0.1))+
+  geom_point(size=3,position=position_dodge(0.1),shape=16)+
+  geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
+  scale_x_discrete(labels=c("17","20","24"))+
+  annotation_custom(grobTree(textGrob("Exp 3, 10mm",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,500))+
+  xlab("Temperature (C)")+
+  ylab("Ionocyte Density (ionocytes/mm^2)")+
+  theme_classic()+
+  theme(legend.position="none")
+print(e310mmplot)
+
+
+
+legend10mm<-get_legend(e210mmplot)
+grid.arrange(e210mmplot,e310mmplot,legend10mm,ncol=3,widths=c(2,2,1))
