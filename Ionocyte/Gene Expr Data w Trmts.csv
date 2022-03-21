@@ -1,4 +1,4 @@
-name,expression,age,replicate,Experiment,gene,400uatmO2.level,CO2.level2,Te20Cp.17Ceve17C,Temp.level2,pH,pH.sd,CO2,CO2.sd,Temp,Temp.sd,Salinity,DO,DO.sd,PO2,PO2.sd,Alkalinity,Alkalinity.sd,DIC,DIC.sd,fCO2,fCO2.sd,Carbonate,Carbonate.sd
+name,expression,age,replicate,Experiment,gene,CO2.level,CO2.level2,Temp.level,Temp.level2,pH,pH.sd,CO2,CO2.sd,Temp,Temp.sd,Salinity,DO,DO.sd,PO2,PO2.sd,Alkalinity,Alkalinity.sd,DIC,DIC.sd,fCO2,fCO2.sd,Carbonate,Carbonate.sd
 17C 10dph 1,1.220592143,T,1,exp3,nka,400uatm,C,17C,L,8.22,0.01,322,12,17.4,0.2,31,8.26,0.12,21.5,0.3,2054,8,1838,26,321,12,153,2
 17C 10dph 2,1.418148608,T,2,exp3,nka,400uatm,C,17C,L,8.22,0.01,322,12,17.4,0.2,31,8.26,0.12,21.5,0.3,2054,8,1838,26,321,12,153,2
 17C 10dph 3,1.228331706,T,3,exp3,nka,400uatm,C,17C,L,8.22,0.01,322,12,17.4,0.2,31,8.26,0.12,21.5,0.3,2054,8,1838,26,321,12,153,2
