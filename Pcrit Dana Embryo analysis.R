@@ -186,15 +186,67 @@ library(plyr)
 dana_emb_sum<-ddply(emb_dana,"CO2_level",summarise,N=length(MO2),MeanMO2=mean(MO2),SE=sd(MO2)/sqrt(N))
 dana_emb_sum #elevated CO2 slightly decreases MO2...opposite of previous results. But may need to redo using only data before ~Pcrit if want to compare to previous experiments. 
 
+
+
+
 #Use calc_MO2() function from 'respirometry' package to calculate MO2 for binned chunks of time for each column of the data sheets and store it in a new dataframe
 library(respirometry)
+P1A1<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$A1,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("A1",times=33),rep("blankt1",times=33),rep("amb",times=33))
+P1A2<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$A2,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("A2",times=33),rep("blankt9",times=33),rep("high",times=33))
+P1A3<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$A3,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("A3",times=33),rep("t1",times=33),rep("amb",times=33))
+P1A4<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$A4,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("A4",times=33),rep("blankt2",times=33),rep("med",times=33))
+P1A5<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$A5,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("A5",times=33),rep("t8",times=33),rep("amb",times=33))
+P1A6<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$A6,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("A6",times=33),rep("t7",times=33),rep("high",times=33))
+P1B1<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$B1,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("B1",times=33),rep("blankt3",times=33),rep("high",times=33))
+P1B2<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$B2,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("B2",times=33),rep("blankt7",times=33),rep("high",times=33))
+P1B3<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$B3,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("B3",times=33),rep("t5",times=33),rep("med",times=33))
+P1B4<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$B4,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("B4",times=33),rep("t7",times=33),rep("high",times=33))
+P1B5<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$B5,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("B5",times=33),rep("blankt4",times=33),rep("med",times=33))
+P1C1<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$C1,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("C1",times=33),rep("t9",times=33),rep("high",times=33))
+P1C2<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$C2,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("C2",times=33),rep("t2",times=33),rep("med",times=33))
+P1C3<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$C3,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("C3",times=33),rep("blankt5",times=33),rep("med",times=33))
+P1C4<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$C4,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("C4",times=33),rep("t3",times=33),rep("high",times=33))
+P1C5<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$C5,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("C5",times=33),rep("blankt6",times=33),rep("amb",times=33))
+P1C6<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$C6,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("C6",times=33),rep("t4",times=33),rep("med",times=33))
+P1D1<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$D1,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("D1",times=33),rep("t9",times=33),rep("high",times=33))
+P1D2<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$D2,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("D2",times=33),rep("t8",times=33),rep("amb",times=33))
+P1D3<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$D3,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("D3",times=33),rep("t6",times=33),rep("amb",times=33))
+P1D4<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$D4,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("D4",times=33),rep("t5",times=33),rep("med",times=33))
+P1D5<-data.frame(calc_MO2(duration=emb_p1_400$Time.Min.,o2=emb_p1_400$D5,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=emb_p1_400$T_internal,sal=27.3),rep("D5",times=33),rep("blankt7",times=33),rep("high",times=33))
 
+names(P1A1)[9:11]<-c("Well","Tank","CO2")
+names(P1A2)[9:11]<-c("Well","Tank","CO2")
+names(P1A3)[9:11]<-c("Well","Tank","CO2")
+names(P1A4)[9:11]<-c("Well","Tank","CO2")
+names(P1A5)[9:11]<-c("Well","Tank","CO2")
+names(P1A6)[9:11]<-c("Well","Tank","CO2")
+names(P1B1)[9:11]<-c("Well","Tank","CO2")
+names(P1B2)[9:11]<-c("Well","Tank","CO2")
+names(P1B3)[9:11]<-c("Well","Tank","CO2")
+names(P1B4)[9:11]<-c("Well","Tank","CO2")
+names(P1B5)[9:11]<-c("Well","Tank","CO2")
+names(P1C1)[9:11]<-c("Well","Tank","CO2")
+names(P1C2)[9:11]<-c("Well","Tank","CO2")
+names(P1C3)[9:11]<-c("Well","Tank","CO2")
+names(P1C4)[9:11]<-c("Well","Tank","CO2")
+names(P1C5)[9:11]<-c("Well","Tank","CO2")
+names(P1C6)[9:11]<-c("Well","Tank","CO2")
+names(P1D1)[9:11]<-c("Well","Tank","CO2")
+names(P1D2)[9:11]<-c("Well","Tank","CO2")
+names(P1D3)[9:11]<-c("Well","Tank","CO2")
+names(P1D4)[9:11]<-c("Well","Tank","CO2")
+names(P1D5)[9:11]<-c("Well","Tank","CO2")
 
-p1C1<-calc_MO2(duration=emb_p1$Time_min,o2=emb_p1$C1,o2_unit="mg_per_l",bin_width=10,vol=0.0005,temp=24,sal=27.3,atm_pres=962)
+#skip blank adjustments for now, calculate Pcrit and plot ...HOW TO DO AVERAGES??
+#Calculate the mean MO2 for each mean O2 value? Do they match up well? 
+all<-rbind(P1A3,P1A5,P1A6,P1B3,P1B4,P1C1,P1C2,P1C4,P1C6,P1D1,P1D2,P1D3,P1D4)
 
-p1D1<-calc_MO2(duration=emb_p1$Time_min,o2=emb_p1$D1,o2_unit="mg_per_l",bin_width=5,vol=0.0005,temp=24,sal=27.3,atm_pres=962)
-plot(p1D1$MO2~p1D1$O2_MEAN)
-plot(emb_p1$D1~emb_p1$Time_min)
+#plot the curves
+library(ggplot2)
+allplot<-ggplot(all, aes(x=O2_MEAN,y=MO2,colour=Well))+
+  geom_line(lwd=2)+
+  scale_colour_manual(values=c("brown","red1","darkorange1","darkgoldenrod1","chartreuse1","darkolivegreen4","cadetblue1","cadetblue","blue3","darkorchid3","deeppink1","deeppink4","azure4"))
+print(allplot)
 
 
 emb_MO2s_p1<-data.frame("Well"<-c("A1","B1","C1","D1","A2","B2","C2","D2","A3","B3","C3","D3","A4","B4","C4","D4","A5","B5","C5","D5","A6","B6","C6","D6"),
