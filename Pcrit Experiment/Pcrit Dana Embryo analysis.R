@@ -248,7 +248,7 @@ all<-rbind(P1A3,P1A5,P1A6,P1B3,P1B4,P1C1,P1C2,P1C4,P1C6,P1D1,P1D2,P1D3,P1D4)
 #plot the curves
 library(ggplot2)
 allplot<-ggplot(all, aes(x=O2_MEAN,y=MO2,colour=Well))+
-  geom_line(lwd=2)+
+  geom_line(lwd=1)+
   scale_colour_manual(values=c("brown","red1","darkorange1","darkgoldenrod1","chartreuse1","darkolivegreen4","cadetblue1","cadetblue","blue3","darkorchid3","deeppink1","deeppink4","azure4"))
 print(allplot)
 
@@ -313,10 +313,10 @@ all2<-rbind(all,P2A1,P2A3,P2A4,P2A6,P2B1,P2B2,P2B6,P2C1,P2C2,P2C3,P2C6,P2D1,P2D3
 
 #plot the curves
 library(ggplot2)
-allplot<-ggplot(all2, aes(x=O2_MEAN,y=MO2,colour=Well))+
+allplot2<-ggplot(all2, aes(x=O2_MEAN,y=MO2,colour=Well))+
   geom_line(lwd=2)+
   scale_colour_manual(values=c("brown","red1","darkorange1","darkgoldenrod1","chartreuse1","darkolivegreen4","cadetblue1","cadetblue","blue3","darkorchid3","deeppink1","deeppink4","azure4",
                                "bisque","indianred1","orange","cornsilk","mediumspringgreen","mediumseagreen","lightblue1","cyan1","cornflowerblue","lightpink","hotpink","lavenderblush3","khaki4","gray16","darksalmon"))
-print(allplot)
+print(allplot2)
 
 
