@@ -71,6 +71,7 @@ plot(emb_p2$D4~emb_p2$Time.Min.)
 plot(emb_p2$D6~emb_p2$Time.Min.)
 
 #Trim the data and calculate the overall slopes again
+#For RMR try using initial ~20 min, or average 3 20 min chunks
 emb_p1_400<-emb_p1[1:966,]
 emb_p2_400<-emb_p2[1:1112,]
 
