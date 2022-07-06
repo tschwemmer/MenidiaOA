@@ -1,0 +1,25 @@
+Well,CO2_level,Tank,dw_mg,probs
+A1,high,t3,0.062470912,
+A2,blankhigh,t3,,
+A3,high,t3,0.181650583,
+A4,high,t3,0.11295278,
+A5,blankhigh,t3,,
+A6,blankmed,t4,,
+B1,blankhigh,t9,,
+B2,high,t9,0.094397152,prob - went up in first hour
+B3,high,t9,0.279945705,
+B4,high,t9,0.161099638,prob - went up at 27 min
+B5,blankhigh,t9,,
+B6,med,t4,0.147555641,
+C1,amb,t1,0.086866714,
+C2,blankamb,t1,,
+C3,amb,t1,0.052357674,
+C4,blankamb,t1,,prob - went up at 27 min
+C5,amb,t1,0.086772736,
+C6,blankmed,t4,,
+D1,high,t7,0.104725435,prob - went up at 150 min
+D2,high,t7,0.049069193,
+D3,blankhigh,t7,,
+D4,high,t7,0.138071073,
+D5,high,t7,0.064490251,
+D6,blankhigh,t7,,
