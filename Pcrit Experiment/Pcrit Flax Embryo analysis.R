@@ -1,6 +1,6 @@
 #Respirometry analysis from 2021 experiment
 
-#Run 1: Embryos, Dana Hall, 6-14-21
+#Run 2: Embryos, Flax Pond, 6-15-21
 
 #load data sheets and treatments
 emb_p1orig<-read.csv(file.choose(),header=TRUE)
@@ -8,9 +8,9 @@ emb_p2orig<-read.csv(file.choose(),header=TRUE)
 emb_trmt_p1<-read.csv(file.choose(),header=TRUE)
 emb_trmt_p2<-read.csv(file.choose(),header=TRUE)
 
-#remove first 85 minutes from Plate 1, first 30 minutes from Plate 2. Then renumber the rows.
-emb_p1<-emb_p1orig[232:4416,]
-emb_p2<-emb_p2orig[86:4415,]
+#
+emb_p1<-emb_p1orig[32:6965,]
+emb_p2<-emb_p2orig[32:6965,]
 row.names(emb_p1)<-NULL
 row.names(emb_p2)<-NULL
 
@@ -25,8 +25,8 @@ emb_trmt_p1$Well<-factor(emb_trmt_p1$Well,levels=c("A1","B1","C1","D1","A2","B2"
 emb_trmt_p2$Well<-factor(emb_trmt_p2$Well,levels=c("A1","B1","C1","D1","A2","B2","C2","D2","A3","B3","C3","D3","A4","B4","C4","D4","A5","B5","C5","D5","A6","B6","C6","D6"))
 emb_trmt_p1$CO2_level<-factor(emb_trmt_p1$CO2_level,levels=c("amb","med","high","blankamb","blankmed","blankhigh"))
 emb_trmt_p2$CO2_level<-factor(emb_trmt_p2$CO2_level,levels=c("amb","med","high","blankamb","blankmed","blankhigh"))
-emb_trmt_p1$Tank<-factor(emb_trmt_p1$Tank,levels=c("t1","t2","t3","t4","t5","t6","t7","t8","t9"))
-emb_trmt_p2$Tank<-factor(emb_trmt_p2$Tank,levels=c("t1","t2","t3","t4","t5","t6","t7","t8","t9"))
+emb_trmt_p1$Tank<-factor(emb_trmt_p1$Tank,levels=c("1A","1B","1C","2A","2B","2C","3A","3B","3C"))
+emb_trmt_p2$Tank<-factor(emb_trmt_p2$Tank,levels=c("1A","1B","1C","2A","2B","2C","3A","3B","3C"))
 
 
 #calculate slope for each well using all untrimmed data. Units will be umol consumed per hour
@@ -37,133 +37,138 @@ slopes_r1p2<-data.frame(names(emb_p2)[4:27], sapply(emb_p2[4:27],function(x) ((-
 names(slopes_r1p2)<-c("Well","MO2")
 
 #plot data for all live wells
-par(mfrow=c(3,5))
-plot(emb_p1$A3~emb_p1$Time.Min.)
+par(mfrow=c(2,5))
+plot(emb_p1$A1~emb_p1$Time.Min.)
+plot(emb_p1$A2~emb_p1$Time.Min.)
+plot(emb_p1$A4~emb_p1$Time.Min.)
 plot(emb_p1$A5~emb_p1$Time.Min.)
 plot(emb_p1$A6~emb_p1$Time.Min.)
+plot(emb_p1$B1~emb_p1$Time.Min.)
 plot(emb_p1$B3~emb_p1$Time.Min.)
 plot(emb_p1$B4~emb_p1$Time.Min.)
+plot(emb_p1$B5~emb_p1$Time.Min.)
 plot(emb_p1$B6~emb_p1$Time.Min.)
 plot(emb_p1$C1~emb_p1$Time.Min.)
 plot(emb_p1$C2~emb_p1$Time.Min.)
 plot(emb_p1$C4~emb_p1$Time.Min.)
+plot(emb_p1$C5~emb_p1$Time.Min.)
 plot(emb_p1$C6~emb_p1$Time.Min.)
 plot(emb_p1$D1~emb_p1$Time.Min.)
 plot(emb_p1$D2~emb_p1$Time.Min.)
 plot(emb_p1$D3~emb_p1$Time.Min.)
 plot(emb_p1$D4~emb_p1$Time.Min.)
+abline(v=c(40,100,180))
+
+#blanks
+par(mfrow=c(2,3))
+plot(emb_p1$A3~emb_p1$Time.Min.)
+plot(emb_p1$B2~emb_p1$Time.Min.)
+plot(emb_p1$C3~emb_p1$Time.Min.)
+plot(emb_p1$D5~emb_p1$Time.Min.)
 plot(emb_p1$D6~emb_p1$Time.Min.)
 
-plot(emb_p2$A1~emb_p2$Time.Min.)
+#plate 2
+par(mfrow=c(2,5))
+plot(emb_p2$A2~emb_p2$Time.Min.)
 plot(emb_p2$A3~emb_p2$Time.Min.)
 plot(emb_p2$A4~emb_p2$Time.Min.)
+plot(emb_p2$A5~emb_p2$Time.Min.)
 plot(emb_p2$A6~emb_p2$Time.Min.)
 plot(emb_p2$B1~emb_p2$Time.Min.)
 plot(emb_p2$B2~emb_p2$Time.Min.)
+plot(emb_p2$B4~emb_p2$Time.Min.)
+plot(emb_p2$B5~emb_p2$Time.Min.)
 plot(emb_p2$B6~emb_p2$Time.Min.)
 plot(emb_p2$C1~emb_p2$Time.Min.)
 plot(emb_p2$C2~emb_p2$Time.Min.)
 plot(emb_p2$C3~emb_p2$Time.Min.)
-plot(emb_p2$C6~emb_p2$Time.Min.)
-plot(emb_p2$D1~emb_p2$Time.Min.)
+plot(emb_p2$C4~emb_p2$Time.Min.)
+plot(emb_p2$C5~emb_p2$Time.Min.)
+plot(emb_p2$D2~emb_p2$Time.Min.)
 plot(emb_p2$D3~emb_p2$Time.Min.)
 plot(emb_p2$D4~emb_p2$Time.Min.)
+plot(emb_p2$D5~emb_p2$Time.Min.)
 plot(emb_p2$D6~emb_p2$Time.Min.)
+abline(v=c(40,100,180))
+
+#blanks
+par(mfrow=c(2,2))
+plot(emb_p1$A1~emb_p1$Time.Min.)
+plot(emb_p1$B3~emb_p1$Time.Min.)
+plot(emb_p1$C6~emb_p1$Time.Min.)
+plot(emb_p1$D1~emb_p1$Time.Min.)
 
 #Trim the data and calculate the overall slopes again
 #For RMR try using initial ~30 min, or average 3 20 min chunks
-emb_p1_rmr<-emb_p1[3:93,]
-emb_p2_rmr<-emb_p2[3:93,]
+emb_p1_rmr<-data.frame(emb_p1$Time.Min.[180:270],emb_p1$Time.Sec.[180:270],emb_p1$A1[180:270],emb_p1$A4[180:270],emb_p1$A5[180:270],
+                       emb_p1$A6[180:270],emb_p1$B1[180:270],emb_p1$B3[180:270],emb_p1$B4[180:270],emb_p1$B5[180:270],emb_p1$B6[180:270],emb_p1$C1[180:270],
+                       emb_p1$C2[180:270],emb_p1$C4[180:270],emb_p1$C5[180:270],emb_p1$C6[180:270],emb_p1$D1[180:270],emb_p1$D2[180:270],emb_p1$D3[180:270],
+                       emb_p1$D4[180:270],
+                       emb_p1$A3[330:420],emb_p1$B2[330:420],emb_p1$C3[330:420],emb_p1$D5[330:420],emb_p1$D6[330:420])
+names(emb_p1_rmr)<-c("Time.Min.","Time.Sec.","A1","A4","A5","A6","B1","B3","B4","B5","B6","C1","C2","C4","C5","C6","D1","D2","D3","D4","A3","B2","C3","D5","D6")
+row.names(emb_p1_rmr)<-NULL
 
-slopes_r1p1_rmr<-data.frame(names(emb_p1_rmr)[4:27], sapply(emb_p1_rmr[4:27],function(x) ((-coef(summary(lm(x~emb_p1_rmr$Time.Sec.)))[2])/31.9988)*1800), 
-                        sapply(emb_p1_rmr[4:27],function(x) summary(lm(x~emb_p1_rmr$Time.Sec.))$r.squared))
+emb_p2_rmr<-emb_p2[180:270,-c(1,23,28)] #This excludes D5 and the temperature and date columns
+row.names(emb_p2_rmr)<-NULL
+
+#calculate slopes
+slopes_r1p1_rmr<-data.frame(names(emb_p1_rmr)[3:25], sapply(emb_p1_rmr[3:25],function(x) ((-coef(summary(lm(x~emb_p1_rmr$Time.Sec.)))[2])/31.9988)*1800), 
+                            sapply(emb_p1_rmr[3:25],function(x) summary(lm(x~emb_p1_rmr$Time.Sec.))$r.squared))
 names(slopes_r1p1_rmr)<-c("Well","MO2","Rsquared")
 
-slopes_r1p2_rmr<-data.frame(names(emb_p2_rmr)[4:27], sapply(emb_p2_rmr[4:27],function(x) ((-coef(summary(lm(x~emb_p2_rmr$Time.Sec.)))[2])/31.9988)*1800), 
-                            sapply(emb_p2_rmr[4:27],function(x) summary(lm(x~emb_p2_rmr$Time.Sec.))$r.squared))
+slopes_r1p2_rmr<-data.frame(names(emb_p2_rmr)[3:25], sapply(emb_p2_rmr[3:25],function(x) ((-coef(summary(lm(x~emb_p2_rmr$Time.Sec.)))[2])/31.9988)*1800), 
+                            sapply(emb_p2_rmr[3:25],function(x) summary(lm(x~emb_p2_rmr$Time.Sec.))$r.squared))
 names(slopes_r1p2_rmr)<-c("Well","MO2","Rsquared")
-
-#plot the oxygen concentration over time for each plate
-par(mfrow=c(3,5))
-plot(emb_p1_400$A3~emb_p1_400$Time.Min.)
-plot(emb_p1_400$A5~emb_p1_400$Time.Min.)
-plot(emb_p1_400$A6~emb_p1_400$Time.Min.)
-plot(emb_p1_400$B3~emb_p1_400$Time.Min.)
-plot(emb_p1_400$B4~emb_p1_400$Time.Min.)
-plot(emb_p1_400$B6~emb_p1_400$Time.Min.)
-plot(emb_p1_400$C1~emb_p1_400$Time.Min.)
-plot(emb_p1_400$C2~emb_p1_400$Time.Min.)
-plot(emb_p1_400$C4~emb_p1_400$Time.Min.)
-plot(emb_p1_400$C6~emb_p1_400$Time.Min.)
-plot(emb_p1_400$D1~emb_p1_400$Time.Min.)
-plot(emb_p1_400$D2~emb_p1_400$Time.Min.)
-plot(emb_p1_400$D3~emb_p1_400$Time.Min.)
-plot(emb_p1_400$D4~emb_p1_400$Time.Min.)
-plot(emb_p1_400$D6~emb_p1_400$Time.Min.)
-
-plot(emb_p2_400$A1~emb_p2_400$Time.Min.)
-plot(emb_p2_400$A3~emb_p2_400$Time.Min.)
-plot(emb_p2_400$A4~emb_p2_400$Time.Min.)
-plot(emb_p2_400$A6~emb_p2_400$Time.Min.)
-plot(emb_p2_400$B1~emb_p2_400$Time.Min.)
-plot(emb_p2_400$B2~emb_p2_400$Time.Min.)
-plot(emb_p2_400$B6~emb_p2_400$Time.Min.)
-plot(emb_p2_400$C1~emb_p2_400$Time.Min.)
-plot(emb_p2_400$C2~emb_p2_400$Time.Min.)
-plot(emb_p2_400$C3~emb_p2_400$Time.Min.)
-plot(emb_p2_400$C6~emb_p2_400$Time.Min.)
-plot(emb_p2_400$D1~emb_p2_400$Time.Min.)
-plot(emb_p2_400$D3~emb_p2_400$Time.Min.)
-plot(emb_p2_400$D4~emb_p2_400$Time.Min.)
-plot(emb_p2_400$D6~emb_p2_400$Time.Min.)
 
 
 #calculate the blanks
-t1blank<-mean(slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="A1"],slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="B4"])
-t2blank<-mean(slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="A4"],slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="D5"])
-t3blank<-mean(slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="B1"],slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="C5"])
-t4blank<-mean(slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="B5"],slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="D2"])
-t5blank<-mean(slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="C3"],slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="B5"])
-t6blank<-mean(slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="C5"],slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="C4"])
-t7blank<-mean(slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="B2"],slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="D5"])
-t8blank<-mean(slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="A2"],slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="A5"])
-t9blank<-mean(slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="A2"],slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="B3"])
+blank1<-mean(slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="A3"],slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="D6"],slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="A1"])
+blank2<-mean(slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="B2"],slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="B3"],slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="D1"])
+blank3<-mean(slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="D5"],slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="B3"],slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="C6"])
+
 
 
 #Subtract the blanks
-emb_p1b<-data.frame(c("A3","A5","A6","B3","B4","B6","C1","C2","C4","C6","D1","D2","D3","D4","D6"),
-                    c(slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="A3"]-t1blank,
-                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="A5"]-t8blank,
-                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="A6"]-t7blank,
-                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="B3"]-t5blank,
-                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="B4"]-t7blank,
-                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="B6"]-t7blank,
-                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="C1"]-t9blank,
-                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="C2"]-t2blank,
-                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="C4"]-t3blank,
-                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="C6"]-t4blank,
-                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="D1"]-t9blank,
-                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="D2"]-t8blank,
-                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="D3"]-t6blank,
-                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="D4"]-t5blank,
-                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="D6"]-t5blank))
+emb_p1b<-data.frame(c("A1","A4","A5","A6","B1","B3","B4","B5","B6","C1","C2","C4","C5","C6","D1","D2","D3","D4"),
+                    c(slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="A1"]-blank1,
+                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="A4"]-blank1,
+                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="A5"]-blank1,
+                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="A6"]-blank1,
+                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="B1"]-blank2,
+                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="B3"]-blank2,
+                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="B4"]-blank2,
+                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="B5"]-blank2,
+                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="B6"]-blank1,
+                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="C1"]-blank2,
+                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="C2"]-blank2,
+                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="C4"]-blank2,
+                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="C5"]-blank2,
+                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="C6"]-blank1,
+                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="D1"]-blank3,
+                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="D2"]-blank3,
+                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="D3"]-blank3,
+                      slopes_r1p1_rmr$MO2[slopes_r1p1_rmr$Well=="D4"]-blank3))
 names(emb_p1b)<-c("Well","MO2")
-emb_p2b<-data.frame(c("A1","A3","A4","A6","B1","B2","B6","C1","C2","C3","C6","D1","D3","D4","D6"),
-                    c(slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="A1"]-t3blank,
-                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="A3"]-t1blank,
-                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="A4"]-t4blank,
-                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="A6"]-t6blank,
-                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="B1"]-t8blank,
-                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="B2"]-t7blank,
-                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="B6"]-t3blank,
-                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="C1"]-t9blank,
-                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="C2"]-t1blank,
-                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="C3"]-t6blank,
-                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="C6"]-t2blank,
-                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="D1"]-t4blank,
-                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="D3"]-t2blank,
-                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="D4"]-t4blank,
-                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="D6"]-t6blank))
+emb_p2b<-data.frame(c("A2","A3","A4","A5","A6","B1","B2","B4","B5","B6","C1","C2","C3","C4","C5","D2","D3","D4","D6"),
+                    c(slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="A2"]-blank1,
+                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="A3"]-blank1,
+                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="A4"]-blank1,
+                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="A5"]-blank1,
+                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="A6"]-blank1,
+                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="B1"]-blank3,
+                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="B2"]-blank3,
+                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="B4"]-blank3,
+                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="B5"]-blank3,
+                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="B6"]-blank3,
+                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="C1"]-blank3,
+                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="C2"]-blank3,
+                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="C3"]-blank3,
+                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="C4"]-blank3,
+                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="C5"]-blank3,
+                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="D2"]-blank2,
+                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="D3"]-blank2,
+                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="D4"]-blank2,
+                      slopes_r1p2_rmr$MO2[slopes_r1p2_rmr$Well=="D6"]-blank2))
 names(emb_p2b)<-c("Well","MO2")
 
 #Check that they are all around the same order of magnitude and none are negative. Yay!

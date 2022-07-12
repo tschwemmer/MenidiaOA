@@ -96,7 +96,7 @@ plot(lrv_p2$D6~lrv_p2$Time.Min.)
 #Trim the data for the purpose of calculating the initial slope (RMR in fully oxygenated water)
 lrv_p1_rmr<-data.frame(lrv_p1$Time.Min.[136:226], lrv_p1$Time.Sec.[136:226], lrv_p1$A3[136:226], lrv_p1$A4[136:226],lrv_p1$B3[136:226],lrv_p1$B6[136:226],
                        lrv_p1$C1[136:226],lrv_p1$C5[136:226],lrv_p1$D1[136:226],lrv_p1$D2[136:226],lrv_p1$D4[136:226],lrv_p1$D5[136:226],
-                       lrv_p1$A1[241:331],lrv_p1$B2[241:331],lrv_p1$C3[744:834],
+                       lrv_p1$A1[16:106],lrv_p1$B2[241:331],lrv_p1$C3[744:834],
                        lrv_p1$A2[136:226],lrv_p1$A5[136:226],lrv_p1$A6[136:226],lrv_p1$B1[136:226],lrv_p1$B5[136:226],lrv_p1$C2[136:226],
                        lrv_p1$C4[136:226],lrv_p1$C6[136:226],lrv_p1$D3[744:834],lrv_p1$D6[136:226])
 names(lrv_p1_rmr)<-c("Time.Min.","Time.Sec.","A3","A4","B3","B6","C1","C5","D1","D2","D4","D5","A1","B2","C3","A2","A5","A6","B1","B5","C2","C4","C6","D3","D6")
@@ -110,115 +110,135 @@ lrv_p2_rmr<-data.frame(lrv_p2$Time.Min.[76:166], lrv_p2$Time.Sec.[76:166], lrv_p
 names(lrv_p2_rmr)<-c("Time.Min.","Time.Sec.","A2","A4","A5","A6","B1","B2","B3","B4","C1","C3","D1","D3","D4","C4","A1","A3","B5","B6","C2","C5","D2","D5","D6")
 
 
-slopes_r3p1_200<-data.frame(names(lrv_p1_200)[4:27], sapply(lrv_p1_200[4:27],function(x) ((-coef(summary(lm(x~lrv_p1_200$Time.Sec.)))[2])/31.9988)*1800), 
-                            sapply(lrv_p1_200[4:27],function(x) summary(lm(x~lrv_p1_200$Time.Sec.))$r.squared))
-names(slopes_r3p1_200)<-c("Well","MO2","Rsquared")
+slopes_r5p1_rmr<-data.frame(names(lrv_p1_rmr)[3:25], sapply(lrv_p1_rmr[3:25],function(x) ((-coef(summary(lm(x~lrv_p1_rmr$Time.Sec.)))[2])/31.9988)*1800), 
+                            sapply(lrv_p1_rmr[3:25],function(x) summary(lm(x~lrv_p1_rmr$Time.Sec.))$r.squared))
+names(slopes_r5p1_rmr)<-c("Well","MO2","Rsquared")
 
-slopes_r3p2_200<-data.frame(names(lrv_p2_200)[4:27], sapply(lrv_p2_200[4:27],function(x) ((-coef(summary(lm(x~lrv_p2_200$Time.Sec.)))[2])/31.9988)*1800), 
-                            sapply(lrv_p2_200[4:27],function(x) summary(lm(x~lrv_p2_200$Time.Sec.))$r.squared))
-names(slopes_r3p2_200)<-c("Well","MO2","Rsquared")
+slopes_r5p2_rmr<-data.frame(names(lrv_p2_rmr)[3:25], sapply(lrv_p2_rmr[3:25],function(x) ((-coef(summary(lm(x~lrv_p2_rmr$Time.Sec.)))[2])/31.9988)*1800), 
+                            sapply(lrv_p2_rmr[3:25],function(x) summary(lm(x~lrv_p2_rmr$Time.Sec.))$r.squared))
+names(slopes_r5p2_rmr)<-c("Well","MO2","Rsquared")
 
 
 
 #calculate the blanks
-t1blank<-mean(slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="D1"],slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="D3"])
-t2blank<-mean(slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="A1"],slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="A6"])
-t3blank<-mean(slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="A6"],slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="D6"])
-t4blank<-mean(slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="A2"],slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="A4"])
-t5blank<-mean(slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="D2"],slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="D3"])
-t6blank<-mean(slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="C1"],slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="C2"])
-t7blank<-mean(slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="C2"],slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="C4"])
-t8blank<-mean(slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="B3"],slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="B6"])
-t9blank<-mean(slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="B3"],slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="B5"])
+t1blank<-mean(slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="C2"],slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="C4"])
+t2blank<-mean(slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="A1"],slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="A3"])
+t3blank<-mean(slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="A2"],slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="A5"])
+t4blank<-mean(slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="A6"],slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="C6"])
+t5blank<-mean(slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="D2"],slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="D5"])
+t6blank<-mean(slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="C2"],slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="C5"])
+t7blank<-mean(slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="D3"],slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="D6"])
+t8blank<-mean(slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="B5"],slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="B6"])
+t9blank<-mean(slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="B1"],slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="B5"])
 
 
 #Subtract the blanks
-lar_p1b<-data.frame(c("A2","A3","A4","A5","B1","B2","B4","B5","C1","C3","C5","C6","D2","D4","D5","D6"),
-                    c(slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="A2"]-t2blank,
-                      slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="A3"]-t2blank,
-                      slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="A4"]-t2blank,
-                      slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="A5"]-t2blank,
-                      slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="B1"]-t8blank,
-                      slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="B2"]-t8blank,
-                      slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="B4"]-t8blank,
-                      slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="B5"]-t8blank,
-                      slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="C1"]-t7blank,
-                      slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="C3"]-t7blank,
-                      slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="C5"]-t7blank,
-                      slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="C6"]-t7blank,
-                      slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="D2"]-t1blank,
-                      slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="D4"]-t1blank,
-                      slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="D5"]-t1blank,
-                      slopes_r3p1_200$MO2[slopes_r3p1_200$Well=="D6"]-t3blank))
-names(lar_p1b)<-c("Well","MO2")
-lar_p2b<-data.frame(c("A1","A3","A5","B1","B2","B4","B6","C3","C4","C5","C6","D1","D4","D5"),
-                    c(slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="A1"]-t4blank,
-                      slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="A3"]-t4blank,
-                      slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="A5"]-t4blank,
-                      slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="B1"]-t9blank,
-                      slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="B2"]-t9blank,
-                      slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="B4"]-t9blank,
-                      slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="B6"]-t3blank,
-                      slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="C3"]-t6blank,
-                      slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="C4"]-t6blank,
-                      slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="C5"]-t6blank,
-                      slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="C6"]-t3blank,
-                      slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="D1"]-t5blank,
-                      slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="D4"]-t5blank,
-                      slopes_r3p2_200$MO2[slopes_r3p2_200$Well=="D5"]-t5blank))
-names(lar_p2b)<-c("Well","MO2")
+lrv_p1b<-data.frame(c("A1","A3","A4","B2","B3","B6","C1","C3","C5","D1","D2","D4","D5"),
+                    c(slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="A1"]-t3blank,
+                      slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="A3"]-t3blank,
+                      slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="A4"]-t3blank,
+                      slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="B2"]-t9blank,
+                      slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="B3"]-t9blank,
+                      slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="B6"]-t4blank,
+                      slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="C1"]-t1blank,
+                      slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="C3"]-t1blank,
+                      slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="C5"]-t1blank,
+                      slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="D1"]-t7blank,
+                      slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="D2"]-t7blank,
+                      slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="D4"]-t7blank,
+                      slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="D5"]-t7blank))
+names(lrv_p1b)<-c("Well","MO2")
+lrv_p2b<-data.frame(c("A2","A4","A5","A6","B1","B2","B3","B4","C1","C3","C4","D1","D3","D4"),
+                    c(slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="A2"]-t2blank,
+                      slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="A4"]-t2blank,
+                      slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="A5"]-t5blank,
+                      slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="A6"]-t5blank,
+                      slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="B1"]-t8blank,
+                      slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="B2"]-t8blank,
+                      slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="B3"]-t8blank,
+                      slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="B4"]-t8blank,
+                      slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="C1"]-t6blank,
+                      slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="C3"]-t6blank,
+                      slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="C4"]-t6blank,
+                      slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="D1"]-t5blank,
+                      slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="D3"]-t5blank,
+                      slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="D4"]-t5blank))
+names(lrv_p2b)<-c("Well","MO2")
 
 #Check that they are all around the same order of magnitude and none are negative. Yay!
 #Match treatments up to wells, then rbind into one dataset and remove any that had problems in the notes (e.g. egg was missing from well, there was a bubble or leaky seal) 
 library(dplyr)
-lar_p1b<-dplyr::full_join(lar_p1b,lar_trmt_p1,by="Well")
-lar_p1b<-lar_p1b[1:16,] #remove the blanks
-lar_p2b<-dplyr::full_join(lar_p2b,lar_trmt_p2,by="Well")
-lar_p2b<-lar_p2b[1:14,] #remove the blanks
-lar_dana<-rbind(lar_p1b[-c(16),],lar_p2b) #combine the two plates into one dataset, removing 16 because of problems (larva dried up before measuring). 
-row.names(lar_dana)<-NULL #renumber the rows so it's easy to index if need be.
+lrv_p1b<-dplyr::full_join(lrv_p1b,lrv_trmt_p1,by="Well")
+lrv_p1b<-lrv_p1b[1:13,] #remove the blanks
+lrv_p2b<-dplyr::full_join(lrv_p2b,lrv_trmt_p2,by="Well")
+lrv_p2b<-lrv_p2b[1:14,] #remove the blanks
+lrv_dana<-rbind(lrv_p1b,lrv_p2b) #combine the two plates into one dataset. 
+row.names(lrv_dana)<-NULL #renumber the rows so it's easy to index if need be.
 
 #Add a column for mass-specific metabolic rate, MO2/dw in umol O2 / mg dw / h. 
-lar_dana<-data.frame(lar_dana, "msmr"<-c(lar_dana[1,2]/lar_dana[1,5],
-                                         lar_dana[2,2]/lar_dana[2,5],
-                                         lar_dana[3,2]/lar_dana[3,5],
-                                         lar_dana[4,2]/lar_dana[4,5],
-                                         lar_dana[5,2]/lar_dana[5,5],
-                                         lar_dana[6,2]/lar_dana[6,5],
-                                         lar_dana[7,2]/lar_dana[7,5],
-                                         lar_dana[8,2]/lar_dana[8,5],
-                                         lar_dana[9,2]/lar_dana[9,5],
-                                         lar_dana[10,2]/lar_dana[10,5],
-                                         lar_dana[11,2]/lar_dana[11,5],
-                                         lar_dana[12,2]/lar_dana[12,5],
-                                         lar_dana[13,2]/lar_dana[13,5],
-                                         lar_dana[14,2]/lar_dana[14,5],
-                                         lar_dana[15,2]/lar_dana[15,5],
-                                         lar_dana[16,2]/lar_dana[16,5],
-                                         lar_dana[17,2]/lar_dana[17,5],
-                                         lar_dana[18,2]/lar_dana[18,5],
-                                         lar_dana[19,2]/lar_dana[19,5],
-                                         lar_dana[20,2]/lar_dana[20,5],
-                                         lar_dana[21,2]/lar_dana[21,5],
-                                         lar_dana[22,2]/lar_dana[22,5],
-                                         lar_dana[23,2]/lar_dana[23,5],
-                                         lar_dana[24,2]/lar_dana[24,5],
-                                         lar_dana[25,2]/lar_dana[25,5],
-                                         lar_dana[26,2]/lar_dana[26,5],
-                                         lar_dana[27,2]/lar_dana[27,5],
-                                         lar_dana[28,2]/lar_dana[28,5],
-                                         lar_dana[29,2]/lar_dana[29,5]))
-names(lar_dana)[6]<-"msmr"
+lrv_dana<-data.frame(lrv_dana, "msmr"<-c(lrv_dana[1,2]/lrv_dana[1,5],
+                                         lrv_dana[2,2]/lrv_dana[2,5],
+                                         lrv_dana[3,2]/lrv_dana[3,5],
+                                         lrv_dana[4,2]/lrv_dana[4,5],
+                                         lrv_dana[5,2]/lrv_dana[5,5],
+                                         lrv_dana[6,2]/lrv_dana[6,5],
+                                         lrv_dana[7,2]/lrv_dana[7,5],
+                                         lrv_dana[8,2]/lrv_dana[8,5],
+                                         lrv_dana[9,2]/lrv_dana[9,5],
+                                         lrv_dana[10,2]/lrv_dana[10,5],
+                                         lrv_dana[11,2]/lrv_dana[11,5],
+                                         lrv_dana[12,2]/lrv_dana[12,5],
+                                         lrv_dana[13,2]/lrv_dana[13,5],
+                                         lrv_dana[14,2]/lrv_dana[14,5],
+                                         lrv_dana[15,2]/lrv_dana[15,5],
+                                         lrv_dana[16,2]/lrv_dana[16,5],
+                                         lrv_dana[17,2]/lrv_dana[17,5],
+                                         lrv_dana[18,2]/lrv_dana[18,5],
+                                         lrv_dana[19,2]/lrv_dana[19,5],
+                                         lrv_dana[20,2]/lrv_dana[20,5],
+                                         lrv_dana[21,2]/lrv_dana[21,5],
+                                         lrv_dana[22,2]/lrv_dana[22,5],
+                                         lrv_dana[23,2]/lrv_dana[23,5],
+                                         lrv_dana[24,2]/lrv_dana[24,5],
+                                         lrv_dana[25,2]/lrv_dana[25,5],
+                                         lrv_dana[26,2]/lrv_dana[26,5],
+                                         lrv_dana[27,2]/lrv_dana[27,5]))
+names(lrv_dana)[7]<-"msmr"
 
 #analyze the MO2 with respect to CO2
-dana_lar_model<-lm(lar_dana$msmr~lar_dana$CO2_level)
-anova(dana_lar_model) #CO2 level is not significant
+dana_lrv_model<-lm(lrv_dana$msmr~lrv_dana$CO2_level)
+anova(dana_lrv_model) #CO2 level is not significant, p=0.1946
+
+#do it with a LME/ANOVA with tank as random effect
+library(lme4)
+library(lmerTest)
+dana_lrv_mod<-lmer(msmr~Tank+(1|CO2_level),data=lrv_dana) #This gave a singular fit which means the model is too complicated for the data and the random effect can be excluded. 
+ranova(dana_lrv_mod) #p=1 this confirms that the random effect can be excluded. 
+
+#try it the other way
+dana_lrv_mdl<-aov(lrv_dana$msmr~lrv_dana$CO2_level/factor(lrv_dana$Tank))
+summary(dana_lrv_mdl) #still not significant
+
+#diagnostics
+
 
 #calculate the group means 
-
 library(plyr)
-dana_lar_sum<-ddply(lar_dana,"CO2_level",summarise,N=length(msmr),MeanMO2=mean(msmr),SE=sd(msmr)/sqrt(N))
-dana_lar_sum #elevated CO2 slightly decreases MO2...opposite of previous results. But may need to redo using only data before ~Pcrit if want to compare to previous experiments. 
+dana_lrv_sum<-ddply(lrv_dana,"CO2_level",summarise,N=length(msmr),MeanMO2=mean(msmr),SE=sd(msmr)/sqrt(N))
+dana_lrv_sum #elevated CO2 slightly decreases MO2...opposite of previous results. 
+
+#plot the data - means and SEs
+library(ggplot2)
+library(grid)
+danalrvplot<-ggplot(dana_lrv_sum, aes(x=CO2_level,y=MeanMO2))+
+  geom_point(size=3,shape=16)+
+  geom_errorbar(aes(ymin=MeanMO2-SE,ymax=MeanMO2+SE),width=0.2)+
+  annotation_custom(grobTree(textGrob("5dph Larvae, Exp. 1",x=0.5,y=0.98,gp=gpar(fontsize=16,fontface="bold"))))+
+  theme_classic()
+print(danalrvplot)
+  
+
+
 
 #Trim the unusable parts from the original datasets for calc_mo2() analysis
 lar_p1formo2<-lar_p1orig[c(7:2218),]
