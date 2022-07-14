@@ -57,7 +57,7 @@ plot(emb_p1$D1~emb_p1$Time.Min.)
 plot(emb_p1$D2~emb_p1$Time.Min.)
 plot(emb_p1$D3~emb_p1$Time.Min.)
 plot(emb_p1$D4~emb_p1$Time.Min.)
-abline(v=c(40,100,180))
+abline(v=c(100,200,300,400))
 
 #blanks
 par(mfrow=c(2,3))
@@ -89,26 +89,44 @@ plot(emb_p2$D3~emb_p2$Time.Min.)
 plot(emb_p2$D4~emb_p2$Time.Min.)
 plot(emb_p2$D5~emb_p2$Time.Min.)
 plot(emb_p2$D6~emb_p2$Time.Min.)
-abline(v=c(40,100,180))
+abline(v=c(100,400,600,1000))
 
 #blanks
 par(mfrow=c(2,2))
-plot(emb_p1$A1~emb_p1$Time.Min.)
-plot(emb_p1$B3~emb_p1$Time.Min.)
-plot(emb_p1$C6~emb_p1$Time.Min.)
-plot(emb_p1$D1~emb_p1$Time.Min.)
+plot(emb_p2$A1~emb_p2$Time.Min.)
+plot(emb_p2$B3~emb_p2$Time.Min.)
+plot(emb_p2$C6~emb_p2$Time.Min.)
+plot(emb_p2$D1~emb_p2$Time.Min.)
 
 #Trim the data and calculate the overall slopes again
 #For RMR try using initial ~30 min, or average 3 20 min chunks
-emb_p1_rmr<-data.frame(emb_p1$Time.Min.[180:270],emb_p1$Time.Sec.[180:270],emb_p1$A1[180:270],emb_p1$A4[180:270],emb_p1$A5[180:270],
-                       emb_p1$A6[180:270],emb_p1$B1[180:270],emb_p1$B3[180:270],emb_p1$B4[180:270],emb_p1$B5[180:270],emb_p1$B6[180:270],emb_p1$C1[180:270],
-                       emb_p1$C2[180:270],emb_p1$C4[180:270],emb_p1$C5[180:270],emb_p1$C6[180:270],emb_p1$D1[180:270],emb_p1$D2[180:270],emb_p1$D3[180:270],
-                       emb_p1$D4[180:270],
-                       emb_p1$A3[330:420],emb_p1$B2[330:420],emb_p1$C3[330:420],emb_p1$D5[330:420],emb_p1$D6[330:420])
+#emb_p1_rmr<-data.frame(emb_p1$Time.Min.[180:270],emb_p1$Time.Sec.[180:270],emb_p1$A1[180:270],emb_p1$A4[180:270],emb_p1$A5[180:270],
+#                       emb_p1$A6[180:270],emb_p1$B1[180:270],emb_p1$B3[180:270],emb_p1$B4[180:270],emb_p1$B5[180:270],emb_p1$B6[180:270],emb_p1$C1[180:270],
+#                       emb_p1$C2[180:270],emb_p1$C4[180:270],emb_p1$C5[180:270],emb_p1$C6[180:270],emb_p1$D1[180:270],emb_p1$D2[180:270],emb_p1$D3[180:270],
+#                       emb_p1$D4[180:270],
+#                       emb_p1$A3[330:420],emb_p1$B2[330:420],emb_p1$C3[330:420],emb_p1$D5[330:420],emb_p1$D6[330:420])
+#names(emb_p1_rmr)<-c("Time.Min.","Time.Sec.","A1","A4","A5","A6","B1","B3","B4","B5","B6","C1","C2","C4","C5","C6","D1","D2","D3","D4","A3","B2","C3","D5","D6")
+#row.names(emb_p1_rmr)<-NULL
+
+#emb_p2_rmr<-emb_p2[180:270,-c(1,23,28)] #This excludes D5 and the temperature and date columns
+#row.names(emb_p2_rmr)<-NULL
+
+#Trim the data and calculate the overall slopes again, this time using data after spikes when applicable
+#For RMR try using initial ~30 min, or average 3 20 min chunks
+emb_p1_rmr<-data.frame(emb_p1$Time.Min.[750:840],emb_p1$Time.Sec.[750:840],emb_p1$A1[750:840],emb_p1$A4[750:840],emb_p1$A5[750:840],
+                       emb_p1$A6[750:840],emb_p1$B1[750:840],emb_p1$B3[750:840],emb_p1$B4[750:840],emb_p1$B5[1320:1410],emb_p1$B6[1320:1410],emb_p1$C1[960:1050],
+                       emb_p1$C2[750:840],emb_p1$C4[1320:1410],emb_p1$C5[750:840],emb_p1$C6[1320:1410],emb_p1$D1[360:450],emb_p1$D2[360:450],emb_p1$D3[360:450],
+                       emb_p1$D4[360:450],
+                       emb_p1$A3[570:660],emb_p1$B2[570:660],emb_p1$C3[570:660],emb_p1$D5[570:660],emb_p1$D6[570:660])
 names(emb_p1_rmr)<-c("Time.Min.","Time.Sec.","A1","A4","A5","A6","B1","B3","B4","B5","B6","C1","C2","C4","C5","C6","D1","D2","D3","D4","A3","B2","C3","D5","D6")
 row.names(emb_p1_rmr)<-NULL
 
-emb_p2_rmr<-emb_p2[180:270,-c(1,23,28)] #This excludes D5 and the temperature and date columns
+emb_p2_rmr<-data.frame(emb_p2$Time.Min.[330:420],emb_p2$Time.Sec.[330:420],emb_p2$A2[330:420],emb_p2$A3[1499:1589],emb_p2$A4[1829:1919],emb_p2$A5[330:420],
+                       emb_p2$A6[330:420],emb_p2$B1[330:420],emb_p2$B2[330:420],emb_p2$B4[330:420],emb_p2$B5[330:420],emb_p2$B6[330:420],emb_p2$C1[330:420],
+                       emb_p2$C2[330:420],emb_p2$C3[330:420],emb_p2$C4[330:420],emb_p2$C5[330:420],emb_p2$D2[330:420],emb_p2$D3[330:420],emb_p2$D4[330:420],
+                       emb_p2$D6[690:780],
+                       emb_p2$A3[330:420],emb_p2$B2[330:420],emb_p2$C3[330:420],emb_p2$D5[330:420],emb_p2$D6[330:420])
+names(emb_p2_rmr)<-c("Time.Min.","Time.Sec.","A2","A3","A4","A5","A6","B1","B2","B4","B5","B6","C1","C2","C3","C4","C5","D2","D2","D4","D6","A1","B3","C6","D1")
 row.names(emb_p2_rmr)<-NULL
 
 #calculate slopes
@@ -175,36 +193,48 @@ names(emb_p2b)<-c("Well","MO2")
 #Match treatments up to wells, then rbind into one dataseet and remove any that had problems in the notes (e.g. egg was missing from well, there was a bubble or leaky seal) 
 library(dplyr)
 emb_p1b<-dplyr::full_join(emb_p1b,emb_trmt_p1,by="Well")
-emb_p1b<-emb_p1b[1:15,] #remove the blanks
+emb_p1b<-emb_p1b[1:18,] #remove the blanks
 emb_p2b<-dplyr::full_join(emb_p2b,emb_trmt_p2,by="Well")
-emb_p2b<-emb_p2b[1:15,] #remove the blanks
-emb_dana<-rbind(emb_p1b[-c(6,15),],emb_p2b) #combine the two plates into one dataset, removing 6 and 15 because of problems. 
-row.names(emb_dana)<-NULL #renumber the rows so it's easy to index if need be.
+emb_p2b<-emb_p2b[1:19,] #remove the blanks
+emb_flax<-rbind(emb_p1b,emb_p2b) #combine the two plates into one dataset.
+row.names(emb_flax)<-NULL #renumber the rows so it's easy to index if need be.
 
 #analyze the MO2 with respect to CO2
-dana_emb_model<-lm(emb_dana$MO2~emb_dana$CO2_level)
-anova(dana_emb_model) #CO2 level is significant, p=0.035
+flax_emb_model<-lm(emb_flax$MO2~emb_flax$CO2_level)
+anova(flax_emb_model) #CO2 level is significant, p=0.006796
 
 #calculate the group means and do a post hoc Tukey test
-TukeyHSD(aov(emb_dana$MO2~emb_dana$CO2_level))
+TukeyHSD(aov(emb_flax$MO2~emb_flax$CO2_level)) #ambient is significantly different than both high CO2 treatments
 
-dana_emb_mod<-lmer(MO2~CO2_level+(1|Tank),data=emb_dana) #singular fit - don't need random effect
-anova(dana_emb_mod)
-ranova(dana_emb_mod) #no effect of random effect tank, p=1
+#linear mixed effects model
+library(lme4)
+library(lmerTest)
+flax_emb_mod<-lmer(MO2~CO2_level+(1|Tank),data=emb_flax) 
+anova(flax_emb_mod) #p=0.071 for CO2
+ranova(flax_emb_mod) #no effect of random effect tank, p=0.56
+
+#try it the other way
+flax_emb_mdl<-aov(emb_flax$MO2~emb_flax$CO2_level/factor(emb_flax$Tank))
+summary(flax_emb_mdl) #CO2 is significant (p=0.00592) and tank is not
+
+
 
 library(plyr)
-dana_emb_sum<-ddply(emb_dana,"CO2_level",summarise,N=length(MO2),MeanMO2=mean(MO2),SE=sd(MO2)/sqrt(N))
-dana_emb_sum #elevated CO2 slightly decreases MO2...opposite of previous results. But may need to redo using only data before ~Pcrit if want to compare to previous experiments. 
+flax_emb_sum<-ddply(emb_flax,"CO2_level",summarise,N=length(MO2),MeanMO2=mean(MO2),SE=sd(MO2)/sqrt(N))
+flax_emb_sum #elevated CO2 slightly increases MO2, similar to previous results. 
+
+flax_emb_sum_tanks<-ddply(emb_flax,"Tank",summarise,N=length(MO2),MeanMO2=mean(MO2),SE=sd(MO2)/sqrt(N))
+flax_emb_sum_tanks
 
 #plot the data - means and SEs
 library(ggplot2)
 library(grid)
-danaembplot<-ggplot(dana_emb_sum, aes(x=CO2_level,y=MeanMO2))+
+flaxembplot<-ggplot(flax_emb_sum_tanks, aes(x=Tank,y=MeanMO2))+
   geom_point(size=3,shape=16)+
   geom_errorbar(aes(ymin=MeanMO2-SE,ymax=MeanMO2+SE),width=0.2)+
-  annotation_custom(grobTree(textGrob("Embryos, Exp. 1",x=0.5,y=0.98,gp=gpar(fontsize=16,fontface="bold"))))+
+  annotation_custom(grobTree(textGrob("Embryos, Exp. 2",x=0.5,y=0.98,gp=gpar(fontsize=16,fontface="bold"))))+
   theme_classic()
-print(danaembplot)
+print(flaxembplot)
 
 
 
