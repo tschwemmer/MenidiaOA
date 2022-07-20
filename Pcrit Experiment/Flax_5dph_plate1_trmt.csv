@@ -1,7 +1,7 @@
 Well,CO2_level,Tank,dw_mg,ID,probs
 A1,med,2A,0.155572104,170,
 A2,med,2A,0.096215374,171,
-A3,med,2A,0.11693551,172,
+A3,med,2A,0.11693551,172,"Bubble or bad seal, don't use"
 A4,med,2A,0.08648657,173,
 A5,blankmed,2A,,,
 A6,blankamb,1B,,,
@@ -9,10 +9,10 @@ B1,high,3C,0.263724114,174,
 B2,blankhigh,3C,,,"increased, may have leaked"
 B3,high,3C,0.244351113,175,
 B4,high,3C,0.171511803,176,
-B5,high,3C,0.242737691,177,
-B6,high,3C,0.216912736,178,
+B5,high,3C,0.242737691,177,don't use for Pcrit
+B6,high,3C,0.216912736,178,Don't use for Pcrit
 C1,med,2B,0.074210278,179,
-C2,med,2B,0.136162513,180,
+C2,med,2B,0.136162513,180,"Bad seal, don't use"
 C3,med,2B,0.153253706,181,
 C4,med,2B,0.123180484,182,
 C5,med,2B,0.270592208,183,

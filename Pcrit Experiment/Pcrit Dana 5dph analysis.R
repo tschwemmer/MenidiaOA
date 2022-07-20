@@ -241,10 +241,58 @@ print(danalrvplot)
 
 
 #Trim the unusable parts from the original datasets for calc_mo2() analysis
-lar_p1formo2<-lar_p1orig[c(7:2218),]
-row.names(lar_p1formo2)<-NULL
-lar_p2formo2<-lar_p2orig[c(7:2081),]
-row.names(lar_p2formo2)<-NULL
+#plot data for all live wells
+
+#Plate1
+plot(lrv_p1orig$A1~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$A3~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$A4~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$B2~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$B3~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$B4~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$B6~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$C1~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$C3~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$C5~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$D1~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$D2~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$D4~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$D5~lrv_p1orig$Time.Min.)
+abline(v=c(10,30,50,80,100,130))
+#blanks
+plot(lrv_p1orig$A5~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$A6~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$C6~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$D3~lrv_p1orig$Time.Min.)
+#Plate2
+plot(lrv_p2orig$A4~lrv_p2orig$Time.Min.)
+plot(lrv_p2orig$A5~lrv_p2orig$Time.Min.)
+plot(lrv_p2orig$A6~lrv_p2orig$Time.Min.)
+plot(lrv_p2orig$B2~lrv_p2orig$Time.Min.)
+plot(lrv_p2orig$B3~lrv_p2orig$Time.Min.)
+plot(lrv_p2orig$B4~lrv_p2orig$Time.Min.)
+plot(lrv_p2orig$B5~lrv_p2orig$Time.Min.)
+plot(lrv_p2orig$B6~lrv_p2orig$Time.Min.)
+plot(lrv_p2orig$C1~lrv_p2orig$Time.Min.)
+plot(lrv_p2orig$C3~lrv_p2orig$Time.Min.)
+plot(lrv_p2orig$C4~lrv_p2orig$Time.Min.)
+plot(lrv_p2orig$C5~lrv_p2orig$Time.Min.)
+plot(lrv_p2orig$C6~lrv_p2orig$Time.Min.)
+plot(lrv_p2orig$D1~lrv_p2orig$Time.Min.)
+plot(lrv_p2orig$D2~lrv_p2orig$Time.Min.)
+plot(lrv_p2orig$D3~lrv_p2orig$Time.Min.)
+plot(lrv_p2orig$D5~lrv_p2orig$Time.Min.)
+plot(lrv_p2orig$D6~lrv_p2orig$Time.Min.)
+abline(v=c(10))
+#Blanks
+par(mfrow=c(2,2))
+plot(lrv_p2orig$A3~lrv_p2$Time.Min.)
+plot(lrv_p2orig$B1~lrv_p2$Time.Min.)
+plot(lrv_p2orig$C2~lrv_p2$Time.Min.)
+plot(lrv_p2orig$D4~lrv_p2$Time.Min.)
+
+#trim fluctuating parts out of only the ones that need it - parts that are due to temperature change mainly. 
+lrv_p1orig$A4[226:301]<-NA
 
 #Use calc_MO2() function from 'respirometry' package to calculate MO2 for binned chunks of time for each column of the data sheets and store it in a new dataframe
 library(respirometry)
