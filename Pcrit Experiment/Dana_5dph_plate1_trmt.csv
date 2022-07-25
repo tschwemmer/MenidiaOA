@@ -8,18 +8,18 @@ A6,blankmed,t4,,
 B1,blankhigh,t9,,
 B2,high,t9,0.094397152,prob - went up in first hour
 B3,high,t9,0.279945705,
-B4,high,t9,0.161099638,prob - went up at 27 min
+B4,high,t9,0.161099638,"prob - went up at 27 min, don't use"
 B5,blankhigh,t9,,
 B6,med,t4,0.147555641,
 C1,amb,t1,0.086866714,
 C2,blankamb,t1,,
 C3,amb,t1,0.052357674,
-C4,blankamb,t1,,prob - went up at 27 min
+C4,blankamb,t1,,"prob - went up at 27 min, and had one extreme low point"
 C5,amb,t1,0.086772736,
 C6,blankmed,t4,,
 D1,high,t7,0.104725435,prob - went up at 150 min
 D2,high,t7,0.049069193,
-D3,blankhigh,t7,,
+D3,blankhigh,t7,,"maybe bad seal, increases twice"
 D4,high,t7,0.138071073,
 D5,high,t7,0.064490251,
 D6,blankhigh,t7,,

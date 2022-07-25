@@ -94,28 +94,29 @@ plot(lrv_p2$D5~lrv_p2$Time.Min.)
 plot(lrv_p2$D6~lrv_p2$Time.Min.)
 
 #Trim the data for the purpose of calculating the initial slope (RMR in fully oxygenated water)
-lrv_p1_rmr<-data.frame(lrv_p1$Time.Min.[136:226], lrv_p1$Time.Sec.[136:226], lrv_p1$A3[136:226], lrv_p1$A4[136:226],lrv_p1$B3[136:226],lrv_p1$B6[136:226],
-                       lrv_p1$C1[136:226],lrv_p1$C5[136:226],lrv_p1$D1[136:226],lrv_p1$D2[136:226],lrv_p1$D4[136:226],lrv_p1$D5[136:226],
-                       lrv_p1$A1[16:106],lrv_p1$B2[241:331],lrv_p1$C3[744:834],
-                       lrv_p1$A2[136:226],lrv_p1$A5[136:226],lrv_p1$A6[136:226],lrv_p1$B1[136:226],lrv_p1$B5[136:226],lrv_p1$C2[136:226],
-                       lrv_p1$C4[136:226],lrv_p1$C6[136:226],lrv_p1$D3[744:834],lrv_p1$D6[136:226])
-names(lrv_p1_rmr)<-c("Time.Min.","Time.Sec.","A3","A4","B3","B6","C1","C5","D1","D2","D4","D5","A1","B2","C3","A2","A5","A6","B1","B5","C2","C4","C6","D3","D6")
+lrv_p1_rmr<-data.frame(lrv_p1$Time.Min.[46:136], lrv_p1$Time.Sec.[46:136],lrv_p1$A1[151:241],lrv_p1$A3[46:136],lrv_p1$A4[46:136],
+                       lrv_p1$B2[226:316],lrv_p1$B3[46:136],lrv_p1$B6[46:136],
+                       lrv_p1$C1[46:136],lrv_p1$C3[46:136],lrv_p1$C5[46:136],
+                       lrv_p1$D1[390:480],lrv_p1$D2[46:136],lrv_p1$D4[46:136],lrv_p1$D5[46:136],
+                       lrv_p1$A2[46:136],lrv_p1$A5[46:136],lrv_p1$A6[46:136],lrv_p1$B1[46:136],lrv_p1$B5[46:136],lrv_p1$C2[46:136],
+                       lrv_p1$C4[46:136],lrv_p1$C6[46:136],lrv_p1$D6[46:136])
+names(lrv_p1_rmr)<-c("Time.Min.","Time.Sec.","A1","A3","A4","B2","B3","B6","C1","C3","C5","D1","D2","D4","D5","A2","A5","A6","B1","B5","C2","C4","C6","D6")
 
-lrv_p2_rmr<-data.frame(lrv_p2$Time.Min.[76:166], lrv_p2$Time.Sec.[76:166], lrv_p2$A2[76:166],lrv_p2$A4[76:166],lrv_p2$A5[76:166],lrv_p2$A6[76:166],
-                       lrv_p2$B1[76:166],lrv_p2$B2[76:166],lrv_p2$B3[76:166],lrv_p2$B4[76:166],lrv_p2$C1[76:166],lrv_p2$C3[76:166],lrv_p2$D1[76:166],
-                       lrv_p2$D3[76:166],lrv_p2$D4[76:166],
-                       lrv_p2$C4[181:271],
-                       lrv_p2$A1[76:166],lrv_p2$A3[76:166],lrv_p2$B5[76:166],lrv_p2$B6[76:166],lrv_p2$C2[76:166],
-                       lrv_p2$C5[76:166],lrv_p2$D2[76:166],lrv_p2$D5[76:166],lrv_p2$D6[76:166])
-names(lrv_p2_rmr)<-c("Time.Min.","Time.Sec.","A2","A4","A5","A6","B1","B2","B3","B4","C1","C3","D1","D3","D4","C4","A1","A3","B5","B6","C2","C5","D2","D5","D6")
+lrv_p2_rmr<-data.frame(lrv_p2$Time.Min.[46:136], lrv_p2$Time.Sec.[46:136], lrv_p2$A2[181:271],lrv_p2$A4[46:136],lrv_p2$A5[46:136],lrv_p2$A6[46:136],
+                       lrv_p2$B1[46:136],lrv_p2$B2[46:136],lrv_p2$B3[46:136],lrv_p2$B4[46:136],
+                       lrv_p2$C1[46:136],lrv_p2$C3[46:136],lrv_p2$C4[91:181],
+                       lrv_p2$D1[46:136],lrv_p2$D3[46:136],lrv_p2$D4[46:136],
+                       lrv_p2$A1[46:136],lrv_p2$A3[46:136],lrv_p2$B5[46:136],lrv_p2$B6[241:331],lrv_p2$C2[46:136],
+                       lrv_p2$C5[46:136],lrv_p2$D2[46:136],lrv_p2$D5[46:136],lrv_p2$D6[556:646])
+names(lrv_p2_rmr)<-c("Time.Min.","Time.Sec.","A2","A4","A5","A6","B1","B2","B3","B4","C1","C3","C4","D1","D3","D4","A1","A3","B5","B6","C2","C5","D2","D5","D6")
 
 
-slopes_r5p1_rmr<-data.frame(names(lrv_p1_rmr)[3:25], sapply(lrv_p1_rmr[3:25],function(x) ((-coef(summary(lm(x~lrv_p1_rmr$Time.Sec.)))[2])/31.9988)*1800), 
-                            sapply(lrv_p1_rmr[3:25],function(x) summary(lm(x~lrv_p1_rmr$Time.Sec.))$r.squared))
+slopes_r5p1_rmr<-data.frame(names(lrv_p1_rmr)[3:24], sapply(lrv_p1_rmr[3:24],function(x) ((-coef(summary(lm(x~lrv_p1_rmr$Time.Sec.)))[2])/31.9988)*1800), 
+                            sapply(lrv_p1_rmr[3:24],function(x) summary(lm(x~lrv_p1_rmr$Time.Sec.))$r.squared))
 names(slopes_r5p1_rmr)<-c("Well","MO2","Rsquared")
 
-slopes_r5p2_rmr<-data.frame(names(lrv_p2_rmr)[3:25], sapply(lrv_p2_rmr[3:25],function(x) ((-coef(summary(lm(x~lrv_p2_rmr$Time.Sec.)))[2])/31.9988)*1800), 
-                            sapply(lrv_p2_rmr[3:25],function(x) summary(lm(x~lrv_p2_rmr$Time.Sec.))$r.squared))
+slopes_r5p2_rmr<-data.frame(names(lrv_p2_rmr)[3:24], sapply(lrv_p2_rmr[3:24],function(x) ((-coef(summary(lm(x~lrv_p2_rmr$Time.Sec.)))[2])/31.9988)*1800), 
+                            sapply(lrv_p2_rmr[3:24],function(x) summary(lm(x~lrv_p2_rmr$Time.Sec.))$r.squared))
 names(slopes_r5p2_rmr)<-c("Well","MO2","Rsquared")
 
 
@@ -127,7 +128,7 @@ t3blank<-mean(slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="A2"],slopes_r5p1_rmr$MO
 t4blank<-mean(slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="A6"],slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="C6"])
 t5blank<-mean(slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="D2"],slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="D5"])
 t6blank<-mean(slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="C2"],slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="C5"])
-t7blank<-mean(slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="D3"],slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="D6"])
+t7blank<-slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="D6"]
 t8blank<-mean(slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="B5"],slopes_r5p2_rmr$MO2[slopes_r5p2_rmr$Well=="B6"])
 t9blank<-mean(slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="B1"],slopes_r5p1_rmr$MO2[slopes_r5p1_rmr$Well=="B5"])
 
@@ -207,12 +208,13 @@ names(lrv_dana)[7]<-"msmr"
 
 #analyze the MO2 with respect to CO2
 dana_lrv_model<-lm(lrv_dana$msmr~lrv_dana$CO2_level)
-anova(dana_lrv_model) #CO2 level is not significant, p=0.1946
+anova(dana_lrv_model) #CO2 level is not significant, p=0.5843
 
 #do it with a LME/ANOVA with tank as random effect
 library(lme4)
 library(lmerTest)
-dana_lrv_mod<-lmer(msmr~Tank+(1|CO2_level),data=lrv_dana) #This gave a singular fit which means the model is too complicated for the data and the random effect can be excluded. 
+dana_lrv_mod<-lmer(msmr~Tank+(1|CO2_level),data=lrv_dana) #This gave a weird error message I don't understand. 
+anova(dana_lrv_mod)
 ranova(dana_lrv_mod) #p=1 this confirms that the random effect can be excluded. 
 
 #try it the other way
@@ -258,41 +260,69 @@ plot(lrv_p1orig$D1~lrv_p1orig$Time.Min.)
 plot(lrv_p1orig$D2~lrv_p1orig$Time.Min.)
 plot(lrv_p1orig$D4~lrv_p1orig$Time.Min.)
 plot(lrv_p1orig$D5~lrv_p1orig$Time.Min.)
-abline(v=c(10,30,50,80,100,130))
+abline(v=c(270,300,450,480))
 #blanks
+plot(lrv_p1orig$A2~lrv_p1orig$Time.Min.)
 plot(lrv_p1orig$A5~lrv_p1orig$Time.Min.)
 plot(lrv_p1orig$A6~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$B1~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$B5~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$C2~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$C4~lrv_p1orig$Time.Min.)
 plot(lrv_p1orig$C6~lrv_p1orig$Time.Min.)
 plot(lrv_p1orig$D3~lrv_p1orig$Time.Min.)
+plot(lrv_p1orig$D6~lrv_p1orig$Time.Min.)
 #Plate2
+plot(lrv_p2orig$A2~lrv_p2orig$Time.Min.)
 plot(lrv_p2orig$A4~lrv_p2orig$Time.Min.)
 plot(lrv_p2orig$A5~lrv_p2orig$Time.Min.)
 plot(lrv_p2orig$A6~lrv_p2orig$Time.Min.)
+plot(lrv_p2orig$B1~lrv_p2orig$Time.Min.)
 plot(lrv_p2orig$B2~lrv_p2orig$Time.Min.)
 plot(lrv_p2orig$B3~lrv_p2orig$Time.Min.)
 plot(lrv_p2orig$B4~lrv_p2orig$Time.Min.)
-plot(lrv_p2orig$B5~lrv_p2orig$Time.Min.)
-plot(lrv_p2orig$B6~lrv_p2orig$Time.Min.)
 plot(lrv_p2orig$C1~lrv_p2orig$Time.Min.)
 plot(lrv_p2orig$C3~lrv_p2orig$Time.Min.)
 plot(lrv_p2orig$C4~lrv_p2orig$Time.Min.)
-plot(lrv_p2orig$C5~lrv_p2orig$Time.Min.)
 plot(lrv_p2orig$C6~lrv_p2orig$Time.Min.)
 plot(lrv_p2orig$D1~lrv_p2orig$Time.Min.)
-plot(lrv_p2orig$D2~lrv_p2orig$Time.Min.)
 plot(lrv_p2orig$D3~lrv_p2orig$Time.Min.)
-plot(lrv_p2orig$D5~lrv_p2orig$Time.Min.)
-plot(lrv_p2orig$D6~lrv_p2orig$Time.Min.)
-abline(v=c(10))
+plot(lrv_p2orig$D4~lrv_p2orig$Time.Min.)
+abline(v=c(115,140))
 #Blanks
 par(mfrow=c(2,2))
+plot(lrv_p2orig$A1~lrv_p2$Time.Min.)
 plot(lrv_p2orig$A3~lrv_p2$Time.Min.)
-plot(lrv_p2orig$B1~lrv_p2$Time.Min.)
+plot(lrv_p2orig$B5~lrv_p2$Time.Min.)
+plot(lrv_p2orig$B6~lrv_p2$Time.Min.)
 plot(lrv_p2orig$C2~lrv_p2$Time.Min.)
-plot(lrv_p2orig$D4~lrv_p2$Time.Min.)
+plot(lrv_p2orig$C5~lrv_p2$Time.Min.)
+plot(lrv_p2orig$D2~lrv_p2$Time.Min.)
+plot(lrv_p2orig$D5~lrv_p2$Time.Min.)
+plot(lrv_p2orig$D6~lrv_p2$Time.Min.)
 
 #trim fluctuating parts out of only the ones that need it - parts that are due to temperature change mainly. 
-lrv_p1orig$A4[226:301]<-NA
+#Plate 1
+lrv_p1orig$A1[106:151]<-NA
+lrv_p1orig$A1[450:565]<-NA
+lrv_p1orig$A3[241:360]<-NA
+lrv_p1orig$A4[151:181]<-NA
+lrv_p1orig$B2[1:226]<-NA
+lrv_p1orig$B2[360:420]<-NA
+lrv_p1orig$B2[744:864]<-NA
+lrv_p1orig$B6[241:744]<-NA
+lrv_p1orig$C5[271:300]<-NA
+lrv_p1orig$D1[1:390]<-NA
+lrv_p1orig$D2[300:529]<-NA
+lrv_p1orig$A2[1759:1819]<-NA
+lrv_p1orig$C4[535]<-NA
+lrv_p1orig$D6[774:864]<-NA
+lrv_p1orig$D6[1312:1401]<-NA
+
+#Plate 2
+
+
+
 
 #Use calc_MO2() function from 'respirometry' package to calculate MO2 for binned chunks of time for each column of the data sheets and store it in a new dataframe
 library(respirometry)
