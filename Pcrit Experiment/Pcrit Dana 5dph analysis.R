@@ -455,7 +455,106 @@ print(allplotlrv)
 
 
 #Try plotting one at a time, grouped by treatment
-#Ambient: P1D1, P1D2, P1D4, P1D5, P1D6, P2A4, P2A5, P2A6
+library(gridExtra)
+#Ambient: P1C1, P1C3, P1C5, P2B1, P2B2, P2B3, P2B4, P2C1, P2C3, P2C4
+P1C1plot<-ggplot(P1C1,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P1C3plot<-ggplot(P1C3,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P1C5plot<-ggplot(P1C5,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P2B1plot<-ggplot(P2B1,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P2B2plot<-ggplot(P2B2,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P2B3plot<-ggplot(P2B3,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P2B4plot<-ggplot(P2B4,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P2C1plot<-ggplot(P2C1,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P2C3plot<-ggplot(P2C3,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P2C4plot<-ggplot(P2C4,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+grid.arrange(P1C1plot,P1C3plot,P1C5plot,P2B1plot,P2B2plot,P2B3plot,P2B4plot,P2C1plot,P2C3plot,P2C4plot,ncol=5)
+
+#Medium: P1B6, P2A2, P2A4, P2A5, P2A6, P2D1, P2D3, P2D4
+P1B6plot<-ggplot(P1B6,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P2A2plot<-ggplot(P2A2,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P2A4plot<-ggplot(P2A4,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P2A5plot<-ggplot(P2A5,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P2A6plot<-ggplot(P2A6,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P2D1plot<-ggplot(P2D1,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P2D3plot<-ggplot(P2D3,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P2D4plot<-ggplot(P2D4,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+grid.arrange(P1B6plot,P2A2plot,P2A4plot,P2A5plot,P2A6plot,P2D1plot,P2D3plot,P2D4plot,ncol=4)
+
+#High: P1A1, P1A3, P1A4, P1B2, P1B3, P1D1, P1D2, P1D4, P1D5
+P1A1plot<-ggplot(P1A1,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P1A3plot<-ggplot(P1A3,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P1A4plot<-ggplot(P1A4,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P1B2plot<-ggplot(P1B2,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
+P1B3plot<-ggplot(P1B3,aes(x=O2_MEAN,y=MO2))+
+  geom_point(size=2)+
+  geom_smooth(method="gam",se=F)+
+  theme_classic()
 P1D1plot<-ggplot(P1D1,aes(x=O2_MEAN,y=MO2))+
   geom_point(size=2)+
   geom_smooth(method="gam",se=F)+
@@ -472,137 +571,5 @@ P1D5plot<-ggplot(P1D5,aes(x=O2_MEAN,y=MO2))+
   geom_point(size=2)+
   geom_smooth(method="gam",se=F)+
   theme_classic()
-P1D6plot<-ggplot(P1D6,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2A4plot<-ggplot(P2A4,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2A5plot<-ggplot(P2A5,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2A6plot<-ggplot(P2A6,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-grid.arrange(P1D1plot,P1D2plot,P1D4plot,P1D5plot,P1D6plot,P2A4plot,P2A5plot,P2A6plot,ncol=4)
-
-#Medium: P1A1, P1A2, P1A4, P1C1, P1C3, P1C4, P1C5, P2B2, P2B3, P2B4, P2B5, P2B6
-P1A1plot<-ggplot(P1A1,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1A2plot<-ggplot(P1A2,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1A4plot<-ggplot(P1A4,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1C1plot<-ggplot(P1C1,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1C3plot<-ggplot(P1C3,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1C4plot<-ggplot(P1C4,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1C5plot<-ggplot(P1C5,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2B2plot<-ggplot(P2B2,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2B3plot<-ggplot(P2B3,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2B4plot<-ggplot(P2B4,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2B5plot<-ggplot(P2B5,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2B6plot<-ggplot(P2B6,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-grid.arrange(P1A1plot,P1A2plot,P1A4plot,P1C1plot,P1C3plot,P1C4plot,P1C5plot,P2B2plot,P2B3plot,P2B4plot,P2B5plot,P2B6plot,ncol=4)
-
-#High: P1B1, P1B3, P1B4, P1B5, P1B6, P2C1, P2C3, P2C4, P2C5, P2C6, P2D1, P2D2, P2D3, P2D5, P2D6
-P1B1plot<-ggplot(P1B1,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1B3plot<-ggplot(P1B3,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1B4plot<-ggplot(P1B4,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1B5plot<-ggplot(P1B5,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1B6plot<-ggplot(P1B6,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2C1plot<-ggplot(P2C1,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2C3plot<-ggplot(P2C3,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2C4plot<-ggplot(P2C4,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2C5plot<-ggplot(P2C5,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2C6plot<-ggplot(P2C6,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2D1plot<-ggplot(P2D1,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2D2plot<-ggplot(P2D2,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="loess",se=F)+
-  theme_classic()
-P2D3plot<-ggplot(P2D3,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2D5plot<-ggplot(P2D5,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2D6plot<-ggplot(P2D6,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-grid.arrange(P1B1plot,P1B3plot,P1B4plot,P1B5plot,P1B6plot,
-             P2C1plot,P2C3plot,P2C4plot,P2C5plot,P2C6plot,
-             P2D1plot,P2D2plot,P2D3plot,P2D5plot,P2D6plot,ncol=5)
+grid.arrange(P1A1plot,P1A3plot,P1A4plot,P1B2plot,P1B3plot,P1D1plot,P1D2plot,P1D4plot,P1D5plot,ncol=3)
 
