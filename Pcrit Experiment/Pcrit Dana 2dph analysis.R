@@ -54,7 +54,6 @@ plot(lar_p1$C6~lar_p1$Time.Min.)
 plot(lar_p1$D2~lar_p1$Time.Min.)
 plot(lar_p1$D4~lar_p1$Time.Min.)
 plot(lar_p1$D5~lar_p1$Time.Min.)
-plot(lar_p1$D6~lar_p1$Time.Min.)
 #blanks
 plot(lar_p1$A1~lar_p1$Time.Min.)
 plot(lar_p1$A6~lar_p1$Time.Min.)
@@ -64,6 +63,7 @@ plot(lar_p1$C2~lar_p1$Time.Min.)
 plot(lar_p1$C4~lar_p1$Time.Min.)
 plot(lar_p1$D1~lar_p1$Time.Min.)
 plot(lar_p1$D3~lar_p1$Time.Min.)
+abline(v=c(10,80,100))
 
 plot(lar_p2$A1~lar_p2$Time.Min.)
 plot(lar_p2$A3~lar_p2$Time.Min.)
@@ -93,21 +93,35 @@ plot(lar_p2$D3~lar_p2$Time.Min.)
 plot(lar_p2$D6~lar_p2$Time.Min.)
 
 #Trim the data for the purpose of calculating the overall slope (cut off when first one hits zero)
-lar_p1_rmr<-lar_p1[31:121,]
-lar_p2_rmr<-lar_p2[31:121,]
+lar_p1_rmr<-data.frame(lar_p1$Time.Min.[46:136], lar_p1$Time.Sec.[46:136],lar_p1$A2[46:136],lar_p1$A3[46:136],lar_p1$A4[46:136],lar_p1$A5[46:136],
+                       lar_p1$B1[76:166],lar_p1$B2[46:136],lar_p1$B4[46:136],lar_p1$B5[46:136],
+                       lar_p1$C1[46:136],lar_p1$C3[46:136],lar_p1$C5[46:136],lar_p1$C6[46:136],
+                       lar_p1$D2[46:136],lar_p1$D4[46:136],lar_p1$D5[46:136],
+                       lar_p1$A1[46:136],lar_p1$A6[46:136],lar_p1$B3[46:136],
+                       lar_p1$B6[46:136],lar_p1$C2[46:136],lar_p1$C4[46:136],lar_p1$D3[46:136])
+names(lar_p1_rmr)<-c("Time.Min.","Time.Sec.","A2","A3","A4","A5","B1","B2","B4","B5","C1","C3","C5","C6","D2","D4","D5","A1","A6","B3","B6","C2","C4","D3")
 
-slopes_r3p1_rmr<-data.frame(names(lar_p1_rmr)[4:27], sapply(lar_p1_rmr[4:27],function(x) ((-coef(summary(lm(x~lar_p1_rmr$Time.Sec.)))[2])/31.9988)*1800), 
-                            sapply(lar_p1_rmr[4:27],function(x) summary(lm(x~lar_p1_rmr$Time.Sec.))$r.squared))
+lar_p2_rmr<-data.frame(lar_p2$Time.Min.[46:136], lar_p2$Time.Sec.[46:136],lar_p2$A1[46:136],lar_p2$A3[46:136],lar_p2$A5[46:136],
+                       lar_p2$B1[46:136],lar_p2$B2[46:136],lar_p2$B4[46:136],lar_p2$B6[46:136],
+                       lar_p2$C3[46:136],lar_p2$C4[46:136],lar_p2$C5[46:136],lar_p2$C6[46:136],
+                       lar_p2$D1[46:136],lar_p2$D4[46:136],lar_p2$D5[46:136],
+                       lar_p2$A2[46:136],lar_p2$A4[46:136],lar_p2$A6[46:136],lar_p2$B3[46:136],lar_p2$B5[46:136],
+                       lar_p2$C1[46:136],lar_p2$C2[46:136],lar_p2$D2[46:136],lar_p2$D3[46:136],lar_p2$D6[46:136])
+names(lar_p2_rmr)<-c("Time.Min.","Time.Sec.","A1","A3","A5","B1","B2","B4","B6","C3","C4","C5","C6","D1","D4","D5","A2","A4","A6","B3","B5","C1","C2","D2","D3","D6")
+
+
+slopes_r3p1_rmr<-data.frame(names(lar_p1_rmr)[3:24], sapply(lar_p1_rmr[3:24],function(x) ((-coef(summary(lm(x~lar_p1_rmr$Time.Sec.)))[2])/31.9988)*1800), 
+                            sapply(lar_p1_rmr[3:24],function(x) summary(lm(x~lar_p1_rmr$Time.Sec.))$r.squared))
 names(slopes_r3p1_rmr)<-c("Well","MO2","Rsquared")
 
-slopes_r3p2_rmr<-data.frame(names(lar_p2_rmr)[4:27], sapply(lar_p2_rmr[4:27],function(x) ((-coef(summary(lm(x~lar_p2_rmr$Time.Sec.)))[2])/31.9988)*1800), 
-                            sapply(lar_p2_rmr[4:27],function(x) summary(lm(x~lar_p2_rmr$Time.Sec.))$r.squared))
+slopes_r3p2_rmr<-data.frame(names(lar_p2_rmr)[3:25], sapply(lar_p2_rmr[3:25],function(x) ((-coef(summary(lm(x~lar_p2_rmr$Time.Sec.)))[2])/31.9988)*1800), 
+                            sapply(lar_p2_rmr[3:25],function(x) summary(lm(x~lar_p2_rmr$Time.Sec.))$r.squared))
 names(slopes_r3p2_rmr)<-c("Well","MO2","Rsquared")
 
 
 
 #calculate the blanks
-t1blank<-mean(slopes_r3p1_rmr$MO2[slopes_r3p1_rmr$Well=="D1"],slopes_r3p1_rmr$MO2[slopes_r3p1_rmr$Well=="D3"])
+t1blank<-slopes_r3p1_rmr$MO2[slopes_r3p1_rmr$Well=="D3"]
 t2blank<-mean(slopes_r3p1_rmr$MO2[slopes_r3p1_rmr$Well=="A1"],slopes_r3p1_rmr$MO2[slopes_r3p1_rmr$Well=="A6"])
 t3blank<-mean(slopes_r3p2_rmr$MO2[slopes_r3p2_rmr$Well=="A6"],slopes_r3p2_rmr$MO2[slopes_r3p2_rmr$Well=="D6"])
 t4blank<-mean(slopes_r3p2_rmr$MO2[slopes_r3p2_rmr$Well=="A2"],slopes_r3p2_rmr$MO2[slopes_r3p2_rmr$Well=="A4"])
@@ -119,7 +133,7 @@ t9blank<-mean(slopes_r3p2_rmr$MO2[slopes_r3p2_rmr$Well=="B3"],slopes_r3p2_rmr$MO
 
 
 #Subtract the blanks
-lar_p1b<-data.frame(c("A2","A3","A4","A5","B1","B2","B4","B5","C1","C3","C5","C6","D2","D4","D5","D6"),
+lar_p1b<-data.frame(c("A2","A3","A4","A5","B1","B2","B4","B5","C1","C3","C5","C6","D2","D4","D5"),
                     c(slopes_r3p1_rmr$MO2[slopes_r3p1_rmr$Well=="A2"]-t2blank,
                       slopes_r3p1_rmr$MO2[slopes_r3p1_rmr$Well=="A3"]-t2blank,
                       slopes_r3p1_rmr$MO2[slopes_r3p1_rmr$Well=="A4"]-t2blank,
@@ -134,8 +148,7 @@ lar_p1b<-data.frame(c("A2","A3","A4","A5","B1","B2","B4","B5","C1","C3","C5","C6
                       slopes_r3p1_rmr$MO2[slopes_r3p1_rmr$Well=="C6"]-t7blank,
                       slopes_r3p1_rmr$MO2[slopes_r3p1_rmr$Well=="D2"]-t1blank,
                       slopes_r3p1_rmr$MO2[slopes_r3p1_rmr$Well=="D4"]-t1blank,
-                      slopes_r3p1_rmr$MO2[slopes_r3p1_rmr$Well=="D5"]-t1blank,
-                      slopes_r3p1_rmr$MO2[slopes_r3p1_rmr$Well=="D6"]-t3blank))
+                      slopes_r3p1_rmr$MO2[slopes_r3p1_rmr$Well=="D5"]-t1blank))
 names(lar_p1b)<-c("Well","MO2")
 lar_p2b<-data.frame(c("A1","A3","A5","B1","B2","B4","B6","C3","C4","C5","C6","D1","D4","D5"),
                     c(slopes_r3p2_rmr$MO2[slopes_r3p2_rmr$Well=="A1"]-t4blank,
@@ -158,10 +171,10 @@ names(lar_p2b)<-c("Well","MO2")
 #Match treatments up to wells, then rbind into one dataset and remove any that had problems in the notes (e.g. egg was missing from well, there was a bubble or leaky seal) 
 library(dplyr)
 lar_p1b<-dplyr::full_join(lar_p1b,lar_trmt_p1,by="Well")
-lar_p1b<-lar_p1b[1:16,] #remove the blanks
+lar_p1b<-lar_p1b[1:15,] #remove the blanks
 lar_p2b<-dplyr::full_join(lar_p2b,lar_trmt_p2,by="Well")
 lar_p2b<-lar_p2b[1:14,] #remove the blanks
-lar_dana<-rbind(lar_p1b[-c(16),],lar_p2b) #combine the two plates into one dataset, removing 16 because of problems (larva dried up before measuring). 
+lar_dana<-rbind(lar_p1b,lar_p2b) #combine the two plates into one dataset. 
 row.names(lar_dana)<-NULL #renumber the rows so it's easy to index if need be.
 
 #Add a column for mass-specific metabolic rate, MO2/dw in umol O2 / mg dw / h. 
@@ -202,7 +215,12 @@ anova(dana_lar_model) #CO2 level is not significant
 
 dana_lar_mod<-lmer(msmr~CO2_level+(1|Tank),data=lar_dana)
 anova(dana_lar_mod)
-ranova(dana_lar_mod) #random effect of tank doesn't affect results. 
+ranova(dana_lar_mod) #random effect of tank does affect results. 
+
+#try it the other way
+dana_lar_mdl<-aov(lar_dana$msmr~lar_dana$CO2_level/factor(lar_dana$Tank))
+summary(dana_lar_mdl) #CO2 not significant, tank is. 
+
 #calculate the group means 
 
 library(plyr)
