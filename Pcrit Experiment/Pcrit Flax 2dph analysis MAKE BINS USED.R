@@ -266,6 +266,7 @@ lar_p1orig$B6[311:371]<-NA
 lar_p1orig$C1[311:351]<-NA
 lar_p1orig$C3[201:251]<-NA
 lar_p1orig$C4[311:331]<-NA
+lar_p1orig$C4[91:111]<-NA
 lar_p1orig$C6[121:161]<-NA
 lar_p1orig$C6[311:361]<-NA
 lar_p1orig$C6[521:571]<-NA
@@ -300,55 +301,55 @@ lar_p2orig$B1[311:501]<-NA
 
 #Use calc_MO2() function from 'respirometry' package to calculate MO2 for binned chunks of time for each column of the data sheets and store it in a new dataframe
 library(respirometry)
-#P1A1<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$A1,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("A1",times=31),rep("1A",times=31),rep("amb",times=31))
-#P1A2<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$A2,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("A2",times=31),rep("1A",times=31),rep("blank1",times=31))
-P1A3<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$A3,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("A3",times=31),rep("1A",times=31),rep("amb",times=31))
-P1A4<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$A4,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("A4",times=31),rep("1A",times=31),rep("amb",times=31))
-P1A5<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$A5,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("A5",times=31),rep("1A",times=31),rep("amb",times=31))
-P1A6<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$A6,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("A6",times=31),rep("1A",times=31),rep("amb",times=31))
-P1B1<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$B1,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("B1",times=31),rep("3A",times=31),rep("high",times=31))
-P1B2<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$B2,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("B2",times=31),rep("3A",times=31),rep("high",times=31))
-P1B3<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$B3,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("B3",times=31),rep("3A",times=31),rep("high",times=31))
-P1B4<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$B4,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("B4",times=31),rep("3A",times=31),rep("high",times=31))
-#P1B5<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$B5,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("B5",times=31),rep("3A",times=31),rep("blank3",times=31))
-P1B6<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$B6,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("B6",times=31),rep("3A",times=31),rep("high",times=31))
-P1C1<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$C1,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("C1",times=31),rep("3C",times=31),rep("high",times=31))
-#P1C2<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$C2,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("C2",times=31),rep("3C",times=31),rep("high",times=31))
-P1C3<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$C3,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("C3",times=31),rep("3C",times=31),rep("blank3",times=31))
-P1C4<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$C4,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("C4",times=31),rep("3C",times=31),rep("high",times=31))
-P1C5<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$C5,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("C5",times=31),rep("3C",times=31),rep("high",times=31))
-P1C6<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$C6,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("C6",times=31),rep("3C",times=31),rep("high",times=31))
-P1D1<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$D1,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("D1",times=31),rep("1C",times=31),rep("amb",times=31))
-P1D2<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$D2,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("D2",times=31),rep("1C",times=31),rep("amb",times=31))
-P1D3<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$D3,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("D3",times=31),rep("1C",times=31),rep("amb",times=31))
-P1D4<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$D4,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("D4",times=31),rep("1C",times=31),rep("amb",times=31))
-P1D5<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$D5,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("D5",times=31),rep("1C",times=31),rep("amb",times=31))
-#P1D6<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$D6,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("D6",times=31),rep("1C",times=31),rep("blank1",times=31))
+#P1A1<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$A1,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$A1[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("A1",times=52),rep("1A",times=52),rep("amb",times=52))
+#P1A2<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$A2,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$A2[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("A2",times=52),rep("1A",times=52),rep("blank1",times=52))
+P1A3<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$A3,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$A3[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("A3",times=101),rep("1A",times=101),rep("amb",times=101))
+P1A4<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$A4,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$A4[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("A4",times=91),rep("1A",times=91),rep("amb",times=91))
+P1A5<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$A5,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$A5[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("A5",times=93),rep("1A",times=93),rep("amb",times=93))
+P1A6<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$A6,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$A6[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("A6",times=90),rep("1A",times=90),rep("amb",times=90))
+P1B1<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$B1,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$B1[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("B1",times=79),rep("3A",times=79),rep("high",times=79))
+P1B2<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$B2,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$B2[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("B2",times=98),rep("3A",times=98),rep("high",times=98))
+P1B3<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$B3,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$B3[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("B3",times=89),rep("3A",times=89),rep("high",times=89))
+P1B4<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$B4,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$B4[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("B4",times=89),rep("3A",times=89),rep("high",times=89))
+#P1B5<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$B5,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$B5[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("B5",times=52),rep("3A",times=52),rep("blank3",times=52))
+P1B6<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$B6,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$B6[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("B6",times=92),rep("3A",times=92),rep("high",times=92))
+P1C1<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$C1,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$C1[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("C1",times=95),rep("3C",times=95),rep("high",times=95))
+#P1C2<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$C2,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$C2[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("C2",times=52),rep("3C",times=52),rep("high",times=52))
+P1C3<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$C3,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$C3[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("C3",times=100),rep("3C",times=100),rep("blank3",times=100))
+P1C4<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$C4,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$C4[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("C4",times=100),rep("3C",times=100),rep("high",times=100))
+P1C5<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$C5,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$C5[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("C5",times=84),rep("3C",times=84),rep("high",times=84))
+P1C6<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$C6,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$C6[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("C6",times=85),rep("3C",times=85),rep("high",times=85))
+P1D1<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$D1,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$D1[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("D1",times=89),rep("1C",times=89),rep("amb",times=89))
+P1D2<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$D2,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$D2[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("D2",times=100),rep("1C",times=100),rep("amb",times=100))
+P1D3<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$D3,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$D3[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("D3",times=94),rep("1C",times=94),rep("amb",times=94))
+P1D4<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$D4,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$D4[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("D4",times=94),rep("1C",times=94),rep("amb",times=94))
+P1D5<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$D5,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$D5[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("D5",times=79),rep("1C",times=79),rep("amb",times=79))
+#P1D6<-data.frame(calc_MO2(duration=lar_p1orig[1:1166,]$Time.Min.,o2=lar_p1orig[1:1166,]$D6,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p1orig$D6[1:1166],duration=lar_p1orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p1orig[1:1166,]$T_internal,sal=27.5),rep("D6",times=52),rep("1C",times=52),rep("blank1",times=52))
 
-#P2A1<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$A1,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("A1",times=31),rep("2A",times=31),rep("blank2",times=31))
-P2A2<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$A2,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("A2",times=31),rep("2A",times=31),rep("med",times=31))
-P2A3<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$A3,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("A3",times=31),rep("2A",times=31),rep("med",times=31))
-P2A4<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$A4,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("A4",times=31),rep("2A",times=31),rep("med",times=31))
-P2A5<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$A5,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("A5",times=31),rep("2A",times=31),rep("med",times=31))
-P2A6<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$A6,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("A6",times=31),rep("2A",times=31),rep("med",times=31))
-#P2B1<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$B1,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("B1",times=31),rep("1B",times=31),rep("blank1",times=31))
-#P2B2<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$B2,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("B2",times=31),rep("2C",times=31),rep("med",times=31))
-P2B3<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$B3,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("B3",times=31),rep("2C",times=31),rep("med",times=31))
-P2B4<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$B4,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("B4",times=31),rep("2C",times=31),rep("med",times=31))
-#P2B5<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$B5,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("B5",times=31),rep("2C",times=31),rep("blank2",times=31))
-P2B6<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$B6,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("B6",times=31),rep("2C",times=31),rep("med",times=31))
-#P2C1<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$C1,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("C1",times=31),rep("3B",times=31),rep("high",times=31))
-P2C2<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$C2,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("C2",times=31),rep("3B",times=31),rep("high",times=31))
-#P2C3<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$C3,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("C3",times=31),rep("3B",times=31),rep("high",times=31))
-#P2C4<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$C4,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("C4",times=31),rep("3B",times=31),rep("blank3",times=31))
-P2C5<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$C5,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("C5",times=31),rep("3B",times=31),rep("high",times=31))
-P2C6<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$C6,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("C6",times=31),rep("3B",times=31),rep("high",times=31))
-P2D1<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$D1,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("D1",times=31),rep("2B",times=31),rep("med",times=31))
-P2D2<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$D2,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("D2",times=31),rep("2B",times=31),rep("med",times=31))
-#P2D3<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$D3,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("D3",times=31),rep("2B",times=31),rep("med",times=31))
-P2D4<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$D4,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("D4",times=31),rep("2B",times=31),rep("med",times=31))
-P2D5<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$D5,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("D5",times=31),rep("2B",times=31),rep("med",times=31))
-#P2D6<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$D6,o2_unit="mg_per_l",bin_width=1166/30,vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("D6",times=31),rep("2B",times=31),rep("blank2",times=31))
+#P2A1<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$A1,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$A1[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("A1",times=52),rep("2A",times=52),rep("blank2",times=52))
+P2A2<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$A2,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$A2[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("A2",times=94),rep("2A",times=94),rep("med",times=94))
+P2A3<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$A3,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$A3[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("A3",times=96),rep("2A",times=96),rep("med",times=96))
+P2A4<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$A4,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$A4[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("A4",times=100),rep("2A",times=100),rep("med",times=100))
+P2A5<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$A5,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$A5[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("A5",times=95),rep("2A",times=95),rep("med",times=95))
+P2A6<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$A6,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$A6[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("A6",times=89),rep("2A",times=89),rep("med",times=89))
+#P2B1<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$B1,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$B1[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("B1",times=52),rep("1B",times=52),rep("blank1",times=52))
+#P2B2<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$B2,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$B2[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("B2",times=52),rep("2C",times=52),rep("med",times=52))
+P2B3<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$B3,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$B3[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("B3",times=106),rep("2C",times=106),rep("med",times=106))
+P2B4<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$B4,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$B4[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("B4",times=102),rep("2C",times=102),rep("med",times=102))
+#P2B5<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$B5,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$B5[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("B5",times=52),rep("2C",times=52),rep("blank2",times=52))
+P2B6<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$B6,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$B6[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("B6",times=103),rep("2C",times=103),rep("med",times=103))
+#P2C1<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$C1,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$C1[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("C1",times=52),rep("3B",times=52),rep("high",times=52))
+P2C2<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$C2,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$C2[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("C2",times=84),rep("3B",times=84),rep("high",times=84))
+#P2C3<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$C3,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$C3[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("C3",times=52),rep("3B",times=52),rep("high",times=52))
+#P2C4<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$C4,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$C4[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("C4",times=52),rep("3B",times=52),rep("blank3",times=52))
+P2C5<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$C5,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$C5[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("C5",times=91),rep("3B",times=91),rep("high",times=91))
+P2C6<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$C6,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$C6[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("C6",times=102),rep("3B",times=102),rep("high",times=102))
+P2D1<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$D1,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$D1[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("D1",times=93),rep("2B",times=93),rep("med",times=93))
+P2D2<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$D2,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$D2[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("D2",times=100),rep("2B",times=100),rep("med",times=100))
+#P2D3<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$D3,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$D3[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("D3",times=52),rep("2B",times=52),rep("med",times=52))
+P2D4<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$D4,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$D4[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("D4",times=99),rep("2B",times=99),rep("med",times=99))
+P2D5<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$D5,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$D5[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("D5",times=101),rep("2B",times=101),rep("med",times=101))
+#P2D6<-data.frame(calc_MO2(duration=lar_p2orig[1:1166,]$Time.Min.,o2=lar_p2orig[1:1166,]$D6,o2_unit="mg_per_l",bin_width=make_bins(o2=lar_p2orig$D6[1:1166],duration=lar_p2orig$Time.Min.[1:1166],max_o2_width=1/5),vol=0.0005,temp=lar_p2orig[1:1166,]$T_internal,sal=27.5),rep("D6",times=52),rep("2B",times=52),rep("blank2",times=52))
 
 names(P1A1)[9:11]<-c("Well","Tank","CO2")
 names(P1A2)[9:11]<-c("Well","Tank","CO2")
@@ -400,42 +401,41 @@ names(P2D4)[9:11]<-c("Well","Tank","CO2")
 names(P2D5)[9:11]<-c("Well","Tank","CO2")
 names(P2D6)[9:11]<-c("Well","Tank","CO2")
 
-
 #Add a column in each well's calc_mo2 output for mass and msmr. 
-P1A3$dw<-rep(0.11375326,times=31)
-P1A4$dw<-rep(0.11681336,times=31)
-P1A5$dw<-rep(0.09922280,times=31)
-P1A6$dw<-rep(0.10432513,times=31)
-P1B1$dw<-rep(0.08709446,times=31)
-P1B2$dw<-rep(0.09902456,times=31)
-P1B3$dw<-rep(0.10209817,times=31)
-P1B4$dw<-rep(0.11107118,times=31)
-P1B6$dw<-rep(0.11923361,times=31)
-P1C1$dw<-rep(0.14085895,times=31)
-P1C3$dw<-rep(0.09655368,times=31)
-P1C4$dw<-rep(0.12954792,times=31)
-P1C5$dw<-rep(0.10568236,times=31)
-P1C6$dw<-rep(0.13715155,times=31)
-P1D1$dw<-rep(0.14086458,times=31)
-P1D2$dw<-rep(0.09798792,times=31)
-P1D3$dw<-rep(0.13085227,times=31)
-P1D4$dw<-rep(0.13390428,times=31)
-P1D5$dw<-rep(0.12593972,times=31)
-P2A2$dw<-rep(0.10935514,times=31)
-P2A3$dw<-rep(0.12358477,times=31)
-P2A4$dw<-rep(0.08569174,times=31)
-P2A5$dw<-rep(0.07806737,times=31)
-P2A6$dw<-rep(0.11007652,times=31)
-P2B3$dw<-rep(0.13847522,times=31)
-P2B4$dw<-rep(0.10507304,times=31)
-P2B6$dw<-rep(0.11904125,times=31)
-P2C2$dw<-rep(0.09615336,times=31)
-P2C5$dw<-rep(0.15999001,times=31)
-P2C6$dw<-rep(0.11356300,times=31)
-P2D1$dw<-rep(0.12751676,times=31)
-P2D2$dw<-rep(0.14018903,times=31)
-P2D4$dw<-rep(0.12256590,times=31)
-P2D5$dw<-rep(0.12119752,times=31)
+P1A3$dw<-rep(0.11375326,times=length(P1A3$MO2))
+P1A4$dw<-rep(0.11681336,times=length(P1A4$MO2))
+P1A5$dw<-rep(0.09922280,times=length(P1A5$MO2))
+P1A6$dw<-rep(0.10432513,times=length(P1A6$MO2))
+P1B1$dw<-rep(0.08709446,times=length(P1B1$MO2))
+P1B2$dw<-rep(0.09902456,times=length(P1B2$MO2))
+P1B3$dw<-rep(0.10209817,times=length(P1B3$MO2))
+P1B4$dw<-rep(0.11107118,times=length(P1B4$MO2))
+P1B6$dw<-rep(0.11923361,times=length(P1B6$MO2))
+P1C1$dw<-rep(0.14085895,times=length(P1C1$MO2))
+P1C3$dw<-rep(0.09655368,times=length(P1C3$MO2))
+P1C4$dw<-rep(0.12954792,times=length(P1C4$MO2))
+P1C5$dw<-rep(0.10568236,times=length(P1C5$MO2))
+P1C6$dw<-rep(0.13715155,times=length(P1C6$MO2))
+P1D1$dw<-rep(0.14086458,times=length(P1D1$MO2))
+P1D2$dw<-rep(0.09798792,times=length(P1D2$MO2))
+P1D3$dw<-rep(0.13085227,times=length(P1D3$MO2))
+P1D4$dw<-rep(0.13390428,times=length(P1D4$MO2))
+P1D5$dw<-rep(0.12593972,times=length(P1D5$MO2))
+P2A2$dw<-rep(0.10935514,times=length(P2A2$MO2))
+P2A3$dw<-rep(0.12358477,times=length(P2A3$MO2))
+P2A4$dw<-rep(0.08569174,times=length(P2A4$MO2))
+P2A5$dw<-rep(0.07806737,times=length(P2A5$MO2))
+P2A6$dw<-rep(0.11007652,times=length(P2A6$MO2))
+P2B3$dw<-rep(0.13847522,times=length(P2B3$MO2))
+P2B4$dw<-rep(0.10507304,times=length(P2B4$MO2))
+P2B6$dw<-rep(0.11904125,times=length(P2B6$MO2))
+P2C2$dw<-rep(0.09615336,times=length(P2C2$MO2))
+P2C5$dw<-rep(0.15999001,times=length(P2C5$MO2))
+P2C6$dw<-rep(0.11356300,times=length(P2C6$MO2))
+P2D1$dw<-rep(0.12751676,times=length(P2D1$MO2))
+P2D2$dw<-rep(0.14018903,times=length(P2D2$MO2))
+P2D4$dw<-rep(0.12256590,times=length(P2D4$MO2))
+P2D5$dw<-rep(0.12119752,times=length(P2D5$MO2))
 
 P1A3$msmrs<-P1A3$MO2/P1A3$dw
 P1A4$msmrs<-P1A4$MO2/P1A4$dw
@@ -471,7 +471,6 @@ P2D1$msmrs<-P2D1$MO2/P2D1$dw
 P2D2$msmrs<-P2D2$MO2/P2D2$dw
 P2D4$msmrs<-P2D4$MO2/P2D4$dw
 P2D5$msmrs<-P2D5$MO2/P2D5$dw
-
 
 #skip blank adjustments for now, calculate Pcrit and plot ...HOW TO DO AVERAGES?? Fit a line to all of the points from the same treatment/tank. 
 #Calculate the mean MO2 for each mean O2 value? Do they match up well? 
@@ -547,10 +546,6 @@ P2A5plot<-ggplot(P2A5,aes(x=O2_MEAN,y=msmrs))+
   geom_smooth(method="gam",se=F)+
   theme_classic()
 P2A6plot<-ggplot(P2A6,aes(x=O2_MEAN,y=msmrs))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2B2plot<-ggplot(P2B2,aes(x=O2_MEAN,y=msmrs))+
   geom_point(size=2)+
   geom_smooth(method="gam",se=F)+
   theme_classic()
@@ -654,7 +649,7 @@ lar_flax$Pcrit_alpha<-c(calc_pcrit(P1A3$O2_MEAN,P1A3$msmrs)['Alpha'],
                         calc_pcrit(P1B6$O2_MEAN,P1B6$msmrs)['Alpha'],
                         calc_pcrit(P1C1$O2_MEAN,P1C1$msmrs)['Alpha'],
                         calc_pcrit(P1C3$O2_MEAN,P1C3$msmrs)['Alpha'],
-                        calc_pcrit(P1C4$O2_MEAN,P1C4$msmrs)['Alpha'],
+                       NA,# calc_pcrit(P1C4$O2_MEAN,P1C4$msmrs)['Alpha'],
                         calc_pcrit(P1C5$O2_MEAN,P1C5$msmrs)['Alpha'],
                         calc_pcrit(P1C6$O2_MEAN,P1C6$msmrs)['Alpha'],
                         calc_pcrit(P1D1$O2_MEAN,P1D1$msmrs)['Alpha'],
@@ -664,12 +659,12 @@ lar_flax$Pcrit_alpha<-c(calc_pcrit(P1A3$O2_MEAN,P1A3$msmrs)['Alpha'],
                         calc_pcrit(P1D5$O2_MEAN,P1D5$msmrs)['Alpha'],
                         calc_pcrit(P2A2$O2_MEAN,P2A2$msmrs)['Alpha'],
                         calc_pcrit(P2A3$O2_MEAN,P2A3$msmrs)['Alpha'],
-                        calc_pcrit(P2A4$O2_MEAN,P2A4$msmrs)['Alpha'],
-                        calc_pcrit(P2A5$O2_MEAN,P2A5$msmrs)['Alpha'],
+                        NA,#calc_pcrit(P2A4$O2_MEAN,P2A4$msmrs)['Alpha'],
+                        NA,#calc_pcrit(P2A5$O2_MEAN,P2A5$msmrs)['Alpha'],
                         calc_pcrit(P2A6$O2_MEAN,P2A6$msmrs)['Alpha'],
-                        NA,
+                       NA,
                         calc_pcrit(P2B3$O2_MEAN,P2B3$msmrs)['Alpha'],
-                        calc_pcrit(P2B4$O2_MEAN,P2B4$msmrs)['Alpha'],
+                        NA,#calc_pcrit(P2B4$O2_MEAN,P2B4$msmrs)['Alpha'],
                         calc_pcrit(P2B6$O2_MEAN,P2B6$msmrs)['Alpha'],
                         NA,
                         calc_pcrit(P2C2$O2_MEAN,P2C2$msmrs)['Alpha'],
@@ -677,7 +672,7 @@ lar_flax$Pcrit_alpha<-c(calc_pcrit(P1A3$O2_MEAN,P1A3$msmrs)['Alpha'],
                         calc_pcrit(P2C5$O2_MEAN,P2C5$msmrs)['Alpha'],
                         calc_pcrit(P2C6$O2_MEAN,P2C6$msmrs)['Alpha'],
                         calc_pcrit(P2D1$O2_MEAN,P2D1$msmrs)['Alpha'],
-                        calc_pcrit(P2D2$O2_MEAN,P2D2$msmrs)['Alpha'],
+                        NA,#calc_pcrit(P2D2$O2_MEAN,P2D2$msmrs)['Alpha'],
                         calc_pcrit(P2D4$O2_MEAN,P2D4$msmrs)['Alpha'],
                         calc_pcrit(P2D5$O2_MEAN,P2D5$msmrs)['Alpha'])
 lar_flax$Pcrit_break<-c(calc_pcrit(P1A3$O2_MEAN,P1A3$msmrs)['Breakpoint'],
@@ -691,7 +686,7 @@ lar_flax$Pcrit_break<-c(calc_pcrit(P1A3$O2_MEAN,P1A3$msmrs)['Breakpoint'],
                         calc_pcrit(P1B6$O2_MEAN,P1B6$msmrs)['Breakpoint'],
                         calc_pcrit(P1C1$O2_MEAN,P1C1$msmrs)['Breakpoint'],
                         calc_pcrit(P1C3$O2_MEAN,P1C3$msmrs)['Breakpoint'],
-                        calc_pcrit(P1C4$O2_MEAN,P1C4$msmrs)['Breakpoint'],
+                        NA,#calc_pcrit(P1C4$O2_MEAN,P1C4$msmrs)['Breakpoint'],
                         calc_pcrit(P1C5$O2_MEAN,P1C5$msmrs)['Breakpoint'],
                         calc_pcrit(P1C6$O2_MEAN,P1C6$msmrs)['Breakpoint'],
                         calc_pcrit(P1D1$O2_MEAN,P1D1$msmrs)['Breakpoint'],
@@ -701,12 +696,12 @@ lar_flax$Pcrit_break<-c(calc_pcrit(P1A3$O2_MEAN,P1A3$msmrs)['Breakpoint'],
                         calc_pcrit(P1D5$O2_MEAN,P1D5$msmrs)['Breakpoint'],
                         calc_pcrit(P2A2$O2_MEAN,P2A2$msmrs)['Breakpoint'],
                         calc_pcrit(P2A3$O2_MEAN,P2A3$msmrs)['Breakpoint'],
-                        calc_pcrit(P2A4$O2_MEAN,P2A4$msmrs)['Breakpoint'],
-                        calc_pcrit(P2A5$O2_MEAN,P2A5$msmrs)['Breakpoint'],
+                        NA,#calc_pcrit(P2A4$O2_MEAN,P2A4$msmrs)['Breakpoint'],
+                        NA,#calc_pcrit(P2A5$O2_MEAN,P2A5$msmrs)['Breakpoint'],
                         calc_pcrit(P2A6$O2_MEAN,P2A6$msmrs)['Breakpoint'],
                         NA,
                         calc_pcrit(P2B3$O2_MEAN,P2B3$msmrs)['Breakpoint'],
-                        calc_pcrit(P2B4$O2_MEAN,P2B4$msmrs)['Breakpoint'],
+                        NA,#calc_pcrit(P2B4$O2_MEAN,P2B4$msmrs)['Breakpoint'],
                         calc_pcrit(P2B6$O2_MEAN,P2B6$msmrs)['Breakpoint'],
                         NA,
                         calc_pcrit(P2C2$O2_MEAN,P2C2$msmrs)['Breakpoint'],
@@ -714,7 +709,7 @@ lar_flax$Pcrit_break<-c(calc_pcrit(P1A3$O2_MEAN,P1A3$msmrs)['Breakpoint'],
                         calc_pcrit(P2C5$O2_MEAN,P2C5$msmrs)['Breakpoint'],
                         calc_pcrit(P2C6$O2_MEAN,P2C6$msmrs)['Breakpoint'],
                         calc_pcrit(P2D1$O2_MEAN,P2D1$msmrs)['Breakpoint'],
-                        calc_pcrit(P2D2$O2_MEAN,P2D2$msmrs)['Breakpoint'],
+                        NA,#calc_pcrit(P2D2$O2_MEAN,P2D2$msmrs)['Breakpoint'],
                         calc_pcrit(P2D4$O2_MEAN,P2D4$msmrs)['Breakpoint'],
                         calc_pcrit(P2D5$O2_MEAN,P2D5$msmrs)['Breakpoint'])
 lar_flax$Pcrit_subPI<-c(calc_pcrit(P1A3$O2_MEAN,P1A3$msmrs)['Sub_PI'],
@@ -728,7 +723,7 @@ lar_flax$Pcrit_subPI<-c(calc_pcrit(P1A3$O2_MEAN,P1A3$msmrs)['Sub_PI'],
                         calc_pcrit(P1B6$O2_MEAN,P1B6$msmrs)['Sub_PI'],
                         calc_pcrit(P1C1$O2_MEAN,P1C1$msmrs)['Sub_PI'],
                         calc_pcrit(P1C3$O2_MEAN,P1C3$msmrs)['Sub_PI'],
-                        calc_pcrit(P1C4$O2_MEAN,P1C4$msmrs)['Sub_PI'],
+                        NA,#calc_pcrit(P1C4$O2_MEAN,P1C4$msmrs)['Sub_PI'],
                         calc_pcrit(P1C5$O2_MEAN,P1C5$msmrs)['Sub_PI'],
                         calc_pcrit(P1C6$O2_MEAN,P1C6$msmrs)['Sub_PI'],
                         calc_pcrit(P1D1$O2_MEAN,P1D1$msmrs)['Sub_PI'],
@@ -738,12 +733,12 @@ lar_flax$Pcrit_subPI<-c(calc_pcrit(P1A3$O2_MEAN,P1A3$msmrs)['Sub_PI'],
                         calc_pcrit(P1D5$O2_MEAN,P1D5$msmrs)['Sub_PI'],
                         calc_pcrit(P2A2$O2_MEAN,P2A2$msmrs)['Sub_PI'],
                         calc_pcrit(P2A3$O2_MEAN,P2A3$msmrs)['Sub_PI'],
-                        calc_pcrit(P2A4$O2_MEAN,P2A4$msmrs)['Sub_PI'],
-                        calc_pcrit(P2A5$O2_MEAN,P2A5$msmrs)['Sub_PI'],
+                        NA,#calc_pcrit(P2A4$O2_MEAN,P2A4$msmrs)['Sub_PI'],
+                        NA,#calc_pcrit(P2A5$O2_MEAN,P2A5$msmrs)['Sub_PI'],
                         calc_pcrit(P2A6$O2_MEAN,P2A6$msmrs)['Sub_PI'],
                         NA,
                         calc_pcrit(P2B3$O2_MEAN,P2B3$msmrs)['Sub_PI'],
-                        calc_pcrit(P2B4$O2_MEAN,P2B4$msmrs)['Sub_PI'],
+                        NA,#calc_pcrit(P2B4$O2_MEAN,P2B4$msmrs)['Sub_PI'],
                         calc_pcrit(P2B6$O2_MEAN,P2B6$msmrs)['Sub_PI'],
                         NA,
                         calc_pcrit(P2C2$O2_MEAN,P2C2$msmrs)['Sub_PI'],
@@ -751,7 +746,7 @@ lar_flax$Pcrit_subPI<-c(calc_pcrit(P1A3$O2_MEAN,P1A3$msmrs)['Sub_PI'],
                         calc_pcrit(P2C5$O2_MEAN,P2C5$msmrs)['Sub_PI'],
                         calc_pcrit(P2C6$O2_MEAN,P2C6$msmrs)['Sub_PI'],
                         calc_pcrit(P2D1$O2_MEAN,P2D1$msmrs)['Sub_PI'],
-                        calc_pcrit(P2D2$O2_MEAN,P2D2$msmrs)['Sub_PI'],
+                        NA,#calc_pcrit(P2D2$O2_MEAN,P2D2$msmrs)['Sub_PI'],
                         calc_pcrit(P2D4$O2_MEAN,P2D4$msmrs)['Sub_PI'],
                         calc_pcrit(P2D5$O2_MEAN,P2D5$msmrs)['Sub_PI'])
 lar_flax$Pcrit_NLR<-c(calc_pcrit(P1A3$O2_MEAN,P1A3$msmrs)['NLR'],
@@ -778,7 +773,6 @@ lar_flax$Pcrit_NLR<-c(calc_pcrit(P1A3$O2_MEAN,P1A3$msmrs)['NLR'],
                         calc_pcrit(P2A4$O2_MEAN,P2A4$msmrs)['NLR'],
                         calc_pcrit(P2A5$O2_MEAN,P2A5$msmrs)['NLR'],
                         calc_pcrit(P2A6$O2_MEAN,P2A6$msmrs)['NLR'],
-                        NA,
                         calc_pcrit(P2B3$O2_MEAN,P2B3$msmrs)['NLR'],
                         calc_pcrit(P2B4$O2_MEAN,P2B4$msmrs)['NLR'],
                         calc_pcrit(P2B6$O2_MEAN,P2B6$msmrs)['NLR'],
@@ -791,82 +785,7 @@ lar_flax$Pcrit_NLR<-c(calc_pcrit(P1A3$O2_MEAN,P1A3$msmrs)['NLR'],
                         calc_pcrit(P2D2$O2_MEAN,P2D2$msmrs)['NLR'],
                         calc_pcrit(P2D4$O2_MEAN,P2D4$msmrs)['NLR'],
                         calc_pcrit(P2D5$O2_MEAN,P2D5$msmrs)['NLR'])
-lar_flax$alpha<-c(calc_alpha(P1A3$O2_MEAN,P1A3$msmrs)$alpha,
-                  calc_alpha(P1A4$O2_MEAN,P1A4$msmrs)$alpha,
-                  calc_alpha(P1A5$O2_MEAN,P1A5$msmrs)$alpha,
-                  calc_alpha(P1A6$O2_MEAN,P1A6$msmrs)$alpha,
-                  calc_alpha(P1B1$O2_MEAN,P1B1$msmrs)$alpha,
-                  calc_alpha(P1B2$O2_MEAN,P1B2$msmrs)$alpha,
-                  calc_alpha(P1B3$O2_MEAN,P1B3$msmrs)$alpha,
-                  calc_alpha(P1B4$O2_MEAN,P1B4$msmrs)$alpha,
-                  calc_alpha(P1B6$O2_MEAN,P1B6$msmrs)$alpha,
-                  calc_alpha(P1C1$O2_MEAN,P1C1$msmrs)$alpha,
-                  calc_alpha(P1C3$O2_MEAN,P1C3$msmrs)$alpha,
-                  calc_alpha(P1C4$O2_MEAN,P1C4$msmrs)$alpha,
-                  calc_alpha(P1C5$O2_MEAN,P1C5$msmrs)$alpha,
-                  calc_alpha(P1C6$O2_MEAN,P1C6$msmrs)$alpha,
-                  calc_alpha(P1D1$O2_MEAN,P1D1$msmrs)$alpha,
-                  calc_alpha(P1D2$O2_MEAN,P1D2$msmrs)$alpha,
-                  calc_alpha(P1D3$O2_MEAN,P1D3$msmrs)$alpha,
-                  calc_alpha(P1D4$O2_MEAN,P1D4$msmrs)$alpha,
-                  calc_alpha(P1D5$O2_MEAN,P1D5$msmrs)$alpha,
-                  calc_alpha(P2A2$O2_MEAN,P2A2$msmrs)$alpha,
-                  calc_alpha(P2A3$O2_MEAN,P2A3$msmrs)$alpha,
-                  calc_alpha(P2A4$O2_MEAN,P2A4$msmrs)$alpha,
-                  calc_alpha(P2A5$O2_MEAN,P2A5$msmrs)$alpha,
-                  calc_alpha(P2A6$O2_MEAN,P2A6$msmrs)$alpha,
-                  NA,
-                  calc_alpha(P2B3$O2_MEAN,P2B3$msmrs)$alpha,
-                  calc_alpha(P2B4$O2_MEAN,P2B4$msmrs)$alpha,
-                  calc_alpha(P2B6$O2_MEAN,P2B6$msmrs)$alpha,
-                  NA,
-                  calc_alpha(P2C2$O2_MEAN,P2C2$msmrs)$alpha,
-                  NA,
-                  calc_alpha(P2C5$O2_MEAN,P2C5$msmrs)$alpha,
-                  calc_alpha(P2C6$O2_MEAN,P2C6$msmrs)$alpha,
-                  calc_alpha(P2D1$O2_MEAN,P2D1$msmrs)$alpha,
-                  calc_alpha(P2D2$O2_MEAN,P2D2$msmrs)$alpha,
-                  calc_alpha(P2D4$O2_MEAN,P2D4$msmrs)$alpha,
-                  calc_alpha(P2D5$O2_MEAN,P2D5$msmrs)$alpha)
 
-
-#plot pcrit to look for probs
-plot_pcrit(P1A3$O2_MEAN,P1A3$msmrs)
-plot_pcrit(P1A4$O2_MEAN,P1A4$msmrs)
-plot_pcrit(P1A5$O2_MEAN,P1A5$msmrs)
-plot_pcrit(P1A6$O2_MEAN,P1A6$msmrs)
-plot_pcrit(P1B1$O2_MEAN,P1B1$msmrs)
-plot_pcrit(P1B2$O2_MEAN,P1B2$msmrs)
-plot_pcrit(P1B3$O2_MEAN,P1B3$msmrs)
-plot_pcrit(P1B4$O2_MEAN,P1B4$msmrs)
-plot_pcrit(P1B6$O2_MEAN,P1B6$msmrs)
-plot_pcrit(P1C1$O2_MEAN,P1C1$msmrs)
-plot_pcrit(P1C3$O2_MEAN,P1C3$msmrs)
-plot_pcrit(P1C4$O2_MEAN,P1C4$msmrs)
-
-plot_pcrit(P1C5$O2_MEAN,P1C5$msmrs)
-plot_pcrit(P1C6$O2_MEAN,P1C6$msmrs)
-plot_pcrit(P1D1$O2_MEAN,P1D1$msmrs)
-plot_pcrit(P1D2$O2_MEAN,P1D2$msmrs)
-plot_pcrit(P1D3$O2_MEAN,P1D3$msmrs)
-plot_pcrit(P1D4$O2_MEAN,P1D4$msmrs)
-plot_pcrit(P1D5$O2_MEAN,P1D5$msmrs)
-plot_pcrit(P2A2$O2_MEAN,P2A2$msmrs)
-plot_pcrit(P2A3$O2_MEAN,P2A3$msmrs)
-plot_pcrit(P2A4$O2_MEAN,P2A4$msmrs)
-plot_pcrit(P2A5$O2_MEAN,P2A5$msmrs)
-plot_pcrit(P2A6$O2_MEAN,P2A6$msmrs)
-
-plot_pcrit(P2B3$O2_MEAN,P2B3$msmrs)
-plot_pcrit(P2B4$O2_MEAN,P2B4$msmrs)
-plot_pcrit(P2B6$O2_MEAN,P2B6$msmrs)
-plot_pcrit(P2C2$O2_MEAN,P2C2$msmrs)
-plot_pcrit(P2C5$O2_MEAN,P2C5$msmrs)
-plot_pcrit(P2C6$O2_MEAN,P2C6$msmrs)
-plot_pcrit(P2D1$O2_MEAN,P2D1$msmrs)
-plot_pcrit(P2D2$O2_MEAN,P2D2$msmrs)
-plot_pcrit(P2D4$O2_MEAN,P2D4$msmrs)
-plot_pcrit(P2D5$O2_MEAN,P2D5$msmrs)
 
 #Analyze and visualize with respect to CO2 treatments
 
