@@ -245,7 +245,8 @@ library(grid)
 flaxlarplot<-ggplot(flax_lar_sum, aes(x=CO2_level,y=MeanMO2))+
   geom_point(size=3,shape=16)+
   geom_errorbar(aes(ymin=MeanMO2-SE,ymax=MeanMO2+SE),width=0.2)+
-  annotation_custom(grobTree(textGrob("2dph Larvae, Exp. 1",x=0.5,y=0.98,gp=gpar(fontsize=16,fontface="bold"))))+
+  annotation_custom(grobTree(textGrob("2dph Larvae, Exp. 2",x=0.5,y=0.98,gp=gpar(fontsize=16,fontface="bold"))))+
+  coord_cartesian(ylim=c(0.1,0.25))+
   theme_classic()
 print(flaxlarplot)
 
