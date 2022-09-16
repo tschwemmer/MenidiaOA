@@ -221,6 +221,9 @@ ranova(flax_lrv_mod) #p=1 this confirms that the random effect can be excluded.
 flax_lrv_mdl<-aov(lrv_flax$msmr~lrv_flax$CO2_level/factor(lrv_flax$Tank))
 summary(flax_lrv_mdl) #CO2 is significant (p=0.00387), tank is not. 
 
+#calculate the group means and do a post hoc Tukey test
+TukeyHSD(aov(lrv_flax$msmr~lrv_flax$CO2_level))
+
 #diagnostics
 
 
@@ -890,6 +893,9 @@ alpha_sum
 break_sum<-ddply(lrv_flax,"CO2_level",summarise,N=length(Pcrit_break),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),SE=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
 break_sum #in both cases, Pcrit increases in elevated CO2 treatments but so does SE - may need to transform and/or check for outliers
 
+a_sum<-ddply(lrv_flax,"CO2_level",summarise,N=length(alpha),MeanPcrit=mean(alpha,na.rm=TRUE),SE=sd(alpha,na.rm=TRUE)/sqrt(N))
+a_sum
+
 #use lm and anova to test for significance
 library(lmerTest)
 library(lme4)
@@ -905,6 +911,9 @@ ranova(break_mod)
 
 break_mod1<-lm(Pcrit_break~CO2_level,data=lrv_flax)
 anova(break_mod1) #ditto, p=0.1159
+
+a_mod<-lm(alpha~CO2_level,data=lrv_flax)
+anova(a_mod)
 
 #are residuals normally distributed
 res_alpha<-residuals(alpha_mod1)

@@ -233,6 +233,11 @@ anova(flax_lar_model) #CO2 level is not significant
 flax_lar_mod<-lmer(msmr~CO2_level+(1|Tank),data=lar_flax)
 anova(flax_lar_mod)
 ranova(flax_lar_mod) #random effect of tank doesn't affect results. 
+
+#try it the other way
+flax_lar_mdl<-aov(lar_flax$MO2~lar_flax$CO2_level/factor(lar_flax$Tank))
+summary(flax_lar_mdl) #
+
 #calculate the group means 
 
 library(plyr)
@@ -889,6 +894,10 @@ alpha_sum
 break_sum<-ddply(lar_flax,"CO2_level",summarise,N=length(Pcrit_break),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),SE=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
 break_sum #in both cases, Pcrit increases in elevated CO2 treatments but so does SE - may need to transform and/or check for outliers
 
+a_sum<-ddply(lar_flax,"CO2_level",summarise,N=length(alpha),MeanAlpha=mean(alpha,na.rm=TRUE),SE=sd(alpha,na.rm=TRUE)/sqrt(N))
+a_sum #in both cases, Pcrit increases in elevated CO2 treatments but so does SE - may need to transform and/or check for outliers
+
+
 #use lm and anova to test for significance
 library(lmerTest)
 library(lme4)
@@ -904,6 +913,9 @@ ranova(break_mod)
 
 break_mod1<-lm(Pcrit_break~CO2_level,data=lar_flax)
 anova(break_mod1) #ditto, p=0.07111
+
+a_mod1<-lm(alpha~CO2_level,data=lar_flax)
+anova(a_mod1)
 
 #are residuals normally distributed
 res_alpha<-residuals(alpha_mod1)

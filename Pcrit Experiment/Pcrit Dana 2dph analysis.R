@@ -791,6 +791,10 @@ alpha_sum
 break_sum<-ddply(lar_dana,"CO2_level",summarise,N=length(Pcrit_break),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),SE=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
 break_sum #in both cases, Pcrit increases in elevated CO2 treatments but so does SE - may need to transform and/or check for outliers
 
+a_sum<-ddply(lar_dana,"CO2_level",summarise,N=length(alpha),MeanAlpha=mean(alpha,na.rm=TRUE),SE=sd(alpha,na.rm=TRUE)/sqrt(N))
+a_sum #in both cases, Pcrit increases in elevated CO2 treatments but so does SE - may need to transform and/or check for outliers
+
+
 #use lm and anova to test for significance
 library(lmerTest)
 library(lme4)
@@ -806,6 +810,9 @@ ranova(break_mod)
 
 break_mod1<-lm(Pcrit_break~CO2_level,data=lar_dana)
 anova(break_mod1) #ditto, p=0.6312
+
+a_mod1<-lm(alpha~CO2_level,data=lar_dana)
+anova(a_mod1)
 
 #are residuals normally distributed
 res_alpha<-residuals(alpha_mod1)

@@ -201,7 +201,7 @@ row.names(emb_flax)<-NULL #renumber the rows so it's easy to index if need be.
 
 #analyze the MO2 with respect to CO2
 flax_emb_model<-lm(emb_flax$MO2~emb_flax$CO2_level)
-anova(flax_emb_model) #CO2 level is significant, p=0.006796
+anova(flax_emb_model) #
 
 #calculate the group means and do a post hoc Tukey test
 TukeyHSD(aov(emb_flax$MO2~emb_flax$CO2_level)) #ambient is significantly different than both high CO2 treatments
@@ -210,12 +210,12 @@ TukeyHSD(aov(emb_flax$MO2~emb_flax$CO2_level)) #ambient is significantly differe
 library(lme4)
 library(lmerTest)
 flax_emb_mod<-lmer(MO2~CO2_level+(1|Tank),data=emb_flax) 
-anova(flax_emb_mod) #p=0.071 for CO2
-ranova(flax_emb_mod) #no effect of random effect tank, p=0.56
+anova(flax_emb_mod) #
+ranova(flax_emb_mod) #
 
 #try it the other way
 flax_emb_mdl<-aov(emb_flax$MO2~emb_flax$CO2_level/factor(emb_flax$Tank))
-summary(flax_emb_mdl) #CO2 is significant (p=0.00592) and tank is not
+summary(flax_emb_mdl) #
 
 
 
@@ -229,10 +229,11 @@ flax_emb_sum_tanks
 #plot the data - means and SEs
 library(ggplot2)
 library(grid)
-flaxembplot<-ggplot(flax_emb_sum_tanks, aes(x=Tank,y=MeanMO2))+
+flaxembplot<-ggplot(flax_emb_sum, aes(x=CO2_level,y=MeanMO2))+
   geom_point(size=3,shape=16)+
   geom_errorbar(aes(ymin=MeanMO2-SE,ymax=MeanMO2+SE),width=0.2)+
-  annotation_custom(grobTree(textGrob("Embryos, Exp. 2",x=0.5,y=0.98,gp=gpar(fontsize=16,fontface="bold"))))+
+  #annotation_custom(grobTree(textGrob("Embryos, Exp. 2",x=0.5,y=0.98,gp=gpar(fontsize=16,fontface="bold"))))+
+  labs(x=expression(paste("pCO"[2]," (uatm)")),y=expression(paste("MO"[2]," (umol individual"^-1," h"^-1,")")))+
   theme_classic()
 print(flaxembplot)
 

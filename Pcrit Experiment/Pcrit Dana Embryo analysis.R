@@ -187,6 +187,11 @@ dana_emb_mod<-lmer(MO2~CO2_level+(1|Tank),data=emb_dana) #singular fit - don't n
 anova(dana_emb_mod)
 ranova(dana_emb_mod) #no effect of random effect tank, p=1
 
+
+#try it the other way
+dana_emb_mdl<-aov(emb_dana$MO2~emb_dana$CO2_level/factor(emb_dana$Tank))
+summary(dana_emb_mdl) #p=0.0579 for CO2, tank not significant
+
 library(plyr)
 dana_emb_sum<-ddply(emb_dana,"CO2_level",summarise,N=length(MO2),MeanMO2=mean(MO2),SE=sd(MO2)/sqrt(N))
 dana_emb_sum #elevated CO2 slightly decreases MO2...opposite of previous results. But may need to redo using only data before ~Pcrit if want to compare to previous experiments. 

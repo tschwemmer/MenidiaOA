@@ -439,6 +439,64 @@ names(P2D4)[9:11]<-c("Well","Tank","CO2")
 names(P2D5)[9:11]<-c("Well","Tank","CO2")
 names(P2D6)[9:11]<-c("Well","Tank","CO2")
 
+#Add a column in each well's calc_mo2 output for mass and msmr. 
+P1A1$dw<-rep(0.06247091,times=23)
+P1A3$dw<-rep(0.18165058,times=23)
+P1A4$dw<-rep(0.11295278,times=23)
+P1B2$dw<-rep(0.09439715,times=23)
+P1B3$dw<-rep(0.27994570,times=23)
+P1B6$dw<-rep(0.14755564,times=23)
+P1C1$dw<-rep(0.08686671,times=23)
+P1C3$dw<-rep(0.05235767,times=23)
+P1C5$dw<-rep(0.08677274,times=23)
+P1D1$dw<-rep(0.10472544,times=23)
+P1D2$dw<-rep(0.04906919,times=23)
+P1D4$dw<-rep(0.13807107,times=23)
+P1D5$dw<-rep(0.06449025,times=23)
+P2A2$dw<-rep(0.06672954,times=23)
+P2A4$dw<-rep(0.07941095,times=23)
+P2A5$dw<-rep(0.11768010,times=23)
+P2A6$dw<-rep(0.22495392,times=23)
+P2B1$dw<-rep(0.20566076,times=23)
+P2B2$dw<-rep(0.06196151,times=23)
+P2B3$dw<-rep(0.10707247,times=23)
+P2B4$dw<-rep(0.29503372,times=23)
+P2C1$dw<-rep(0.17521464,times=23)
+P2C3$dw<-rep(0.07373983,times=23)
+P2C4$dw<-rep(0.05529619,times=23)
+P2D1$dw<-rep(0.22639415,times=23)
+P2D3$dw<-rep(0.10075909,times=23)
+P2D4$dw<-rep(0.12439017,times=23)
+
+P1A1$msmrs<-P1A1$MO2/P1A1$dw
+P1A3$msmrs<-P1A3$MO2/P1A3$dw
+P1A4$msmrs<-P1A4$MO2/P1A4$dw
+P1B2$msmrs<-P1B2$MO2/P1B2$dw
+P1B3$msmrs<-P1B3$MO2/P1B3$dw
+P1B6$msmrs<-P1B6$MO2/P1B6$dw
+P1C1$msmrs<-P1C1$MO2/P1C1$dw
+P1C3$msmrs<-P1C3$MO2/P1C3$dw
+P1C5$msmrs<-P1C5$MO2/P1C5$dw
+P1D1$msmrs<-P1D1$MO2/P1D1$dw
+P1D2$msmrs<-P1D2$MO2/P1D2$dw
+P1D4$msmrs<-P1D4$MO2/P1D4$dw
+P1D5$msmrs<-P1D5$MO2/P1D5$dw
+P2A2$msmrs<-P2A2$MO2/P2A2$dw
+P2A4$msmrs<-P2A4$MO2/P2A4$dw
+P2A5$msmrs<-P2A5$MO2/P2A5$dw
+P2A6$msmrs<-P2A6$MO2/P2A6$dw
+P2B1$msmrs<-P2B1$MO2/P2B1$dw
+P2B2$msmrs<-P2B2$MO2/P2B2$dw
+P2B3$msmrs<-P2B3$MO2/P2B3$dw
+P2B4$msmrs<-P2B4$MO2/P2B4$dw
+P2C1$msmrs<-P2C1$MO2/P2C1$dw
+P2C3$msmrs<-P2C3$MO2/P2C3$dw
+P2C4$msmrs<-P2C4$MO2/P2C4$dw
+P2D1$msmrs<-P2D1$MO2/P2D1$dw
+P2D3$msmrs<-P2D3$MO2/P2D3$dw
+P2D4$msmrs<-P2D4$MO2/P2D4$dw
+
+
 #skip blank adjustments for now, calculate Pcrit and plot ...HOW TO DO AVERAGES?? Fit a line to all of the points from the same treatment/tank. 
 #Calculate the mean MO2 for each mean O2 value? Do they match up well? 
 alllrv<-rbind(P1A1,P1A3,P1A4,P1B2,P1B3,P1B6,P1C1,P1C3,P1C5,P1D1,P1D2,P1D4,P1D5,
@@ -572,4 +630,184 @@ P1D5plot<-ggplot(P1D5,aes(x=O2_MEAN,y=MO2))+
   geom_smooth(method="gam",se=F)+
   theme_classic()
 grid.arrange(P1A1plot,P1A3plot,P1A4plot,P1B2plot,P1B3plot,P1D1plot,P1D2plot,P1D4plot,P1D5plot,ncol=3)
+
+
+lrv_dana$Pcrit_alpha<-c(calc_pcrit(P1A1$O2_MEAN,P1A1$msmrs)['Alpha'],
+                        calc_pcrit(P1A3$O2_MEAN,P1A3$msmrs)['Alpha'],
+                        calc_pcrit(P1A4$O2_MEAN,P1A4$msmrs)['Alpha'],
+                        calc_pcrit(P1B2$O2_MEAN,P1B2$msmrs)['Alpha'],
+                        calc_pcrit(P1B3$O2_MEAN,P1B3$msmrs)['Alpha'],
+                        calc_pcrit(P1B6$O2_MEAN,P1B6$msmrs)['Alpha'],
+                        calc_pcrit(P1C1$O2_MEAN,P1C1$msmrs)['Alpha'],
+                        calc_pcrit(P1C3$O2_MEAN,P1C3$msmrs)['Alpha'],
+                        calc_pcrit(P1C5$O2_MEAN,P1C5$msmrs)['Alpha'],
+                        calc_pcrit(P1D1$O2_MEAN,P1D1$msmrs)['Alpha'],
+                        calc_pcrit(P1D2$O2_MEAN,P1D2$msmrs)['Alpha'],
+                        calc_pcrit(P1D4$O2_MEAN,P1D4$msmrs)['Alpha'],
+                        calc_pcrit(P1D5$O2_MEAN,P1D5$msmrs)['Alpha'],
+                        calc_pcrit(P2A2$O2_MEAN,P2A2$msmrs)['Alpha'],
+                        calc_pcrit(P2A4$O2_MEAN,P2A4$msmrs)['Alpha'],
+                        calc_pcrit(P2A5$O2_MEAN,P2A5$msmrs)['Alpha'],
+                        calc_pcrit(P2A6$O2_MEAN,P2A6$msmrs)['Alpha'],
+                        calc_pcrit(P2B1$O2_MEAN,P2B1$msmrs)['Alpha'],
+                        calc_pcrit(P2B2$O2_MEAN,P2B2$msmrs)['Alpha'],
+                        calc_pcrit(P2B3$O2_MEAN,P2B3$msmrs)['Alpha'],
+                        calc_pcrit(P2B4$O2_MEAN,P2B4$msmrs)['Alpha'],
+                        calc_pcrit(P2C1$O2_MEAN,P2C1$msmrs)['Alpha'],
+                        calc_pcrit(P2C3$O2_MEAN,P2C3$msmrs)['Alpha'],
+                        calc_pcrit(P2C4$O2_MEAN,P2C4$msmrs)['Alpha'],
+                        calc_pcrit(P2D1$O2_MEAN,P2D1$msmrs)['Alpha'],
+                        calc_pcrit(P2D3$O2_MEAN,P2D3$msmrs)['Alpha'],
+                        calc_pcrit(P2D4$O2_MEAN,P2D4$msmrs)['Alpha'])
+lrv_dana$Pcrit_break<-c(calc_pcrit(P1A1$O2_MEAN,P1A1$msmrs)['Breakpoint'],
+                        calc_pcrit(P1A3$O2_MEAN,P1A3$msmrs)['Breakpoint'],
+                        calc_pcrit(P1A4$O2_MEAN,P1A4$msmrs)['Breakpoint'],
+                        calc_pcrit(P1B2$O2_MEAN,P1B2$msmrs)['Breakpoint'],
+                        calc_pcrit(P1B3$O2_MEAN,P1B3$msmrs)['Breakpoint'],
+                        calc_pcrit(P1B6$O2_MEAN,P1B6$msmrs)['Breakpoint'],
+                        calc_pcrit(P1C1$O2_MEAN,P1C1$msmrs)['Breakpoint'],
+                        calc_pcrit(P1C3$O2_MEAN,P1C3$msmrs)['Breakpoint'],
+                        calc_pcrit(P1C5$O2_MEAN,P1C5$msmrs)['Breakpoint'],
+                        calc_pcrit(P1D1$O2_MEAN,P1D1$msmrs)['Breakpoint'],
+                        calc_pcrit(P1D2$O2_MEAN,P1D2$msmrs)['Breakpoint'],
+                        calc_pcrit(P1D4$O2_MEAN,P1D4$msmrs)['Breakpoint'],
+                        calc_pcrit(P1D5$O2_MEAN,P1D5$msmrs)['Breakpoint'],
+                        calc_pcrit(P2A2$O2_MEAN,P2A2$msmrs)['Breakpoint'],
+                        calc_pcrit(P2A4$O2_MEAN,P2A4$msmrs)['Breakpoint'],
+                        calc_pcrit(P2A5$O2_MEAN,P2A5$msmrs)['Breakpoint'],
+                        calc_pcrit(P2A6$O2_MEAN,P2A6$msmrs)['Breakpoint'],
+                        calc_pcrit(P2B1$O2_MEAN,P2B1$msmrs)['Breakpoint'],
+                        calc_pcrit(P2B2$O2_MEAN,P2B2$msmrs)['Breakpoint'],
+                        calc_pcrit(P2B3$O2_MEAN,P2B3$msmrs)['Breakpoint'],
+                        calc_pcrit(P2B4$O2_MEAN,P2B4$msmrs)['Breakpoint'],
+                        calc_pcrit(P2C1$O2_MEAN,P2C1$msmrs)['Breakpoint'],
+                        calc_pcrit(P2C3$O2_MEAN,P2C3$msmrs)['Breakpoint'],
+                        calc_pcrit(P2C4$O2_MEAN,P2C4$msmrs)['Breakpoint'],
+                        calc_pcrit(P2D1$O2_MEAN,P2D1$msmrs)['Breakpoint'],
+                        calc_pcrit(P2D3$O2_MEAN,P2D3$msmrs)['Breakpoint'],
+                        calc_pcrit(P2D4$O2_MEAN,P2D4$msmrs)['Breakpoint'])
+lrv_dana$Pcrit_subPI<-c(calc_pcrit(P1A1$O2_MEAN,P1A1$msmrs)['Sub_PI'],
+                        calc_pcrit(P1A3$O2_MEAN,P1A3$msmrs)['Sub_PI'],
+                        calc_pcrit(P1A4$O2_MEAN,P1A4$msmrs)['Sub_PI'],
+                        calc_pcrit(P1B2$O2_MEAN,P1B2$msmrs)['Sub_PI'],
+                        calc_pcrit(P1B3$O2_MEAN,P1B3$msmrs)['Sub_PI'],
+                        calc_pcrit(P1B6$O2_MEAN,P1B6$msmrs)['Sub_PI'],
+                        calc_pcrit(P1C1$O2_MEAN,P1C1$msmrs)['Sub_PI'],
+                        calc_pcrit(P1C3$O2_MEAN,P1C3$msmrs)['Sub_PI'],
+                        calc_pcrit(P1C5$O2_MEAN,P1C5$msmrs)['Sub_PI'],
+                        calc_pcrit(P1D1$O2_MEAN,P1D1$msmrs)['Sub_PI'],
+                        calc_pcrit(P1D2$O2_MEAN,P1D2$msmrs)['Sub_PI'],
+                        calc_pcrit(P1D4$O2_MEAN,P1D4$msmrs)['Sub_PI'],
+                        calc_pcrit(P1D5$O2_MEAN,P1D5$msmrs)['Sub_PI'],
+                        calc_pcrit(P2A2$O2_MEAN,P2A2$msmrs)['Sub_PI'],
+                        calc_pcrit(P2A4$O2_MEAN,P2A4$msmrs)['Sub_PI'],
+                        calc_pcrit(P2A5$O2_MEAN,P2A5$msmrs)['Sub_PI'],
+                        calc_pcrit(P2A6$O2_MEAN,P2A6$msmrs)['Sub_PI'],
+                        calc_pcrit(P2B1$O2_MEAN,P2B1$msmrs)['Sub_PI'],
+                        calc_pcrit(P2B2$O2_MEAN,P2B2$msmrs)['Sub_PI'],
+                        calc_pcrit(P2B3$O2_MEAN,P2B3$msmrs)['Sub_PI'],
+                        calc_pcrit(P2B4$O2_MEAN,P2B4$msmrs)['Sub_PI'],
+                        calc_pcrit(P2C1$O2_MEAN,P2C1$msmrs)['Sub_PI'],
+                        calc_pcrit(P2C3$O2_MEAN,P2C3$msmrs)['Sub_PI'],
+                        calc_pcrit(P2C4$O2_MEAN,P2C4$msmrs)['Sub_PI'],
+                        calc_pcrit(P2D1$O2_MEAN,P2D1$msmrs)['Sub_PI'],
+                        calc_pcrit(P2D3$O2_MEAN,P2D3$msmrs)['Sub_PI'],
+                        calc_pcrit(P2D4$O2_MEAN,P2D4$msmrs)['Sub_PI'])
+lrv_dana$Pcrit_NLR<-c(calc_pcrit(P1A1$O2_MEAN,P1A1$msmrs)['NLR'],
+                        calc_pcrit(P1A3$O2_MEAN,P1A3$msmrs)['NLR'],
+                        calc_pcrit(P1A4$O2_MEAN,P1A4$msmrs)['NLR'],
+                        calc_pcrit(P1B2$O2_MEAN,P1B2$msmrs)['NLR'],
+                        calc_pcrit(P1B3$O2_MEAN,P1B3$msmrs)['NLR'],
+                        calc_pcrit(P1B6$O2_MEAN,P1B6$msmrs)['NLR'],
+                        calc_pcrit(P1C1$O2_MEAN,P1C1$msmrs)['NLR'],
+                        calc_pcrit(P1C3$O2_MEAN,P1C3$msmrs)['NLR'],
+                        calc_pcrit(P1C5$O2_MEAN,P1C5$msmrs)['NLR'],
+                        calc_pcrit(P1D1$O2_MEAN,P1D1$msmrs)['NLR'],
+                        calc_pcrit(P1D2$O2_MEAN,P1D2$msmrs)['NLR'],
+                        calc_pcrit(P1D4$O2_MEAN,P1D4$msmrs)['NLR'],
+                        calc_pcrit(P1D5$O2_MEAN,P1D5$msmrs)['NLR'],
+                        calc_pcrit(P2A2$O2_MEAN,P2A2$msmrs)['NLR'],
+                        calc_pcrit(P2A4$O2_MEAN,P2A4$msmrs)['NLR'],
+                        calc_pcrit(P2A5$O2_MEAN,P2A5$msmrs)['NLR'],
+                        calc_pcrit(P2A6$O2_MEAN,P2A6$msmrs)['NLR'],
+                        calc_pcrit(P2B1$O2_MEAN,P2B1$msmrs)['NLR'],
+                        calc_pcrit(P2B2$O2_MEAN,P2B2$msmrs)['NLR'],
+                        calc_pcrit(P2B3$O2_MEAN,P2B3$msmrs)['NLR'],
+                        calc_pcrit(P2B4$O2_MEAN,P2B4$msmrs)['NLR'],
+                        calc_pcrit(P2C1$O2_MEAN,P2C1$msmrs)['NLR'],
+                        calc_pcrit(P2C3$O2_MEAN,P2C3$msmrs)['NLR'],
+                        calc_pcrit(P2C4$O2_MEAN,P2C4$msmrs)['NLR'],
+                        calc_pcrit(P2D1$O2_MEAN,P2D1$msmrs)['NLR'],
+                        calc_pcrit(P2D3$O2_MEAN,P2D3$msmrs)['NLR'],
+                        calc_pcrit(P2D4$O2_MEAN,P2D4$msmrs)['NLR'])
+lrv_dana$alpha<-c(calc_alpha(P1A1$O2_MEAN,P1A1$msmrs)$alpha,
+                        calc_alpha(P1A3$O2_MEAN,P1A3$msmrs)$alpha,
+                        calc_alpha(P1A4$O2_MEAN,P1A4$msmrs)$alpha,
+                        calc_alpha(P1B2$O2_MEAN,P1B2$msmrs)$alpha,
+                        calc_alpha(P1B3$O2_MEAN,P1B3$msmrs)$alpha,
+                        calc_alpha(P1B6$O2_MEAN,P1B6$msmrs)$alpha,
+                        calc_alpha(P1C1$O2_MEAN,P1C1$msmrs)$alpha,
+                        calc_alpha(P1C3$O2_MEAN,P1C3$msmrs)$alpha,
+                        calc_alpha(P1C5$O2_MEAN,P1C5$msmrs)$alpha,
+                        calc_alpha(P1D1$O2_MEAN,P1D1$msmrs)$alpha,
+                        calc_alpha(P1D2$O2_MEAN,P1D2$msmrs)$alpha,
+                        calc_alpha(P1D4$O2_MEAN,P1D4$msmrs)$alpha,
+                        calc_alpha(P1D5$O2_MEAN,P1D5$msmrs)$alpha,
+                        calc_alpha(P2A2$O2_MEAN,P2A2$msmrs)$alpha,
+                        calc_alpha(P2A4$O2_MEAN,P2A4$msmrs)$alpha,
+                        calc_alpha(P2A5$O2_MEAN,P2A5$msmrs)$alpha,
+                        calc_alpha(P2A6$O2_MEAN,P2A6$msmrs)$alpha,
+                        calc_alpha(P2B1$O2_MEAN,P2B1$msmrs)$alpha,
+                        calc_alpha(P2B2$O2_MEAN,P2B2$msmrs)$alpha,
+                        calc_alpha(P2B3$O2_MEAN,P2B3$msmrs)$alpha,
+                        calc_alpha(P2B4$O2_MEAN,P2B4$msmrs)$alpha,
+                        calc_alpha(P2C1$O2_MEAN,P2C1$msmrs)$alpha,
+                        calc_alpha(P2C3$O2_MEAN,P2C3$msmrs)$alpha,
+                        calc_alpha(P2C4$O2_MEAN,P2C4$msmrs)$alpha,
+                        calc_alpha(P2D1$O2_MEAN,P2D1$msmrs)$alpha,
+                        calc_alpha(P2D3$O2_MEAN,P2D3$msmrs)$alpha,
+                        calc_alpha(P2D4$O2_MEAN,P2D4$msmrs)$alpha)
+
+
+#set levels of CO2_level and Tank
+lrv_dana$CO2_level<-factor(lrv_dana$CO2_level,levels=c("amb","med","high"))
+lrv_dana$Tank<-factor(lrv_dana$Tank,levels=c("t1","t2","t3","t4","t5","t6","t7","t8","t9"))
+
+plot(lrv_dana$Pcrit_alpha~lrv_dana$CO2_level)
+plot(lrv_dana$Pcrit_break~lrv_dana$CO2_level)
+plot(lrv_dana$alpha~lrv_dana$CO2_level)
+
+#check if different Pcrit metrics are correlated
+plot(lrv_dana$Pcrit_alpha~lrv_dana$Pcrit_break) #Cone shaped. 
+
+#calculate mean and SE of Pcrit values by treatment
+library(plyr)
+alpha_sum<-ddply(lrv_dana,"CO2_level",summarise,N=length(Pcrit_alpha),MeanPcrit=mean(Pcrit_alpha,na.rm=TRUE),SE=sd(Pcrit_alpha,na.rm=TRUE)/sqrt(N))
+alpha_sum
+
+break_sum<-ddply(lrv_dana,"CO2_level",summarise,N=length(Pcrit_break),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),SE=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
+break_sum #in both cases, Pcrit increases in elevated CO2 treatments but so does SE - may need to transform and/or check for outliers
+
+a_sum<-ddply(lrv_dana,"CO2_level",summarise,N=length(alpha),MeanPcrit=mean(alpha,na.rm=TRUE),SE=sd(alpha,na.rm=TRUE)/sqrt(N))
+a_sum
+
+#use lm and anova to test for significance
+library(lmerTest)
+library(lme4)
+
+alpha_mod<-lmer(Pcrit_alpha~CO2_level+1|Tank,data=lrv_dana) #singular fit
+ranova(alpha_mod)
+
+alpha_mod1<-lm(Pcrit_alpha~CO2_level,data=lrv_dana)
+anova(alpha_mod1) #not significant, p=0.5533
+
+break_mod<-lmer(Pcrit_break~CO2_level+1|Tank,data=lrv_dana) #singular fit
+ranova(break_mod)
+
+break_mod1<-lm(Pcrit_break~CO2_level,data=lrv_dana)
+anova(break_mod1) #ditto, p=0.1159
+
+a_mod<-lm(alpha~CO2_level,data=lrv_dana)
+anova(a_mod)
+
 
