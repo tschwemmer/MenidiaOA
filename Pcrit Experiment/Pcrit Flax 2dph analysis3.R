@@ -1338,7 +1338,7 @@ plot(lar_flax$Pcrit_break~lar_flax$CO2_level)
 
 #calculate mean and SE of Pcrit values by treatment
 library(plyr)
-break_sum<-ddply(lar_flax,"CO2_level",summarise,N=length(Pcrit_break),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),SE=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
+break_sum<-ddply(lar_flax,"CO2_level",summarise,N=length(na.omit(Pcrit_break)),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),SE=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
 break_sum #in both cases, Pcrit increases in elevated CO2 treatments but so does SE - may need to transform and/or check for outliers
 
 
@@ -1433,7 +1433,7 @@ anova(flax_lar_mod)
 ranova(flax_lar_mod) #random effect of tank doesn't affect results. 
 
 #try it the other way
-flax_lar_mdl<-aov(lar_flax$RMR~lar_flax$CO2_level/factor(lar_flax$Tank))
+flax_lar_mdl<-aov(1/(lar_flax$RMR)~lar_flax$CO2_level/factor(lar_flax$Tank))
 summary(flax_lar_mdl) #no significance
 
 #diagnostics
@@ -1442,17 +1442,17 @@ plot(flax_lar_mdl)
 
 #For ANOVA the assumptions are normality of the DATA and homogeneity of variances
 #normality of data
-shapiro.test(lar_flax$RMR) #looks good p=0.18
+shapiro.test(1/(lar_flax$RMR)) #looks good p=0.08424
+hist(lar_flax$RMR)
 
 #homogeneity of variances
 library(car)
-leveneTest(lar_flax$RMR, lar_flax$CO2_level) #p=0.7317 good
+leveneTest(1/(lar_flax$RMR), lar_flax$CO2_level) #p=0.003516, reciprocal transformation works
 
-#calculate the group means 
 
 library(plyr)
 flax_lar_sum<-ddply(lar_flax,"CO2_level",summarise,N=length(na.omit(RMR)),MeanMO2=mean(RMR,na.rm=TRUE),SE=sd(RMR,na.rm=TRUE)/sqrt(N))
-flax_lar_sum #elevated CO2 slightly decreases MO2...opposite of previous results. But may need to redo using only data before ~Pcrit if want to compare to previous experiments. 
+flax_lar_sum  
 
 #plot the data - means and SEs
 library(ggplot2)
@@ -1464,3 +1464,7 @@ flaxlarplot<-ggplot(flax_lar_sum, aes(x=CO2_level,y=MeanMO2))+
   coord_cartesian(ylim=c(0.1,0.25))+
   theme_classic()
 print(flaxlarplot)
+
+pct_spike_amb<-100*sum(na.omit(lar_flax$spike[lar_flax$CO2_level=="amb"]))/length(na.omit(lar_flax$spike[lar_flax$CO2_level=="amb"]))
+pct_spike_med<-100*sum(na.omit(lar_flax$spike[lar_flax$CO2_level=="med"]))/length(na.omit(lar_flax$spike[lar_flax$CO2_level=="med"]))
+pct_spike_high<-100*sum(na.omit(lar_flax$spike[lar_flax$CO2_level=="high"]))/length(na.omit(lar_flax$spike[lar_flax$CO2_level=="high"]))

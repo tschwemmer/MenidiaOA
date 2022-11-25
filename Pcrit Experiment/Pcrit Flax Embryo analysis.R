@@ -1192,7 +1192,7 @@ plot(emb_flax$Pcrit_break~emb_flax$CO2_level)
 
 #calculate mean and SE of Pcrit values by treatment
 library(plyr)
-break_sum<-ddply(emb_flax,"CO2_level",summarise,N=length(Pcrit_break),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),SE=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
+break_sum<-ddply(emb_flax,"CO2_level",summarise,N=length(na.omit(Pcrit_break)),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),SE=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
 break_sum #in both cases, Pcrit increases in elevated CO2 treatments but so does SE - may need to transform and/or check for outliers
 
 
@@ -1208,7 +1208,7 @@ break_mod1<-lm(Pcrit_break~CO2_level,data=emb_flax)
 anova(break_mod1) #p=0.5403
 
 #try it the other way
-break_mod2<-aov(emb_flax$Pcrit_break~emb_flax$CO2_level/factor(emb_flax$Tank))
+break_mod2<-aov(1/(emb_flax$Pcrit_break)~emb_flax$CO2_level/factor(emb_flax$Tank))
 summary(break_mod2) #neither CO2 nor tank is significant
 
 
@@ -1312,7 +1312,7 @@ hist(emb_flax$RMR) #it is right skewed by a 5 individuals that are >0.005
 
 #homogeneity of variances
 library(car)
-leveneTest(sqrt(emb_flax$RMR), emb_flax$CO2_level) #p=0.04956 may need to transform
+leveneTest(sqrt(emb_flax$RMR), emb_flax$CO2_level) #p=0.1588 with sqrt transformation, reciprocal doesn't work
 
 #calculate the group means 
 

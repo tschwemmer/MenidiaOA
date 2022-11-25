@@ -1135,7 +1135,7 @@ break_mod1<-lm(Pcrit_break~CO2_level,data=emb_dana)
 anova(break_mod1) #
 
 #try it the other way
-break_mod2<-aov(emb_dana$Pcrit_break~emb_dana$CO2_level/factor(emb_dana$Tank))
+break_mod2<-aov(1/(emb_dana$Pcrit_break)~emb_dana$CO2_level/factor(emb_dana$Tank))
 summary(break_mod2) #neither CO2 nor Tank is significant
 
 
@@ -1145,13 +1145,13 @@ plot(break_mod2)
 
 #For ANOVA the assumptions are normality of the DATA and homogeneity of variances
 #normality of data
-shapiro.test(emb_dana$Pcrit_break) #p=0.5406
+shapiro.test(1/(emb_dana$Pcrit_break)) #p=0.5406
 par(mfrow=c(1,1))
 hist(emb_dana$Pcrit_break)
 
 #homogeneity of variances
 library(car)
-leveneTest(emb_dana$Pcrit_break, emb_dana$CO2_level) #p=0.3706
+leveneTest(1/(emb_dana$Pcrit_break), emb_dana$CO2_level) #p=0.3706
 
 #plot the data - means and SEs
 library(ggplot2)
@@ -1213,7 +1213,7 @@ anova(dana_emb_mod) #p=0.2872
 ranova(dana_emb_mod) #random effect of tank doesn't affect results. 
 
 #try it the other way
-dana_emb_mdl<-aov(sqrt(emb_dana$RMR)~emb_dana$CO2_level/factor(emb_dana$Tank))
+dana_emb_mdl<-aov(sqrt(sqrt(emb_dana$RMR))~emb_dana$CO2_level/factor(emb_dana$Tank))
 summary(dana_emb_mdl) #Not significant
 
 
@@ -1224,13 +1224,13 @@ plot(dana_emb_mdl)
 
 #For ANOVA the assumptions are normality of the DATA and homogeneity of variances
 #normality of data
-shapiro.test(emb_dana$RMR) #good p=0.7352
+shapiro.test(sqrt(emb_dana$RMR)) #good p=0.7352
 par(mfrow=c(1,1))
 hist(emb_dana$RMR) #it is right skewed by a 5 individuals that are >0.005
 
 #homogeneity of variances
 library(car)
-leveneTest(emb_dana$RMR, emb_dana$CO2_level) #p=0.0496 may need to transform
+leveneTest(sqrt(emb_dana$RMR), emb_dana$CO2_level) #p=0.0496 may need to transform
 
 #calculate the group means 
 

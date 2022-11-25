@@ -1368,12 +1368,12 @@ anova(dana_lar_mod)
 ranova(dana_lar_mod) #random effect of tank doesn't affect results. 
 
 #try it the other way
-dana_lar_mdl<-aov(lar_dana$RMR~lar_dana$CO2_level/factor(lar_dana$Tank))
+dana_lar_mdl<-aov(1/(lar_dana$RMR)~lar_dana$CO2_level/factor(lar_dana$Tank))
 summary(dana_lar_mdl) #no significance
 
 #assumptions
-shapiro.test(lar_dana$RMR)
-leveneTest(lar_dana$RMR,lar_dana$CO2_level)
+shapiro.test(1/(lar_dana$RMR))
+leveneTest(1/(lar_dana$RMR),lar_dana$CO2_level)
 
 #calculate the group means 
 
@@ -1392,3 +1392,6 @@ danalarplot<-ggplot(dana_lar_rmrsum, aes(x=CO2_level,y=MeanMO2))+
   theme_classic()
 print(danalarplot)
 
+pct_spike_amb<-100*sum(na.omit(lar_dana$spike[lar_dana$CO2_level=="amb"]))/length(na.omit(lar_dana$spike[lar_dana$CO2_level=="amb"]))
+pct_spike_med<-100*sum(na.omit(lar_dana$spike[lar_dana$CO2_level=="med"]))/length(na.omit(lar_dana$spike[lar_dana$CO2_level=="med"]))
+pct_spike_high<-100*sum(na.omit(lar_dana$spike[lar_dana$CO2_level=="high"]))/length(na.omit(lar_dana$spike[lar_dana$CO2_level=="high"]))
