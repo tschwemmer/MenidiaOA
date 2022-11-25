@@ -635,6 +635,58 @@ P2D6$msmrs<-P2D6$MO2/P2D6$dw
 #remove P1B6 because decided cant use it
 lrv_flax<-lrv_flax[-c(7),]
 
+#Remove the slopes where the number of data points was less than 4. 
+P1A1<-P1A1[c(P1A1$N>4),]
+P1A2<-P1A2[c(P1A2$N>4),]
+P1A3<-P1A3[c(P1A3$N>4),]
+P1A4<-P1A4[c(P1A4$N>4),]
+P1A5<-P1A5[c(P1A5$N>4),]
+P1A6<-P1A6[c(P1A6$N>4),]
+P1B1<-P1B1[c(P1B1$N>4),]
+P1B2<-P1B2[c(P1B2$N>4),]
+P1B3<-P1B3[c(P1B3$N>4),]
+P1B4<-P1B4[c(P1B4$N>4),]
+P1B5<-P1B5[c(P1B5$N>4),]
+P1B6<-P1B6[c(P1B6$N>4),]
+P1C1<-P1C1[c(P1C1$N>4),]
+P1C2<-P1C2[c(P1C2$N>4),]
+P1C3<-P1C3[c(P1C3$N>4),]
+P1C4<-P1C4[c(P1C4$N>4),]
+P1C5<-P1C5[c(P1C5$N>4),]
+P1C6<-P1C6[c(P1C6$N>4),]
+P1D1<-P1D1[c(P1D1$N>4),]
+P1D2<-P1D2[c(P1D2$N>4),]
+P1D3<-P1D3[c(P1D3$N>4),]
+P1D4<-P1D4[c(P1D4$N>4),]
+P1D5<-P1D5[c(P1D5$N>4),]
+P1D6<-P1D6[c(P1D6$N>4),]
+
+P2A1<-P2A1[c(P2A1$N>4),]
+P2A2<-P2A2[c(P2A2$N>4),]
+P2A3<-P2A3[c(P2A3$N>4),]
+P2A4<-P2A4[c(P2A4$N>4),]
+P2A5<-P2A5[c(P2A5$N>4),]
+P2A6<-P2A6[c(P2A6$N>4),]
+P2B1<-P2B1[c(P2B1$N>4),]
+P2B2<-P2B2[c(P2B2$N>4),]
+P2B3<-P2B3[c(P2B3$N>4),]
+P2B4<-P2B4[c(P2B4$N>4),]
+P2B5<-P2B5[c(P2B5$N>4),]
+P2B6<-P2B6[c(P2B6$N>4),]
+P2C1<-P2C1[c(P2C1$N>4),]
+P2C2<-P2C2[c(P2C2$N>4),]
+P2C3<-P2C3[c(P2C3$N>4),]
+P2C4<-P2C4[c(P2C4$N>4),]
+P2C5<-P2C5[c(P2C5$N>4),]
+P2C6<-P2C6[c(P2C6$N>4),]
+P2D1<-P2D1[c(P2D1$N>4),]
+P2D2<-P2D2[c(P2D2$N>4),]
+P2D3<-P2D3[c(P2D3$N>4),]
+P2D4<-P2D4[c(P2D4$N>4),]
+P2D5<-P2D5[c(P2D5$N>4),]
+P2D6<-P2D6[c(P2D6$N>4),]
+
+
 #Compile into one dataframe to plot 
 alllrv<-rbind(P1A1,P1A2,P1A4,P1B1,P1B3,P1B4,P1C1,P1C3,P1C4,P1C5,P1D1,P1D2,P1D4,P1D5,P1D6,
               P2A4,P2A5,P2A6,P2B2,P2B3,P2B4,P2B5,P2B6,P2C1,P2C3,P2C4,P2C5,P2C6,P2D1,P2D2,P2D3,P2D5,P2D6)
@@ -642,163 +694,72 @@ alllrv<-rbind(P1A1,P1A2,P1A4,P1B1,P1B3,P1B4,P1C1,P1C3,P1C4,P1C5,P1D1,P1D2,P1D4,P
 #plot the curves
 library(ggplot2)
 library(gridExtra)
-allplotlrv<-ggplot(alllrv, aes(x=O2_MEAN,y=MO2,colour=Well))+
+allplotlrv<-ggplot(alllrv, aes(x=O2_MEAN,y=msmrs,colour=Well))+
   geom_point(size=1)+
   scale_colour_manual(values=c("brown","red1","darkorange1","darkgoldenrod1","chartreuse1","darkolivegreen4","cadetblue1","cadetblue","blue3","darkorchid3","deeppink1","deeppink4","azure4","bisque","indianred1",
                                "orange","cornsilk","mediumspringgreen","mediumseagreen","lightblue1","cyan1","cornflowerblue","lightpink","hotpink","lavenderblush3","khaki4","gray16","darksalmon"))
 print(allplotlrv)
 
-#Try plotting one at a time, grouped by treatment
-#Ambient: P1D1, P1D2, P1D4, P1D5, P1D6, P2A4, P2A5, P2A6
-P1D1plot<-ggplot(P1D1,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1D2plot<-ggplot(P1D2,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1D4plot<-ggplot(P1D4,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1D5plot<-ggplot(P1D5,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1D6plot<-ggplot(P1D6,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2A4plot<-ggplot(P2A4,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2A5plot<-ggplot(P2A5,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2A6plot<-ggplot(P2A6,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-grid.arrange(P1D1plot,P1D2plot,P1D4plot,P1D5plot,P1D6plot,P2A4plot,P2A5plot,P2A6plot,ncol=4)
+#look for ones that are above 0.4-0.5 or below -0.05
+hist(P1A1$msmrs,breaks=10)
+hist(P1A2$msmrs,breaks=10)
+hist(P1A3$msmrs,breaks=10) 
+hist(P1A4$msmrs,breaks=10) 
+hist(P1A5$msmrs,breaks=10)
+hist(P1A6$msmrs,breaks=10) 
+hist(P1B1$msmrs,breaks=10)
+hist(P1B2$msmrs,breaks=10)
+hist(P1B3$msmrs,breaks=10) #one below -0.05
+hist(P1B4$msmrs,breaks=10) 
+hist(P1B5$msmrs,breaks=10)
+hist(P1B6$msmrs,breaks=10)
+hist(P1C1$msmrs,breaks=10)
+hist(P1C2$msmrs,breaks=10)
+hist(P1C3$msmrs,breaks=10) 
+hist(P1C4$msmrs,breaks=10)
+hist(P1C5$msmrs,breaks=10)
+hist(P1C6$msmrs,breaks=10) 
+hist(P1D1$msmrs,breaks=10)
+hist(P1D2$msmrs,breaks=10)
+hist(P1D3$msmrs,breaks=10)
+hist(P1D4$msmrs,breaks=10)
+hist(P1D5$msmrs,breaks=10)
+hist(P1D6$msmrs,breaks=10) #seven above 0.4
+hist(P2A1$msmrs,breaks=10)
+hist(P2A2$msmrs,breaks=10)
+hist(P2A3$msmrs,breaks=10)
+hist(P2A4$msmrs,breaks=10)
+hist(P2A5$msmrs,breaks=10)
+hist(P2A6$msmrs,breaks=10)
+hist(P2B1$msmrs,breaks=10)
+hist(P2B2$msmrs,breaks=10)
+hist(P2B3$msmrs,breaks=10)
+hist(P2B4$msmrs,breaks=10)
+hist(P2B5$msmrs,breaks=10)
+hist(P2B6$msmrs,breaks=10)
+hist(P2C1$msmrs,breaks=10)
+hist(P2C2$msmrs,breaks=10)
+hist(P2C3$msmrs,breaks=10)
+hist(P2C4$msmrs,breaks=10)
+hist(P2C5$msmrs,breaks=10) 
+hist(P2C6$msmrs,breaks=10)
+hist(P2D1$msmrs,breaks=10)
+hist(P2D2$msmrs,breaks=10)
+hist(P2D3$msmrs,breaks=10)
+hist(P2D4$msmrs,breaks=10)
+hist(P2D5$msmrs,breaks=10)
+hist(P2D6$msmrs,breaks=10)
 
-#Medium: P1A1, P1A2, P1A4, P1C1, P1C3, P1C4, P1C5, P2B2, P2B3, P2B4, P2B5, P2B6
-P1A1plot<-ggplot(P1A1,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1A2plot<-ggplot(P1A2,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1A4plot<-ggplot(P1A4,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1C1plot<-ggplot(P1C1,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1C3plot<-ggplot(P1C3,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1C4plot<-ggplot(P1C4,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1C5plot<-ggplot(P1C5,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2B2plot<-ggplot(P2B2,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2B3plot<-ggplot(P2B3,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2B4plot<-ggplot(P2B4,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2B5plot<-ggplot(P2B5,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2B6plot<-ggplot(P2B6,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-grid.arrange(P1A1plot,P1A2plot,P1A4plot,P1C1plot,P1C3plot,P1C4plot,P1C5plot,P2B2plot,P2B3plot,P2B4plot,P2B5plot,P2B6plot,ncol=4)
+#Remove problematic data
+row.names(P1B3)<-NULL
+row.names(P1D6)<-NULL
 
-#High: P1B1, P1B3, P1B4, P1B5, P1B6, P2C1, P2C3, P2C4, P2C5, P2C6, P2D1, P2D2, P2D3, P2D5, P2D6
-P1B1plot<-ggplot(P1B1,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1B3plot<-ggplot(P1B3,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1B4plot<-ggplot(P1B4,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1B5plot<-ggplot(P1B5,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1B6plot<-ggplot(P1B6,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2C1plot<-ggplot(P2C1,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2C3plot<-ggplot(P2C3,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2C4plot<-ggplot(P2C4,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2C5plot<-ggplot(P2C5,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2C6plot<-ggplot(P2C6,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2D1plot<-ggplot(P2D1,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2D2plot<-ggplot(P2D2,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="loess",se=F)+
-  theme_classic()
-P2D3plot<-ggplot(P2D3,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2D5plot<-ggplot(P2D5,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2D6plot<-ggplot(P2D6,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-grid.arrange(P1B1plot,P1B3plot,P1B4plot,P1B5plot,P1B6plot,
-             P2C1plot,P2C3plot,P2C4plot,P2C5plot,P2C6plot,
-             P2D1plot,P2D2plot,P2D3plot,P2D5plot,P2D6plot,ncol=5)
+P1B3<-P1B3[-c(30),] 
+P1D6<-P1D6[-c(76),]
+
+row.names(P1B3)<-NULL
+row.names(P1D6)<-NULL
+
 
 lrv_flax$Pcrit_alpha<-c(calc_pcrit(P1A1$O2_MEAN,P1A1$msmrs)['Alpha'],
                         calc_pcrit(P1A2$O2_MEAN,P1A2$msmrs)['Alpha'],
@@ -806,7 +767,6 @@ lrv_flax$Pcrit_alpha<-c(calc_pcrit(P1A1$O2_MEAN,P1A1$msmrs)['Alpha'],
                         calc_pcrit(P1B1$O2_MEAN,P1B1$msmrs)['Alpha'],
                         calc_pcrit(P1B3$O2_MEAN,P1B3$msmrs)['Alpha'],
                         calc_pcrit(P1B4$O2_MEAN,P1B4$msmrs)['Alpha'],
-                        NA,
                         calc_pcrit(P1C1$O2_MEAN,P1C1$msmrs)['Alpha'],
                         calc_pcrit(P1C3$O2_MEAN,P1C3$msmrs)['Alpha'],
                         calc_pcrit(P1C4$O2_MEAN,P1C4$msmrs)['Alpha'],
@@ -840,7 +800,6 @@ lrv_flax$Pcrit_break<-c(calc_pcrit(P1A1$O2_MEAN,P1A1$msmrs)['Breakpoint'],
                         calc_pcrit(P1B1$O2_MEAN,P1B1$msmrs)['Breakpoint'],
                         calc_pcrit(P1B3$O2_MEAN,P1B3$msmrs)['Breakpoint'],
                         calc_pcrit(P1B4$O2_MEAN,P1B4$msmrs)['Breakpoint'],
-                        NA,
                         calc_pcrit(P1C1$O2_MEAN,P1C1$msmrs)['Breakpoint'],
                         calc_pcrit(P1C3$O2_MEAN,P1C3$msmrs)['Breakpoint'],
                         calc_pcrit(P1C4$O2_MEAN,P1C4$msmrs)['Breakpoint'],
@@ -874,7 +833,6 @@ lrv_flax$Pcrit_subPI<-c(calc_pcrit(P1A1$O2_MEAN,P1A1$msmrs)['Sub_PI'],
                         calc_pcrit(P1B1$O2_MEAN,P1B1$msmrs)['Sub_PI'],
                         calc_pcrit(P1B3$O2_MEAN,P1B3$msmrs)['Sub_PI'],
                         calc_pcrit(P1B4$O2_MEAN,P1B4$msmrs)['Sub_PI'],
-                        NA,
                         calc_pcrit(P1C1$O2_MEAN,P1C1$msmrs)['Sub_PI'],
                         calc_pcrit(P1C3$O2_MEAN,P1C3$msmrs)['Sub_PI'],
                         calc_pcrit(P1C4$O2_MEAN,P1C4$msmrs)['Sub_PI'],
@@ -908,7 +866,6 @@ lrv_flax$Pcrit_NLR<-c(calc_pcrit(P1A1$O2_MEAN,P1A1$msmrs)['NLR'],
                         calc_pcrit(P1B1$O2_MEAN,P1B1$msmrs)['NLR'],
                         calc_pcrit(P1B3$O2_MEAN,P1B3$msmrs)['NLR'],
                         calc_pcrit(P1B4$O2_MEAN,P1B4$msmrs)['NLR'],
-                        NA,
                         calc_pcrit(P1C1$O2_MEAN,P1C1$msmrs)['NLR'],
                         calc_pcrit(P1C3$O2_MEAN,P1C3$msmrs)['NLR'],
                         calc_pcrit(P1C4$O2_MEAN,P1C4$msmrs)['NLR'],
@@ -942,7 +899,6 @@ lrv_flax$alpha<-c(calc_alpha(P1A1$O2_MEAN,P1A1$msmrs)$alpha,
                         calc_alpha(P1B1$O2_MEAN,P1B1$msmrs)$alpha,
                         calc_alpha(P1B3$O2_MEAN,P1B3$msmrs)$alpha,
                         calc_alpha(P1B4$O2_MEAN,P1B4$msmrs)$alpha,
-                        NA,
                         calc_alpha(P1C1$O2_MEAN,P1C1$msmrs)$alpha,
                         calc_alpha(P1C3$O2_MEAN,P1C3$msmrs)$alpha,
                         calc_alpha(P1C4$O2_MEAN,P1C4$msmrs)$alpha,
@@ -971,100 +927,456 @@ lrv_flax$alpha<-c(calc_alpha(P1A1$O2_MEAN,P1A1$msmrs)$alpha,
                         calc_alpha(P2D5$O2_MEAN,P2D5$msmrs)$alpha,
                         calc_alpha(P2D6$O2_MEAN,P2D6$msmrs)$alpha)
 
-#plot pcrit to look for probs
+
+
+###############################################################################
+#Using selgmented function instead of calc_pcrit (segmented function) to get Pcrit
+library(segmented)
+
+
+P1A1seg<-selgmented(lm(msmrs~O2_MEAN,data=P1A1),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1A1)
+plot(P1A1seg,add=T)
 plot_pcrit(P1A1$O2_MEAN,P1A1$msmrs)
+print(P1A1seg)
+
+P1A2seg<-selgmented(lm(msmrs~O2_MEAN,data=P1A2[1:88,]),seg.Z=~O2_MEAN,type='bic',Kmax=6,msg=F)
+plot(msmrs~O2_MEAN,data=P1A2[1:88,])
+plot(P1A2seg,add=T)
 plot_pcrit(P1A2$O2_MEAN,P1A2$msmrs)
+print(P1A2seg)
+
+P1A3seg<-selgmented(lm(msmrs~O2_MEAN,data=P1A3),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1A3)
+plot(P1A3seg,add=T)
+plot_pcrit(P1A3$O2_MEAN,P1A3$msmrs)
+print(P1A3seg)
+
+P1A4seg<-selgmented(lm(msmrs~O2_MEAN,data=P1A4),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1A4)
+plot(P1A4seg,add=T)
 plot_pcrit(P1A4$O2_MEAN,P1A4$msmrs)
+print(P1A4seg)
+
+P1A5seg<-selgmented(lm(msmrs~O2_MEAN,data=P1A5),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1A5)
+plot(P1A5seg,add=T)
+plot_pcrit(P1A5$O2_MEAN,P1A5$msmrs)
+print(P1A5seg)
+
+P1A6seg<-selgmented(lm(msmrs~O2_MEAN,data=P1A6),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1A6)
+plot(P1A6seg,add=T)
+plot_pcrit(P1A6$O2_MEAN,P1A6$msmrs)
+print(P1A6seg)
+
+P1B1seg<-selgmented(lm(msmrs~O2_MEAN,data=P1B1),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1B1)
+plot(P1B1seg,add=T)
 plot_pcrit(P1B1$O2_MEAN,P1B1$msmrs)
+print(P1B1seg)
+
+P1B2seg<-selgmented(lm(msmrs~O2_MEAN,data=P1B2),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1B2)
+plot(P1B2seg,add=T)
+plot_pcrit(P1B2$O2_MEAN,P1B2$msmrs)
+print(P1B2seg)
+
+P1B3seg<-selgmented(lm(msmrs~O2_MEAN,data=P1B3),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1B3)
+plot(P1B3seg,add=T)
 plot_pcrit(P1B3$O2_MEAN,P1B3$msmrs)
+print(P1B3seg)
+
+P1B4seg<-selgmented(lm(msmrs~O2_MEAN,data=P1B4),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1B4)
+plot(P1B4seg,add=T)
 plot_pcrit(P1B4$O2_MEAN,P1B4$msmrs)
+print(P1B4seg)
+
+P1B5seg<-selgmented(lm(msmrs~O2_MEAN,data=P1B5),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1B5)
+plot(P1B5seg,add=T)
+plot_pcrit(P1B5$O2_MEAN,P1B5$msmrs)
+print(P1B5seg)
+
+P1B6seg<-selgmented(lm(msmrs~O2_MEAN,data=P1B6),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=T)
+plot(msmrs~O2_MEAN,data=P1B6)
+plot(P1B6seg,add=T)
+plot_pcrit(P1B6$O2_MEAN,P1B6$msmrs)
+print(P1B6seg)
+
+P1C1seg<-selgmented(lm(msmrs~O2_MEAN,data=P1C1),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1C1)
+plot(P1C1seg,add=T)
 plot_pcrit(P1C1$O2_MEAN,P1C1$msmrs)
+print(P1C1seg)
+
+P1C2seg<-selgmented(lm(msmrs~O2_MEAN,data=P1C2),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1C2)
+plot(P1C2seg,add=T)
+plot_pcrit(P1C2$O2_MEAN,P1C2$msmrs)
+print(P1C2seg)
+
+P1C3seg<-selgmented(lm(msmrs~O2_MEAN,data=P1C3),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1C3)
+plot(P1C3seg,add=T)
 plot_pcrit(P1C3$O2_MEAN,P1C3$msmrs)
+print(P1C3seg)
+
+P1C4seg<-selgmented(lm(msmrs~O2_MEAN,data=P1C4),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1C4)
+plot(P1C4seg,add=T)
 plot_pcrit(P1C4$O2_MEAN,P1C4$msmrs)
+print(P1C4seg)
+
+P1C5seg<-selgmented(lm(msmrs~O2_MEAN,data=P1C5),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1C5)
+plot(P1C5seg,add=T)
 plot_pcrit(P1C5$O2_MEAN,P1C5$msmrs)
+print(P1C5seg)
+
+P1C6seg<-selgmented(lm(msmrs~O2_MEAN,data=P1C6),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=T)
+plot(msmrs~O2_MEAN,data=P1C6)
+plot(P1C6seg,add=T)
+plot_pcrit(P1C6$O2_MEAN,P1C6$msmrs)
+print(P1C6seg)
+
+P1D1seg<-selgmented(lm(msmrs~O2_MEAN,data=P1D1),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1D1)
+plot(P1D1seg,add=T)
 plot_pcrit(P1D1$O2_MEAN,P1D1$msmrs)
+print(P1D1seg)
+
+P1D2seg<-selgmented(lm(msmrs~O2_MEAN,data=P1D2),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1D2)
+plot(P1D2seg,add=T)
 plot_pcrit(P1D2$O2_MEAN,P1D2$msmrs)
+print(P1D2seg)
+
+P1D3seg<-selgmented(lm(msmrs~O2_MEAN,data=P1D3),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1D3)
+plot(P1D3seg,add=T)
+plot_pcrit(P1D3$O2_MEAN,P1D3$msmrs)
+print(P1D3seg)
+
+P1D4seg<-selgmented(lm(msmrs~O2_MEAN,data=P1D4),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1D4)
+plot(P1D4seg,add=T)
 plot_pcrit(P1D4$O2_MEAN,P1D4$msmrs)
+print(P1D4seg)
+
+P1D5seg<-selgmented(lm(msmrs~O2_MEAN,data=P1D5),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=T)
+plot(msmrs~O2_MEAN,data=P1D5)
+plot(P1D5seg,add=T)
 plot_pcrit(P1D5$O2_MEAN,P1D5$msmrs)
+print(P1D5seg)
+
+P1D6seg<-selgmented(lm(msmrs~O2_MEAN,data=P1D6),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1D6)
+plot(P1D6seg,add=T)
 plot_pcrit(P1D6$O2_MEAN,P1D6$msmrs)
+print(P1D6seg)
+
+#Plate 2
+
+P2A1seg<-selgmented(lm(msmrs~O2_MEAN,data=P2A1),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2A1)
+plot(P2A1seg,add=T)
+plot_pcrit(P2A1$O2_MEAN,P2A1$msmrs)
+print(P2A1seg)
+
+P2A2seg<-selgmented(lm(msmrs~O2_MEAN,data=P2A2),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2A2)
+plot(P2A2seg,add=T)
+plot_pcrit(P2A2$O2_MEAN,P2A2$msmrs)
+print(P2A2seg)
+
+P2A3seg<-selgmented(lm(msmrs~O2_MEAN,data=P2A3),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2A3)
+plot(P2A3seg,add=T)
+plot_pcrit(P2A3$O2_MEAN,P2A3$msmrs)
+print(P2A3seg)
+
+P2A4seg<-selgmented(lm(msmrs~O2_MEAN,data=P2A4),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2A4)
+plot(P2A4seg,add=T)
 plot_pcrit(P2A4$O2_MEAN,P2A4$msmrs)
+print(P2A4seg)
+
+P2A5seg<-selgmented(lm(msmrs~O2_MEAN,data=P2A5),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2A5)
+plot(P2A5seg,add=T)
 plot_pcrit(P2A5$O2_MEAN,P2A5$msmrs)
+print(P2A5seg)
+
+P2A6seg<-selgmented(lm(msmrs~O2_MEAN,data=P2A6),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2A6)
+plot(P2A6seg,add=T)
 plot_pcrit(P2A6$O2_MEAN,P2A6$msmrs)
+print(P2A6seg)
+
+P2B1seg<-selgmented(lm(msmrs~O2_MEAN,data=P2B1),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2B1)
+plot(P2B1seg,add=T)
+plot_pcrit(P2B1$O2_MEAN,P2B1$msmrs)
+print(P2B1seg)
+
+P2B2seg<-selgmented(lm(msmrs~O2_MEAN,data=P2B2),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2B2)
+plot(P2B2seg,add=T)
 plot_pcrit(P2B2$O2_MEAN,P2B2$msmrs)
+print(P2B2seg)
+
+P2B3seg<-selgmented(lm(msmrs~O2_MEAN,data=P2B3),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=T)
+plot(msmrs~O2_MEAN,data=P2B3)
+plot(P2B3seg,add=T)
 plot_pcrit(P2B3$O2_MEAN,P2B3$msmrs)
+print(P2B3seg)
+
+P2B4seg<-selgmented(lm(msmrs~O2_MEAN,data=P2B4),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2B4)
+plot(P2B4seg,add=T)
 plot_pcrit(P2B4$O2_MEAN,P2B4$msmrs)
+print(P2B4seg)
+
+P2B5seg<-selgmented(lm(msmrs~O2_MEAN,data=P2B5),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2B5)
+plot(P2B5seg,add=T)
 plot_pcrit(P2B5$O2_MEAN,P2B5$msmrs)
+print(P2B5seg)
+
+P2B6seg<-selgmented(lm(msmrs~O2_MEAN,data=P2B6),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2B6)
+plot(P2B6seg,add=T)
 plot_pcrit(P2B6$O2_MEAN,P2B6$msmrs)
+print(P2B6seg)
+
+P2C1seg<-selgmented(lm(msmrs~O2_MEAN,data=P2C1),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2C1)
+plot(P2C1seg,add=T)
 plot_pcrit(P2C1$O2_MEAN,P2C1$msmrs)
+print(P2C1seg)
+
+P2C2seg<-selgmented(lm(msmrs~O2_MEAN,data=P2C2),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2C2)
+plot(P2C2seg,add=T)
+plot_pcrit(P2C2$O2_MEAN,P2C2$msmrs)
+print(P2C2seg)
+
+P2C3seg<-selgmented(lm(msmrs~O2_MEAN,data=P2C3),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2C3)
+plot(P2C3seg,add=T)
 plot_pcrit(P2C3$O2_MEAN,P2C3$msmrs)
+print(P2C3seg)
+
+P2C4seg<-selgmented(lm(msmrs~O2_MEAN,data=P2C4),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2C4)
+plot(P2C4seg,add=T)
 plot_pcrit(P2C4$O2_MEAN,P2C4$msmrs)
+print(P2C4seg)
+
+P2C5seg<-selgmented(lm(msmrs~O2_MEAN,data=P2C5),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=T)
+plot(msmrs~O2_MEAN,data=P2C5)
+plot(P2C5seg,add=T)
 plot_pcrit(P2C5$O2_MEAN,P2C5$msmrs)
+print(P2C5seg)
+
+P2C6seg<-selgmented(lm(msmrs~O2_MEAN,data=P2C6),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2C6)
+plot(P2C6seg,add=T)
 plot_pcrit(P2C6$O2_MEAN,P2C6$msmrs)
+print(P2C6seg)
+
+P2D1seg<-selgmented(lm(msmrs~O2_MEAN,data=P2D1),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2D1)
+plot(P2D1seg,add=T)
 plot_pcrit(P2D1$O2_MEAN,P2D1$msmrs)
+print(P2D1seg)
+
+P2D2seg<-selgmented(lm(msmrs~O2_MEAN,data=P2D2),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2D2)
+plot(P2D2seg,add=T)
 plot_pcrit(P2D2$O2_MEAN,P2D2$msmrs)
+print(P2D2seg)
+
+P2D3seg<-selgmented(lm(msmrs~O2_MEAN,data=P2D3),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2D3)
+plot(P2D3seg,add=T)
 plot_pcrit(P2D3$O2_MEAN,P2D3$msmrs)
+print(P2D3seg)
+
+P2D4seg<-selgmented(lm(msmrs~O2_MEAN,data=P2D4),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2D4)
+plot(P2D4seg,add=T)
+plot_pcrit(P2D4$O2_MEAN,P2D4$msmrs)
+print(P2D4seg)
+
+P2D5seg<-selgmented(lm(msmrs~O2_MEAN,data=P2D5),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=T)
+plot(msmrs~O2_MEAN,data=P2D5)
+plot(P2D5seg,add=T)
 plot_pcrit(P2D5$O2_MEAN,P2D5$msmrs)
+print(P2D5seg)
+
+P2D6seg<-selgmented(lm(msmrs~O2_MEAN,data=P2D6),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2D6)
+plot(P2D6seg,add=T)
 plot_pcrit(P2D6$O2_MEAN,P2D6$msmrs)
+print(P2D6seg)
 
-#Analyze and visualize with respect to CO2 treatments
+#Finally, update the dataframe with the new Pcrit and spike data
+lrv_flax$Pcrit_break<-c(1.6298,2.435,1.807,  #P1A
+                        1.56153,NA,NA,  #P1B
+                        1.242,2.290,1.1668,1.1044,  #P1C
+                        2.621,1.959,3.0317,1.894,2.319,  #P1D
+                        NA,0.852,1.2649,  #P2A
+                        1.57,0.967,1.52556,2.6837,1.36,  #P2B
+                        NA,0.503,0.816,1.888,0.863,  #P2C
+                        1.641,0.704,2.740,1.333,1.264)  #P2D
+lrv_flax$spike<-c(1,1,1,  #P1A
+                  1,NA,NA,  #P1B
+                  0,1,1,1,  #P1C
+                  1,1,1,1,1,  #P1D
+                  NA,1,0,  #P2A
+                  0,0,1,1,1,  #P2B
+                  NA,0,0,1,0,  #P2C
+                  1,0,1,0,0)  #P2D
 
+################################################################################################
+#Analyze, check model assumptions, and plot
 #set levels of CO2_level and Tank
+str(lrv_flax)
 lrv_flax$CO2_level<-factor(lrv_flax$CO2_level,levels=c("amb","med","high"))
 lrv_flax$Tank<-factor(lrv_flax$Tank,levels=c("1A","1B","1C","2A","2B","2C","3A","3B","3C"))
 
-plot(lrv_flax$Pcrit_alpha~lrv_flax$CO2_level)
 plot(lrv_flax$Pcrit_break~lrv_flax$CO2_level)
-
-#check if different Pcrit metrics are correlated
-plot(lrv_flax$Pcrit_alpha~lrv_flax$Pcrit_break) #not a nice neat line but still some positive correlation. Cone shaped. 
 
 #calculate mean and SE of Pcrit values by treatment
 library(plyr)
-alpha_sum<-ddply(lrv_flax,"CO2_level",summarise,N=length(Pcrit_alpha),MeanPcrit=mean(Pcrit_alpha,na.rm=TRUE),SE=sd(Pcrit_alpha,na.rm=TRUE)/sqrt(N))
-alpha_sum
-
-break_sum<-ddply(lrv_flax,"CO2_level",summarise,N=length(Pcrit_break),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),SE=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
+break_sum<-ddply(lrv_flax,"CO2_level",summarise,N=sum(!is.na(Pcrit_break)),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),SE=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
 break_sum #in both cases, Pcrit increases in elevated CO2 treatments but so does SE - may need to transform and/or check for outliers
 
-a_sum<-ddply(lrv_flax,"CO2_level",summarise,N=length(alpha),MeanPcrit=mean(alpha,na.rm=TRUE),SE=sd(alpha,na.rm=TRUE)/sqrt(N))
-a_sum
 
 #use lm and anova to test for significance
 library(lmerTest)
 library(lme4)
 
-alpha_mod<-lmer(Pcrit_alpha~CO2_level+1|Tank,data=lrv_flax) #singular fit
-ranova(alpha_mod)
-
-alpha_mod1<-lm(Pcrit_alpha~CO2_level,data=lrv_flax)
-anova(alpha_mod1) #not significant, p=0.5533
-
-break_mod<-lmer(Pcrit_break~CO2_level+1|Tank,data=lrv_flax) #singular fit
-ranova(break_mod)
+break_mod<-lmer(Pcrit_break~CO2_level+(1|Tank),data=lrv_flax) 
+ranova(break_mod) #tank doesn't affect fit
+anova(break_mod) #p=0.5271
 
 break_mod1<-lm(Pcrit_break~CO2_level,data=lrv_flax)
-anova(break_mod1) #ditto, p=0.1159
+anova(break_mod1) #p=0.5403
 
-a_mod<-lm(alpha~CO2_level,data=lrv_flax)
-anova(a_mod)
+#try it the other way
+break_mod2<-aov(lrv_flax$Pcrit_break~lrv_flax$CO2_level/factor(lrv_flax$Tank))
+summary(break_mod2) #neither CO2 nor tank is significant, p=0.0973 for CO2
 
-#are residuals normally distributed
-res_alpha<-residuals(alpha_mod1)
-hist(res_alpha) #there is one outlier
-res_break<-residuals(break_mod1)
-hist(res_break)
-#pretty normal shaped
 
+#diagnostics
 par(mfrow=c(2,2))
-plot(alpha_mod1) #17 may be the outlier from the residuals histogram
-plot(break_mod1)
+plot(break_mod2) 
 
-#use statistical tests
-library(olsrr)
+#For ANOVA the assumptions are normality of the DATA and homogeneity of variances
+#normality of data
+shapiro.test(lrv_flax$Pcrit_break) #p=0.3904
+hist(lrv_flax$Pcrit_break)
 
-ols_test_normality(alpha_mod1) #K-S and A-D tests passed p>0.05
-ols_test_normality(break_mod1) #S-W, K-S, and A-D tests passed p>0.05
-ols_test_bartlett(data=lrv_flax,'Pcrit_alpha',group_var='CO2_level') #failed, p=0.0272346 - maybe checking out point #17 will fix it
-ols_test_bartlett(data=lrv_flax,'Pcrit_break',group_var='CO2_level') #passed p>0.05
+#homogeneity of variances
+library(car)
+leveneTest(lrv_flax$Pcrit_break, lrv_flax$CO2_level) #p=0.7352 good
 
-#the data almost meet the assumptions of the model, check point 17
+#plot the data - means and SEs
+library(ggplot2)
+library(grid)
+flaxlrvpcritplot<-ggplot(break_sum, aes(x=CO2_level,y=MeanPcrit))+
+  geom_point(size=3,shape=16)+
+  geom_errorbar(aes(ymin=MeanPcrit-SE,ymax=MeanPcrit+SE),width=0.2)+
+  annotation_custom(grobTree(textGrob("5dph Larvae, Exp. 2",x=0.5,y=0.96,gp=gpar(fontsize=16,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,3))+
+  theme_classic()
+print(flaxlrvpcritplot)
+
+
+###############################################################################################
+#Calculate RMR as the average MO2 for which O2>Pcrit
+
+lrv_flax$RMR<-c(mean(c(P1A1$msmrs[P1A1$O2_MEAN>lrv_flax[1,10]])),
+                mean(c(P1A2$msmrs[P1A2$O2_MEAN>lrv_flax[2,10]])),
+                mean(c(P1A4$msmrs[P1A4$O2_MEAN>lrv_flax[3,10]])),
+                mean(c(P1B1$msmrs[P1B1$O2_MEAN>lrv_flax[4,10]])),
+                NA, #removed because it seems to be dead, very high MO2 at beginning then suddenly low (matches microbial)
+                mean(c(P1B4$msmrs[P1B4$O2_MEAN>3])),
+                mean(c(P1C1$msmrs[P1C1$O2_MEAN>lrv_flax[7,10]])),
+                mean(c(P1C3$msmrs[P1C3$O2_MEAN>lrv_flax[8,10]])),
+                mean(c(P1C4$msmrs[P1C4$O2_MEAN>lrv_flax[9,10]])),
+                mean(c(P1C5$msmrs[P1C5$O2_MEAN>lrv_flax[10,10]])),
+                mean(c(P1D1$msmrs[P1D1$O2_MEAN>lrv_flax[11,10]])),
+                mean(c(P1D2$msmrs[P1D2$O2_MEAN>lrv_flax[12,10]])),
+                mean(c(P1D4$msmrs[P1D4$O2_MEAN>lrv_flax[13,10]])),
+                mean(c(P1D5$msmrs[P1D5$O2_MEAN>lrv_flax[14,10]])),
+                mean(c(P1D6$msmrs[P1D6$O2_MEAN>lrv_flax[15,10]])),
+                mean(c(P2A4$msmrs[P2A4$O2_MEAN>3])),
+                mean(c(P2A5$msmrs[P2A5$O2_MEAN>lrv_flax[17,10]])),
+                mean(c(P2A6$msmrs[P2A6$O2_MEAN>lrv_flax[18,10]])),
+                mean(c(P2B2$msmrs[P2B2$O2_MEAN>lrv_flax[19,10]])),
+                mean(c(P2B3$msmrs[P2B3$O2_MEAN>lrv_flax[20,10]])),
+                mean(c(P2B4$msmrs[P2B4$O2_MEAN>lrv_flax[21,10]])),
+                mean(c(P2B5$msmrs[P2B5$O2_MEAN>lrv_flax[22,10]])),
+                mean(c(P2B6$msmrs[P2B6$O2_MEAN>lrv_flax[23,10]])),
+                mean(c(P2C1$msmrs[P2C1$O2_MEAN>3])),
+                mean(c(P2C3$msmrs[P2C3$O2_MEAN>lrv_flax[25,10]])),
+                mean(c(P2C4$msmrs[P2C4$O2_MEAN>lrv_flax[26,10]])),
+                mean(c(P2C5$msmrs[P2C5$O2_MEAN>lrv_flax[27,10]])),
+                mean(c(P2C6$msmrs[P2C6$O2_MEAN>lrv_flax[28,10]])),
+                mean(c(P2D1$msmrs[P2D1$O2_MEAN>lrv_flax[29,10]])),
+                mean(c(P2D2$msmrs[P2D2$O2_MEAN>lrv_flax[30,10]])),
+                mean(c(P2D3$msmrs[P2D3$O2_MEAN>lrv_flax[31,10]])),
+                mean(c(P2D5$msmrs[P2D5$O2_MEAN>lrv_flax[32,10]])),
+                mean(c(P2D6$msmrs[P2D6$O2_MEAN>lrv_flax[33,10]])))
+
+#analyze RMR
+flax_lrv_model<-lm(lrv_flax$RMR~lrv_flax$CO2_level)
+anova(flax_lrv_model) 
+
+flax_lrv_mod<-lmer(RMR~CO2_level+(1|Tank),data=lrv_flax) 
+anova(flax_lrv_mod)
+ranova(flax_lrv_mod) #random effect of tank doesn't affect results. 
+
+#try it the other way
+flax_lrv_mdl<-aov(lrv_flax$RMR~lrv_flax$CO2_level/factor(lrv_flax$Tank))
+summary(flax_lrv_mdl) #p=0.000964 for CO2, tank not significant
+
+#diagnostics
+par(mfrow=c(2,2))
+plot(flax_lrv_mdl) 
+
+#For ANOVA the assumptions are normality of the DATA and homogeneity of variances
+#normality of data
+shapiro.test(lrv_flax$RMR) #looks good p=0.829
+
+#homogeneity of variances
+library(car)
+leveneTest(lrv_flax$RMR, lrv_flax$CO2_level) #p=0.1433 good
+
+#calculate the group means 
+
+library(plyr)
+flax_lrv_sum<-ddply(lrv_flax,"CO2_level",summarise,N=length(na.omit(RMR)),MeanMO2=mean(RMR,na.rm=TRUE),SE=sd(RMR,na.rm=TRUE)/sqrt(N))
+flax_lrv_sum #elevated CO2 slightly decreases MO2...opposite of previous results. But may need to redo using only data before ~Pcrit if want to compare to previous experiments. 
+
+#plot the data - means and SEs
+library(ggplot2)
+library(grid)
+flaxlrvplot<-ggplot(flax_lrv_sum, aes(x=CO2_level,y=MeanMO2))+
+  geom_point(size=3,shape=16)+
+  geom_errorbar(aes(ymin=MeanMO2-SE,ymax=MeanMO2+SE),width=0.2)+
+  annotation_custom(grobTree(textGrob("5dph Larvae, Exp. 2",x=0.5,y=0.98,gp=gpar(fontsize=16,fontface="bold"))))+
+  coord_cartesian(ylim=c(0.1,0.25))+
+  theme_classic()
+print(flaxlrvplot)
+
+pct_spike_amb<-100*sum(na.omit(lrv_flax$spike[lrv_flax$CO2_level=="amb"]))/length(na.omit(lrv_flax$spike[lrv_flax$CO2_level=="amb"]))
+pct_spike_med<-100*sum(na.omit(lrv_flax$spike[lrv_flax$CO2_level=="med"]))/length(na.omit(lrv_flax$spike[lrv_flax$CO2_level=="med"]))
+pct_spike_high<-100*sum(na.omit(lrv_flax$spike[lrv_flax$CO2_level=="high"]))/length(na.omit(lrv_flax$spike[lrv_flax$CO2_level=="high"]))
+

@@ -367,55 +367,55 @@ P2D4bin<-make_bins(o2=lrv_p2orig$D4[1:1332],duration=lrv_p2orig$Time.Min.[1:1332
 
 #Use calc_MO2() function from 'respirometry' package to calculate MO2 for binned chunks of time for each column of the data sheets and store it in a new dataframe
 library(respirometry)
-P1A1<-data.frame(calc_MO2(duration=lrv_p1orig[1:1908,]$Time.Min.,o2=lrv_p1orig[1:1908,]$A1,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1908,]$T_internal,sal=30.0),rep("A1"),rep("t3"),rep("high"))
-#P1A2<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$A2,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("A2"),rep("t3"),rep("blankt3"))
-P1A3<-data.frame(calc_MO2(duration=lrv_p1orig[1:1042,]$Time.Min.,o2=lrv_p1orig[1:1042,]$A3,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1042,]$T_internal,sal=30.0),rep("A3"),rep("t3"),rep("high"))
-P1A4<-data.frame(calc_MO2(duration=lrv_p1orig[1:1192,]$Time.Min.,o2=lrv_p1orig[1:1192,]$A4,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1192,]$T_internal,sal=30.0),rep("A4"),rep("t3"),rep("high"))
-#P1A5<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$A5,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("A5"),rep("t3"),rep("blankt3"))
-#P1A6<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$A6,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("A6"),rep("t4"),rep("blankt4"))
-#P1B1<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$B1,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("B1"),rep("t9"),rep("blankt9"))
-P1B2<-data.frame(calc_MO2(duration=lrv_p1orig[1:1341,]$Time.Min.,o2=lrv_p1orig[1:1341,]$B2,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1341,]$T_internal,sal=30.0),rep("B2"),rep("t9"),rep("high"))
-P1B3<-data.frame(calc_MO2(duration=lrv_p1orig[1:968,]$Time.Min.,o2=lrv_p1orig[1:968,]$B3,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:968,]$T_internal,sal=30.0),rep("B3"),rep("t9"),rep("high"))
-#P1B4<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$B4,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("B4"),rep("t9"),rep("high"))
-#P1B5<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$B5,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("B5"),rep("t9"),rep("blankt9"))
-P1B6<-data.frame(calc_MO2(duration=lrv_p1orig[1:1341,]$Time.Min.,o2=lrv_p1orig[1:1341,]$B6,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1341,]$T_internal,sal=30.0),rep("B6"),rep("t4"),rep("med"))
-P1C1<-data.frame(calc_MO2(duration=lrv_p1orig[1:1192,]$Time.Min.,o2=lrv_p1orig[1:1192,]$C1,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1192,]$T_internal,sal=30.0),rep("C1"),rep("t1"),rep("amb"))
-#P1C2<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$C2,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("C2"),rep("t1"),rep("blankt1"))
-P1C3<-data.frame(calc_MO2(duration=lrv_p1orig[1:1565,]$Time.Min.,o2=lrv_p1orig[1:1565,]$C3,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1565,]$T_internal,sal=30.0),rep("C3"),rep("t1"),rep("amb"))
-#P1C4<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$C4,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("C4"),rep("t1"),rep("blankt1"))
-P1C5<-data.frame(calc_MO2(duration=lrv_p1orig[1:1192,]$Time.Min.,o2=lrv_p1orig[1:1192,]$C5,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1192,]$T_internal,sal=30.0),rep("C5"),rep("t1"),rep("amb"))
-#P1C6<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$C6,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("C6"),rep("t4"),rep("blankt4"))
-P1D1<-data.frame(calc_MO2(duration=lrv_p1orig[1:1192,]$Time.Min.,o2=lrv_p1orig[1:1192,]$D1,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1192,]$T_internal,sal=30.0),rep("D1"),rep("t7"),rep("high"))
-P1D2<-data.frame(calc_MO2(duration=lrv_p1orig[1:1490,]$Time.Min.,o2=lrv_p1orig[1:1490,]$D2,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1490,]$T_internal,sal=30.0),rep("D2"),rep("t7"),rep("high"))
-#P1D3<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$D3,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("D3"),rep("t7"),rep("blankt7"))
-P1D4<-data.frame(calc_MO2(duration=lrv_p1orig[1:1192,]$Time.Min.,o2=lrv_p1orig[1:1192,]$D4,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1192,]$T_internal,sal=30.0),rep("D4"),rep("t7"),rep("high"))
-P1D5<-data.frame(calc_MO2(duration=lrv_p1orig[1:1415,]$Time.Min.,o2=lrv_p1orig[1:1415,]$D5,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1415,]$T_internal,sal=30.0),rep("D5"),rep("t7"),rep("high"))
-#P1D6<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$D6,o2_unit="mg_per_l",bin_width=40,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("D6"),rep("t7"),rep("blankt7"))
+P1A1<-data.frame(calc_MO2(duration=lrv_p1orig[1:1908,]$Time.Min.,o2=lrv_p1orig[1:1908,]$A1,o2_unit="mg_per_l",bin_width=P1A1bin,vol=0.0006,temp=lrv_p1orig[1:1908,]$T_internal,sal=30.0),rep("A1"),rep("t3"),rep("high"))
+#P1A2<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$A2,o2_unit="mg_per_l",bin_width=P1A2bin,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("A2"),rep("t3"),rep("blankt3"))
+P1A3<-data.frame(calc_MO2(duration=lrv_p1orig[1:1042,]$Time.Min.,o2=lrv_p1orig[1:1042,]$A3,o2_unit="mg_per_l",bin_width=P1A3bin,vol=0.0006,temp=lrv_p1orig[1:1042,]$T_internal,sal=30.0),rep("A3"),rep("t3"),rep("high"))
+P1A4<-data.frame(calc_MO2(duration=lrv_p1orig[1:1192,]$Time.Min.,o2=lrv_p1orig[1:1192,]$A4,o2_unit="mg_per_l",bin_width=P1A4bin,vol=0.0006,temp=lrv_p1orig[1:1192,]$T_internal,sal=30.0),rep("A4"),rep("t3"),rep("high"))
+#P1A5<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$A5,o2_unit="mg_per_l",bin_width=P1A5bin,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("A5"),rep("t3"),rep("blankt3"))
+#P1A6<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$A6,o2_unit="mg_per_l",bin_width=P1A6bin,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("A6"),rep("t4"),rep("blankt4"))
+#P1B1<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$B1,o2_unit="mg_per_l",bin_width=P1B1bin,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("B1"),rep("t9"),rep("blankt9"))
+P1B2<-data.frame(calc_MO2(duration=lrv_p1orig[1:1341,]$Time.Min.,o2=lrv_p1orig[1:1341,]$B2,o2_unit="mg_per_l",bin_width=P1B2bin,vol=0.0006,temp=lrv_p1orig[1:1341,]$T_internal,sal=30.0),rep("B2"),rep("t9"),rep("high"))
+P1B3<-data.frame(calc_MO2(duration=lrv_p1orig[1:968,]$Time.Min.,o2=lrv_p1orig[1:968,]$B3,o2_unit="mg_per_l",bin_width=P1B3bin,vol=0.0006,temp=lrv_p1orig[1:968,]$T_internal,sal=30.0),rep("B3"),rep("t9"),rep("high"))
+#P1B4<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$B4,o2_unit="mg_per_l",bin_width=P1B4bin,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("B4"),rep("t9"),rep("high"))
+#P1B5<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$B5,o2_unit="mg_per_l",bin_width=P1B5bin,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("B5"),rep("t9"),rep("blankt9"))
+P1B6<-data.frame(calc_MO2(duration=lrv_p1orig[1:1341,]$Time.Min.,o2=lrv_p1orig[1:1341,]$B6,o2_unit="mg_per_l",bin_width=P1B6bin,vol=0.0006,temp=lrv_p1orig[1:1341,]$T_internal,sal=30.0),rep("B6"),rep("t4"),rep("med"))
+P1C1<-data.frame(calc_MO2(duration=lrv_p1orig[1:1192,]$Time.Min.,o2=lrv_p1orig[1:1192,]$C1,o2_unit="mg_per_l",bin_width=P1C1bin,vol=0.0006,temp=lrv_p1orig[1:1192,]$T_internal,sal=30.0),rep("C1"),rep("t1"),rep("amb"))
+#P1C2<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$C2,o2_unit="mg_per_l",bin_width=P1C2bin,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("C2"),rep("t1"),rep("blankt1"))
+P1C3<-data.frame(calc_MO2(duration=lrv_p1orig[1:1565,]$Time.Min.,o2=lrv_p1orig[1:1565,]$C3,o2_unit="mg_per_l",bin_width=P1C3bin,vol=0.0006,temp=lrv_p1orig[1:1565,]$T_internal,sal=30.0),rep("C3"),rep("t1"),rep("amb"))
+#P1C4<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$C4,o2_unit="mg_per_l",bin_width=P1C4bin,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("C4"),rep("t1"),rep("blankt1"))
+P1C5<-data.frame(calc_MO2(duration=lrv_p1orig[1:1192,]$Time.Min.,o2=lrv_p1orig[1:1192,]$C5,o2_unit="mg_per_l",bin_width=P1C5bin,vol=0.0006,temp=lrv_p1orig[1:1192,]$T_internal,sal=30.0),rep("C5"),rep("t1"),rep("amb"))
+#P1C6<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$C6,o2_unit="mg_per_l",bin_width=P1C6bin,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("C6"),rep("t4"),rep("blankt4"))
+P1D1<-data.frame(calc_MO2(duration=lrv_p1orig[1:1192,]$Time.Min.,o2=lrv_p1orig[1:1192,]$D1,o2_unit="mg_per_l",bin_width=P1D1bin,vol=0.0006,temp=lrv_p1orig[1:1192,]$T_internal,sal=30.0),rep("D1"),rep("t7"),rep("high"))
+P1D2<-data.frame(calc_MO2(duration=lrv_p1orig[1:1490,]$Time.Min.,o2=lrv_p1orig[1:1490,]$D2,o2_unit="mg_per_l",bin_width=P1D2bin,vol=0.0006,temp=lrv_p1orig[1:1490,]$T_internal,sal=30.0),rep("D2"),rep("t7"),rep("high"))
+#P1D3<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$D3,o2_unit="mg_per_l",bin_width=P1D3bin,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("D3"),rep("t7"),rep("blankt7"))
+P1D4<-data.frame(calc_MO2(duration=lrv_p1orig[1:1192,]$Time.Min.,o2=lrv_p1orig[1:1192,]$D4,o2_unit="mg_per_l",bin_width=P1D4bin,vol=0.0006,temp=lrv_p1orig[1:1192,]$T_internal,sal=30.0),rep("D4"),rep("t7"),rep("high"))
+P1D5<-data.frame(calc_MO2(duration=lrv_p1orig[1:1415,]$Time.Min.,o2=lrv_p1orig[1:1415,]$D5,o2_unit="mg_per_l",bin_width=P1D5bin,vol=0.0006,temp=lrv_p1orig[1:1415,]$T_internal,sal=30.0),rep("D5"),rep("t7"),rep("high"))
+#P1D6<-data.frame(calc_MO2(duration=lrv_p1orig[1:1000,]$Time.Min.,o2=lrv_p1orig[1:1000,]$D6,o2_unit="mg_per_l",bin_width=P1D6bin,vol=0.0006,temp=lrv_p1orig[1:1000,]$T_internal,sal=30.0),rep("D6"),rep("t7"),rep("blankt7"))
 
-#P2A1<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$A1,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("A1"),rep("t2"),rep("blankt2"))
-P2A2<-data.frame(calc_MO2(duration=lrv_p2orig[1:1481,]$Time.Min.,o2=lrv_p2orig[1:1481,]$A2,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:1481,]$T_internal,sal=30.0),rep("A2"),rep("t2"),rep("med"))
-#P2A3<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$A3,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("A3"),rep("t2"),rep("blankt2"))
-P2A4<-data.frame(calc_MO2(duration=lrv_p2orig[1:1928,]$Time.Min.,o2=lrv_p2orig[1:1928,]$A4,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:1928,]$T_internal,sal=30.0),rep("A4"),rep("t2"),rep("med"))
-P2A5<-data.frame(calc_MO2(duration=lrv_p2orig[1:1257,]$Time.Min.,o2=lrv_p2orig[1:1257,]$A5,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:1257,]$T_internal,sal=30.0),rep("A5"),rep("t5"),rep("med"))
-P2A6<-data.frame(calc_MO2(duration=lrv_p2orig[1:959,]$Time.Min.,o2=lrv_p2orig[1:959,]$A6,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:959,]$T_internal,sal=30.0),rep("A6"),rep("t5"),rep("med"))
-P2B1<-data.frame(calc_MO2(duration=lrv_p2orig[1:1108,]$Time.Min.,o2=lrv_p2orig[1:1108,]$B1,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:1108,]$T_internal,sal=30.0),rep("B1"),rep("t8"),rep("amb"))
-P2B2<-data.frame(calc_MO2(duration=lrv_p2orig[1:1257,]$Time.Min.,o2=lrv_p2orig[1:1257,]$B2,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:1257,]$T_internal,sal=30.0),rep("B2"),rep("t8"),rep("amb"))
-P2B3<-data.frame(calc_MO2(duration=lrv_p2orig[1:1033,]$Time.Min.,o2=lrv_p2orig[1:1033,]$B3,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:1033,]$T_internal,sal=30.0),rep("B3"),rep("t8"),rep("amb"))
-P2B4<-data.frame(calc_MO2(duration=lrv_p2orig[1:735,]$Time.Min.,o2=lrv_p2orig[1:735,]$B4,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:735,]$T_internal,sal=30.0),rep("B4"),rep("t8"),rep("amb"))
-#P2B5<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$B5,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("B5"),rep("t8"),rep("blankt8"))
-#P2B6<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$B6,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("B6"),rep("t8"),rep("blankt8"))
-P2C1<-data.frame(calc_MO2(duration=lrv_p2orig[1:1257,]$Time.Min.,o2=lrv_p2orig[1:1257,]$C1,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:1257,]$T_internal,sal=30.0),rep("C1"),rep("t6"),rep("amb"))
-#P2C2<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$C2,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("C2"),rep("t6"),rep("blankt6"))
-P2C3<-data.frame(calc_MO2(duration=lrv_p2orig[1:1332,]$Time.Min.,o2=lrv_p2orig[1:1332,]$C3,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:1332,]$T_internal,sal=30.0),rep("C3"),rep("t6"),rep("amb"))
-P2C4<-data.frame(calc_MO2(duration=lrv_p2orig[1:2511,]$Time.Min.,o2=lrv_p2orig[1:2511,]$C4,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:2511,]$T_internal,sal=30.0),rep("C4"),rep("t6"),rep("amb"))
-#P2C5<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$C5,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("C5"),rep("t6"),rep("blankt6"))
-#P2C6<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$C6,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("C6"),rep("t4"),rep("med"))
-P2D1<-data.frame(calc_MO2(duration=lrv_p2orig[1:585,]$Time.Min.,o2=lrv_p2orig[1:585,]$D1,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:585,]$T_internal,sal=30.0),rep("D1"),rep("t5"),rep("med"))
-#P2D2<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$D2,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("D2"),rep("t5"),rep("blankt5"))
-P2D3<-data.frame(calc_MO2(duration=lrv_p2orig[1:884,]$Time.Min.,o2=lrv_p2orig[1:884,]$D3,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:884,]$T_internal,sal=30.0),rep("D3"),rep("t5"),rep("med"))
-P2D4<-data.frame(calc_MO2(duration=lrv_p2orig[1:1332,]$Time.Min.,o2=lrv_p2orig[1:1332,]$D4,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:1332,]$T_internal,sal=30.0),rep("D4"),rep("t5"),rep("med"))
-#P2D5<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$D5,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("D5"),rep("t5"),rep("blankt5"))
-#P2D6<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$D6,o2_unit="mg_per_l",bin_width=40,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("D6"),rep("t4"),rep("blankt4"))
+#P2A1<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$A1,o2_unit="mg_per_l",bin_width=P2A1bin,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("A1"),rep("t2"),rep("blankt2"))
+P2A2<-data.frame(calc_MO2(duration=lrv_p2orig[1:1481,]$Time.Min.,o2=lrv_p2orig[1:1481,]$A2,o2_unit="mg_per_l",bin_width=P2A2bin,vol=0.0005,temp=lrv_p2orig[1:1481,]$T_internal,sal=30.0),rep("A2"),rep("t2"),rep("med"))
+#P2A3<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$A3,o2_unit="mg_per_l",bin_width=P2A3bin,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("A3"),rep("t2"),rep("blankt2"))
+P2A4<-data.frame(calc_MO2(duration=lrv_p2orig[1:1928,]$Time.Min.,o2=lrv_p2orig[1:1928,]$A4,o2_unit="mg_per_l",bin_width=P2A4bin,vol=0.0005,temp=lrv_p2orig[1:1928,]$T_internal,sal=30.0),rep("A4"),rep("t2"),rep("med"))
+P2A5<-data.frame(calc_MO2(duration=lrv_p2orig[1:1257,]$Time.Min.,o2=lrv_p2orig[1:1257,]$A5,o2_unit="mg_per_l",bin_width=P2A5bin,vol=0.0005,temp=lrv_p2orig[1:1257,]$T_internal,sal=30.0),rep("A5"),rep("t5"),rep("med"))
+P2A6<-data.frame(calc_MO2(duration=lrv_p2orig[1:959,]$Time.Min.,o2=lrv_p2orig[1:959,]$A6,o2_unit="mg_per_l",bin_width=P2A6bin,vol=0.0005,temp=lrv_p2orig[1:959,]$T_internal,sal=30.0),rep("A6"),rep("t5"),rep("med"))
+P2B1<-data.frame(calc_MO2(duration=lrv_p2orig[1:1108,]$Time.Min.,o2=lrv_p2orig[1:1108,]$B1,o2_unit="mg_per_l",bin_width=P2B1bin,vol=0.0005,temp=lrv_p2orig[1:1108,]$T_internal,sal=30.0),rep("B1"),rep("t8"),rep("amb"))
+P2B2<-data.frame(calc_MO2(duration=lrv_p2orig[1:1257,]$Time.Min.,o2=lrv_p2orig[1:1257,]$B2,o2_unit="mg_per_l",bin_width=P2B2bin,vol=0.0005,temp=lrv_p2orig[1:1257,]$T_internal,sal=30.0),rep("B2"),rep("t8"),rep("amb"))
+P2B3<-data.frame(calc_MO2(duration=lrv_p2orig[1:1033,]$Time.Min.,o2=lrv_p2orig[1:1033,]$B3,o2_unit="mg_per_l",bin_width=P2B3bin,vol=0.0005,temp=lrv_p2orig[1:1033,]$T_internal,sal=30.0),rep("B3"),rep("t8"),rep("amb"))
+P2B4<-data.frame(calc_MO2(duration=lrv_p2orig[1:735,]$Time.Min.,o2=lrv_p2orig[1:735,]$B4,o2_unit="mg_per_l",bin_width=P2B4bin,vol=0.0005,temp=lrv_p2orig[1:735,]$T_internal,sal=30.0),rep("B4"),rep("t8"),rep("amb"))
+#P2B5<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$B5,o2_unit="mg_per_l",bin_width=P2B5bin,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("B5"),rep("t8"),rep("blankt8"))
+#P2B6<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$B6,o2_unit="mg_per_l",bin_width=P2B6bin,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("B6"),rep("t8"),rep("blankt8"))
+P2C1<-data.frame(calc_MO2(duration=lrv_p2orig[1:1257,]$Time.Min.,o2=lrv_p2orig[1:1257,]$C1,o2_unit="mg_per_l",bin_width=P2C1bin,vol=0.0005,temp=lrv_p2orig[1:1257,]$T_internal,sal=30.0),rep("C1"),rep("t6"),rep("amb"))
+#P2C2<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$C2,o2_unit="mg_per_l",bin_width=P2C2bin,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("C2"),rep("t6"),rep("blankt6"))
+P2C3<-data.frame(calc_MO2(duration=lrv_p2orig[1:1332,]$Time.Min.,o2=lrv_p2orig[1:1332,]$C3,o2_unit="mg_per_l",bin_width=P2C3bin,vol=0.0005,temp=lrv_p2orig[1:1332,]$T_internal,sal=30.0),rep("C3"),rep("t6"),rep("amb"))
+P2C4<-data.frame(calc_MO2(duration=lrv_p2orig[1:2511,]$Time.Min.,o2=lrv_p2orig[1:2511,]$C4,o2_unit="mg_per_l",bin_width=P2C4bin,vol=0.0005,temp=lrv_p2orig[1:2511,]$T_internal,sal=30.0),rep("C4"),rep("t6"),rep("amb"))
+#P2C5<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$C5,o2_unit="mg_per_l",bin_width=P2C5bin,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("C5"),rep("t6"),rep("blankt6"))
+#P2C6<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$C6,o2_unit="mg_per_l",bin_width=P2C6bin,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("C6"),rep("t4"),rep("med"))
+P2D1<-data.frame(calc_MO2(duration=lrv_p2orig[1:585,]$Time.Min.,o2=lrv_p2orig[1:585,]$D1,o2_unit="mg_per_l",bin_width=P2D1bin,vol=0.0005,temp=lrv_p2orig[1:585,]$T_internal,sal=30.0),rep("D1"),rep("t5"),rep("med"))
+#P2D2<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$D2,o2_unit="mg_per_l",bin_width=P2D2bin,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("D2"),rep("t5"),rep("blankt5"))
+P2D3<-data.frame(calc_MO2(duration=lrv_p2orig[1:884,]$Time.Min.,o2=lrv_p2orig[1:884,]$D3,o2_unit="mg_per_l",bin_width=P2D3bin,vol=0.0005,temp=lrv_p2orig[1:884,]$T_internal,sal=30.0),rep("D3"),rep("t5"),rep("med"))
+P2D4<-data.frame(calc_MO2(duration=lrv_p2orig[1:1332,]$Time.Min.,o2=lrv_p2orig[1:1332,]$D4,o2_unit="mg_per_l",bin_width=P2D4bin,vol=0.0005,temp=lrv_p2orig[1:1332,]$T_internal,sal=30.0),rep("D4"),rep("t5"),rep("med"))
+#P2D5<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$D5,o2_unit="mg_per_l",bin_width=P2D5bin,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("D5"),rep("t5"),rep("blankt5"))
+#P2D6<-data.frame(calc_MO2(duration=lrv_p2orig[1:1000,]$Time.Min.,o2=lrv_p2orig[1:1000,]$D6,o2_unit="mg_per_l",bin_width=P2D6bin,vol=0.0005,temp=lrv_p2orig[1:1000,]$T_internal,sal=30.0),rep("D6"),rep("t4"),rep("blankt4"))
 
 names(P1A1)[9:11]<-c("Well","Tank","CO2")
 names(P1A2)[9:11]<-c("Well","Tank","CO2")
@@ -633,131 +633,76 @@ alllrv<-rbind(P1A1,P1A3,P1A4,P1B2,P1B3,P1B6,P1C1,P1C3,P1C5,P1D1,P1D2,P1D4,P1D5,
 #plot the curves
 library(ggplot2)
 par(mfrow=c(1,1))
-allplotlrv<-ggplot(alllrv, aes(x=O2_MEAN,y=MO2,colour=Well))+
+allplotlrv<-ggplot(alllrv, aes(x=O2_MEAN,y=msmrs,colour=Well))+
   geom_line(lwd=1)+
   scale_colour_manual(values=c("brown","red1","darkorange1","darkgoldenrod1","chartreuse1","darkolivegreen4","cadetblue1","cadetblue","blue3","darkorchid3","deeppink1","deeppink4","azure4","bisque","indianred1",
                                "orange","cornsilk","mediumspringgreen","mediumseagreen","lightblue1","cyan1","cornflowerblue","lightpink","hotpink","lavenderblush3","khaki4","gray16","darksalmon"))
 print(allplotlrv)
 
 
-#Try plotting one at a time, grouped by treatment
-library(gridExtra)
-#Ambient: P1C1, P1C3, P1C5, P2B1, P2B2, P2B3, P2B4, P2C1, P2C3, P2C4
-P1C1plot<-ggplot(P1C1,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1C3plot<-ggplot(P1C3,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1C5plot<-ggplot(P1C5,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2B1plot<-ggplot(P2B1,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2B2plot<-ggplot(P2B2,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2B3plot<-ggplot(P2B3,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2B4plot<-ggplot(P2B4,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2C1plot<-ggplot(P2C1,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2C3plot<-ggplot(P2C3,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2C4plot<-ggplot(P2C4,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-grid.arrange(P1C1plot,P1C3plot,P1C5plot,P2B1plot,P2B2plot,P2B3plot,P2B4plot,P2C1plot,P2C3plot,P2C4plot,ncol=5)
+#look for ones that are above 0.4-0.5 or below -0.05
+hist(P1A1$msmrs,breaks=10)
+hist(P1A2$msmrs,breaks=10)
+hist(P1A3$msmrs,breaks=10) #two below -0.05
+hist(P1A4$msmrs,breaks=10) 
+hist(P1A5$msmrs,breaks=10)
+hist(P1A6$msmrs,breaks=10) 
+hist(P1B1$msmrs,breaks=10)
+hist(P1B2$msmrs,breaks=10) #one above 0.6
+hist(P1B3$msmrs,breaks=10) 
+hist(P1B4$msmrs,breaks=10) 
+hist(P1B5$msmrs,breaks=10)
+hist(P1B6$msmrs,breaks=10)
+hist(P1C1$msmrs,breaks=10) #two near 0.5
+hist(P1C2$msmrs,breaks=10)
+hist(P1C3$msmrs,breaks=10) #one below -0.2, one above 0.6 and many above 0.5
+hist(P1C4$msmrs,breaks=10)
+hist(P1C5$msmrs,breaks=10)
+hist(P1C6$msmrs,breaks=10) 
+hist(P1D1$msmrs,breaks=10)
+hist(P1D2$msmrs,breaks=10) #one might be below -0.05, three above 0.6
+hist(P1D3$msmrs,breaks=10)
+hist(P1D4$msmrs,breaks=10)
+hist(P1D5$msmrs,breaks=10)
+hist(P1D6$msmrs,breaks=10) 
+hist(P2A1$msmrs,breaks=10)
+hist(P2A2$msmrs,breaks=10)
+hist(P2A3$msmrs,breaks=10)
+hist(P2A4$msmrs,breaks=10)
+hist(P2A5$msmrs,breaks=10)
+hist(P2A6$msmrs,breaks=10)
+hist(P2B1$msmrs,breaks=10) #one above 0.5
+hist(P2B2$msmrs,breaks=10)
+hist(P2B3$msmrs,breaks=10)
+hist(P2B4$msmrs,breaks=10)
+hist(P2B5$msmrs,breaks=10)
+hist(P2B6$msmrs,breaks=10)
+hist(P2C1$msmrs,breaks=10)
+hist(P2C2$msmrs,breaks=10)
+hist(P2C3$msmrs,breaks=10)
+hist(P2C4$msmrs,breaks=10)
+hist(P2C5$msmrs,breaks=10) 
+hist(P2C6$msmrs,breaks=10)
+hist(P2D1$msmrs,breaks=10)
+hist(P2D2$msmrs,breaks=10)
+hist(P2D3$msmrs,breaks=10) #several that may be below -0.05, one above 0.8
+hist(P2D4$msmrs,breaks=10)
+hist(P2D5$msmrs,breaks=10)
+hist(P2D6$msmrs,breaks=10)
 
-#Medium: P1B6, P2A2, P2A4, P2A5, P2A6, P2D1, P2D3, P2D4
-P1B6plot<-ggplot(P1B6,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2A2plot<-ggplot(P2A2,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2A4plot<-ggplot(P2A4,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2A5plot<-ggplot(P2A5,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2A6plot<-ggplot(P2A6,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2D1plot<-ggplot(P2D1,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2D3plot<-ggplot(P2D3,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P2D4plot<-ggplot(P2D4,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-grid.arrange(P1B6plot,P2A2plot,P2A4plot,P2A5plot,P2A6plot,P2D1plot,P2D3plot,P2D4plot,ncol=4)
+#Remove problematic data
+row.names(P1A3)<-NULL
+row.names(P1C3)<-NULL
+row.names(P1D2)<-NULL
 
-#High: P1A1, P1A3, P1A4, P1B2, P1B3, P1D1, P1D2, P1D4, P1D5
-P1A1plot<-ggplot(P1A1,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1A3plot<-ggplot(P1A3,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1A4plot<-ggplot(P1A4,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1B2plot<-ggplot(P1B2,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1B3plot<-ggplot(P1B3,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1D1plot<-ggplot(P1D1,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1D2plot<-ggplot(P1D2,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1D4plot<-ggplot(P1D4,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-P1D5plot<-ggplot(P1D5,aes(x=O2_MEAN,y=MO2))+
-  geom_point(size=2)+
-  geom_smooth(method="gam",se=F)+
-  theme_classic()
-grid.arrange(P1A1plot,P1A3plot,P1A4plot,P1B2plot,P1B3plot,P1D1plot,P1D2plot,P1D4plot,P1D5plot,ncol=3)
+
+P1A3<-P1A3[-c(93,94),] 
+P1C3<-P1C3[-c(55),] 
+P1D2<-P1D2[-c(14),]
+
+row.names(P1A3)<-NULL
+row.names(P1C3)<-NULL
+row.names(P1D2)<-NULL
 
 
 lrv_dana$Pcrit_alpha<-c(calc_pcrit(P1A1$O2_MEAN,P1A1$msmrs)['Alpha'],
@@ -897,45 +842,448 @@ lrv_dana$alpha<-c(calc_alpha(P1A1$O2_MEAN,P1A1$msmrs)$alpha,
                         calc_alpha(P2D4$O2_MEAN,P2D4$msmrs)$alpha)
 
 
+###############################################################################
+#Using selgmented function instead of calc_pcrit (segmented function) to get Pcrit
+library(segmented)
+
+
+P1A1seg<-selgmented(lm(msmrs~O2_MEAN,data=P1A1),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1A1)
+plot(P1A1seg,add=T)
+plot_pcrit(P1A1$O2_MEAN,P1A1$msmrs)
+print(P1A1seg)
+
+P1A2seg<-selgmented(lm(msmrs~O2_MEAN,data=P1A2[1:88,]),seg.Z=~O2_MEAN,type='bic',Kmax=6,msg=F)
+plot(msmrs~O2_MEAN,data=P1A2[1:88,])
+plot(P1A2seg,add=T)
+plot_pcrit(P1A2$O2_MEAN,P1A2$msmrs)
+print(P1A2seg)
+
+P1A3seg<-selgmented(lm(msmrs~O2_MEAN,data=P1A3),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1A3)
+plot(P1A3seg,add=T)
+plot_pcrit(P1A3$O2_MEAN,P1A3$msmrs)
+print(P1A3seg)
+
+P1A4seg<-selgmented(lm(msmrs~O2_MEAN,data=P1A4),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1A4)
+plot(P1A4seg,add=T)
+plot_pcrit(P1A4$O2_MEAN,P1A4$msmrs)
+print(P1A4seg)
+
+P1A5seg<-selgmented(lm(msmrs~O2_MEAN,data=P1A5),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1A5)
+plot(P1A5seg,add=T)
+plot_pcrit(P1A5$O2_MEAN,P1A5$msmrs)
+print(P1A5seg)
+
+P1A6seg<-selgmented(lm(msmrs~O2_MEAN,data=P1A6),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1A6)
+plot(P1A6seg,add=T)
+plot_pcrit(P1A6$O2_MEAN,P1A6$msmrs)
+print(P1A6seg)
+
+P1B1seg<-selgmented(lm(msmrs~O2_MEAN,data=P1B1),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1B1)
+plot(P1B1seg,add=T)
+plot_pcrit(P1B1$O2_MEAN,P1B1$msmrs)
+print(P1B1seg)
+
+P1B2seg<-selgmented(lm(msmrs~O2_MEAN,data=P1B2),seg.Z=~O2_MEAN,type='bic',Kmax=5,msg=F)
+plot(msmrs~O2_MEAN,data=P1B2)
+plot(P1B2seg,add=T)
+plot_pcrit(P1B2$O2_MEAN,P1B2$msmrs)
+print(P1B2seg)
+
+P1B3seg<-selgmented(lm(msmrs~O2_MEAN,data=P1B3),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1B3)
+plot(P1B3seg,add=T)
+plot_pcrit(P1B3$O2_MEAN,P1B3$msmrs)
+print(P1B3seg)
+
+P1B4seg<-selgmented(lm(msmrs~O2_MEAN,data=P1B4),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1B4)
+plot(P1B4seg,add=T)
+plot_pcrit(P1B4$O2_MEAN,P1B4$msmrs)
+print(P1B4seg)
+
+P1B5seg<-selgmented(lm(msmrs~O2_MEAN,data=P1B5),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1B5)
+plot(P1B5seg,add=T)
+plot_pcrit(P1B5$O2_MEAN,P1B5$msmrs)
+print(P1B5seg)
+
+P1B6seg<-selgmented(lm(msmrs~O2_MEAN,data=P1B6),seg.Z=~O2_MEAN,type='bic',Kmax=8,msg=T)
+plot(msmrs~O2_MEAN,data=P1B6)
+plot(P1B6seg,add=T)
+plot_pcrit(P1B6$O2_MEAN,P1B6$msmrs)
+print(P1B6seg)
+
+P1C1seg<-selgmented(lm(msmrs~O2_MEAN,data=P1C1),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1C1)
+plot(P1C1seg,add=T)
+plot_pcrit(P1C1$O2_MEAN,P1C1$msmrs)
+print(P1C1seg)
+
+P1C2seg<-selgmented(lm(msmrs~O2_MEAN,data=P1C2),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1C2)
+plot(P1C2seg,add=T)
+plot_pcrit(P1C2$O2_MEAN,P1C2$msmrs)
+print(P1C2seg)
+
+P1C3seg<-selgmented(lm(msmrs~O2_MEAN,data=P1C3),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1C3)
+plot(P1C3seg,add=T)
+plot_pcrit(P1C3$O2_MEAN,P1C3$msmrs)
+print(P1C3seg)
+
+P1C4seg<-selgmented(lm(msmrs~O2_MEAN,data=P1C4),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1C4)
+plot(P1C4seg,add=T)
+plot_pcrit(P1C4$O2_MEAN,P1C4$msmrs)
+print(P1C4seg)
+
+P1C5seg<-selgmented(lm(msmrs~O2_MEAN,data=P1C5),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1C5)
+plot(P1C5seg,add=T)
+plot_pcrit(P1C5$O2_MEAN,P1C5$msmrs)
+print(P1C5seg)
+
+P1C6seg<-selgmented(lm(msmrs~O2_MEAN,data=P1C6),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=T)
+plot(msmrs~O2_MEAN,data=P1C6)
+plot(P1C6seg,add=T)
+plot_pcrit(P1C6$O2_MEAN,P1C6$msmrs)
+print(P1C6seg)
+
+P1D1seg<-selgmented(lm(msmrs~O2_MEAN,data=P1D1),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1D1)
+plot(P1D1seg,add=T)
+plot_pcrit(P1D1$O2_MEAN,P1D1$msmrs)
+print(P1D1seg)
+
+P1D2seg<-selgmented(lm(msmrs~O2_MEAN,data=P1D2),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1D2)
+plot(P1D2seg,add=T)
+plot_pcrit(P1D2$O2_MEAN,P1D2$msmrs)
+print(P1D2seg)
+
+P1D3seg<-selgmented(lm(msmrs~O2_MEAN,data=P1D3),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1D3)
+plot(P1D3seg,add=T)
+plot_pcrit(P1D3$O2_MEAN,P1D3$msmrs)
+print(P1D3seg)
+
+P1D4seg<-selgmented(lm(msmrs~O2_MEAN,data=P1D4),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1D4)
+plot(P1D4seg,add=T)
+plot_pcrit(P1D4$O2_MEAN,P1D4$msmrs)
+print(P1D4seg)
+
+P1D5seg<-selgmented(lm(msmrs~O2_MEAN,data=P1D5),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=T)
+plot(msmrs~O2_MEAN,data=P1D5)
+plot(P1D5seg,add=T)
+plot_pcrit(P1D5$O2_MEAN,P1D5$msmrs)
+print(P1D5seg)
+
+P1D6seg<-selgmented(lm(msmrs~O2_MEAN,data=P1D6),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P1D6)
+plot(P1D6seg,add=T)
+plot_pcrit(P1D6$O2_MEAN,P1D6$msmrs)
+print(P1D6seg)
+
+#Plate 2
+
+P2A1seg<-selgmented(lm(msmrs~O2_MEAN,data=P2A1),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2A1)
+plot(P2A1seg,add=T)
+plot_pcrit(P2A1$O2_MEAN,P2A1$msmrs)
+print(P2A1seg)
+
+P2A2seg<-selgmented(lm(msmrs~O2_MEAN,data=P2A2),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2A2)
+plot(P2A2seg,add=T)
+plot_pcrit(P2A2$O2_MEAN,P2A2$msmrs)
+print(P2A2seg)
+
+P2A3seg<-selgmented(lm(msmrs~O2_MEAN,data=P2A3),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2A3)
+plot(P2A3seg,add=T)
+plot_pcrit(P2A3$O2_MEAN,P2A3$msmrs)
+print(P2A3seg)
+
+P2A4seg<-selgmented(lm(msmrs~O2_MEAN,data=P2A4),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2A4)
+plot(P2A4seg,add=T)
+plot_pcrit(P2A4$O2_MEAN,P2A4$msmrs)
+print(P2A4seg)
+
+P2A5seg<-selgmented(lm(msmrs~O2_MEAN,data=P2A5),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2A5)
+plot(P2A5seg,add=T)
+plot_pcrit(P2A5$O2_MEAN,P2A5$msmrs)
+print(P2A5seg)
+
+P2A6seg<-selgmented(lm(msmrs~O2_MEAN,data=P2A6),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2A6)
+plot(P2A6seg,add=T)
+plot_pcrit(P2A6$O2_MEAN,P2A6$msmrs)
+print(P2A6seg)
+
+P2B1seg<-selgmented(lm(msmrs~O2_MEAN,data=P2B1),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2B1)
+plot(P2B1seg,add=T)
+plot_pcrit(P2B1$O2_MEAN,P2B1$msmrs)
+print(P2B1seg)
+
+P2B2seg<-selgmented(lm(msmrs~O2_MEAN,data=P2B2),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2B2)
+plot(P2B2seg,add=T)
+plot_pcrit(P2B2$O2_MEAN,P2B2$msmrs)
+print(P2B2seg)
+
+P2B3seg<-selgmented(lm(msmrs~O2_MEAN,data=P2B3),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=T)
+plot(msmrs~O2_MEAN,data=P2B3)
+plot(P2B3seg,add=T)
+plot_pcrit(P2B3$O2_MEAN,P2B3$msmrs)
+print(P2B3seg)
+
+P2B4seg<-selgmented(lm(msmrs~O2_MEAN,data=P2B4),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2B4)
+plot(P2B4seg,add=T)
+plot_pcrit(P2B4$O2_MEAN,P2B4$msmrs)
+print(P2B4seg)
+
+P2B5seg<-selgmented(lm(msmrs~O2_MEAN,data=P2B5),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2B5)
+plot(P2B5seg,add=T)
+plot_pcrit(P2B5$O2_MEAN,P2B5$msmrs)
+print(P2B5seg)
+
+P2B6seg<-selgmented(lm(msmrs~O2_MEAN,data=P2B6),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2B6)
+plot(P2B6seg,add=T)
+plot_pcrit(P2B6$O2_MEAN,P2B6$msmrs)
+print(P2B6seg)
+
+P2C1seg<-selgmented(lm(msmrs~O2_MEAN,data=P2C1),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2C1)
+plot(P2C1seg,add=T)
+plot_pcrit(P2C1$O2_MEAN,P2C1$msmrs)
+print(P2C1seg)
+
+P2C2seg<-selgmented(lm(msmrs~O2_MEAN,data=P2C2),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2C2)
+plot(P2C2seg,add=T)
+plot_pcrit(P2C2$O2_MEAN,P2C2$msmrs)
+print(P2C2seg)
+
+P2C3seg<-selgmented(lm(msmrs~O2_MEAN,data=P2C3),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2C3)
+plot(P2C3seg,add=T)
+plot_pcrit(P2C3$O2_MEAN,P2C3$msmrs)
+print(P2C3seg)
+
+P2C4seg<-selgmented(lm(msmrs~O2_MEAN,data=P2C4),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2C4)
+plot(P2C4seg,add=T)
+plot_pcrit(P2C4$O2_MEAN,P2C4$msmrs)
+print(P2C4seg)
+
+P2C5seg<-selgmented(lm(msmrs~O2_MEAN,data=P2C5),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=T)
+plot(msmrs~O2_MEAN,data=P2C5)
+plot(P2C5seg,add=T)
+plot_pcrit(P2C5$O2_MEAN,P2C5$msmrs)
+print(P2C5seg)
+
+P2C6seg<-selgmented(lm(msmrs~O2_MEAN,data=P2C6),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2C6)
+plot(P2C6seg,add=T)
+plot_pcrit(P2C6$O2_MEAN,P2C6$msmrs)
+print(P2C6seg)
+
+P2D1seg<-selgmented(lm(msmrs~O2_MEAN,data=P2D1),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2D1)
+plot(P2D1seg,add=T)
+plot_pcrit(P2D1$O2_MEAN,P2D1$msmrs)
+print(P2D1seg)
+
+P2D2seg<-selgmented(lm(msmrs~O2_MEAN,data=P2D2),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2D2)
+plot(P2D2seg,add=T)
+plot_pcrit(P2D2$O2_MEAN,P2D2$msmrs)
+print(P2D2seg)
+
+P2D3seg<-selgmented(lm(msmrs~O2_MEAN,data=P2D3),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2D3)
+plot(P2D3seg,add=T)
+plot_pcrit(P2D3$O2_MEAN,P2D3$msmrs)
+print(P2D3seg)
+
+P2D4seg<-selgmented(lm(msmrs~O2_MEAN,data=P2D4),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2D4)
+plot(P2D4seg,add=T)
+plot_pcrit(P2D4$O2_MEAN,P2D4$msmrs)
+print(P2D4seg)
+
+P2D5seg<-selgmented(lm(msmrs~O2_MEAN,data=P2D5),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=T)
+plot(msmrs~O2_MEAN,data=P2D5)
+plot(P2D5seg,add=T)
+plot_pcrit(P2D5$O2_MEAN,P2D5$msmrs)
+print(P2D5seg)
+
+P2D6seg<-selgmented(lm(msmrs~O2_MEAN,data=P2D6),seg.Z=~O2_MEAN,type='bic',Kmax=4,msg=F)
+plot(msmrs~O2_MEAN,data=P2D6)
+plot(P2D6seg,add=T)
+plot_pcrit(P2D6$O2_MEAN,P2D6$msmrs)
+print(P2D6seg)
+
+#Finally, update the dataframe with the new Pcrit and spike data
+lrv_dana$Pcrit_break<-c(1.201,0.1375,2.301,  #P1A
+                        1.8589,0.39678,0.69698,  #P1B
+                        0.599,0.9652,0.432494,  #P1C
+                        0.9237,0.1601,0.7474,0.5787,  #P1D
+                        0.5668,1.353,1.291,0.7647,  #P2A
+                        1.648,1.6123,1.087,1.0193,  #P2B
+                        1.68102,1.998,NA,  #P2C
+                        0.81827,0.7639,1.243)  #P2D
+lrv_dana$spike<-c(0,0,1,  #P1A
+                  1,0,0,  #P1B
+                  0,0,0,  #P1C
+                  0,0,1,0,  #P1D
+                  0,1,1,0,  #P2A
+                  1,1,0,1,  #P2B
+                  1,1,NA,  #P2C
+                  0,0,1)  #P2D
+
+################################################################################################
+#Analyze, check model assumptions, and plot
 #set levels of CO2_level and Tank
-lrv_dana$CO2_level<-factor(lrv_dana$CO2_level,levels=c("amb","med","high"))
-lrv_dana$Tank<-factor(lrv_dana$Tank,levels=c("t1","t2","t3","t4","t5","t6","t7","t8","t9"))
+str(lrv_dana)
 
-plot(lrv_dana$Pcrit_alpha~lrv_dana$CO2_level)
 plot(lrv_dana$Pcrit_break~lrv_dana$CO2_level)
-plot(lrv_dana$alpha~lrv_dana$CO2_level)
-
-#check if different Pcrit metrics are correlated
-plot(lrv_dana$Pcrit_alpha~lrv_dana$Pcrit_break) #Cone shaped. 
 
 #calculate mean and SE of Pcrit values by treatment
 library(plyr)
-alpha_sum<-ddply(lrv_dana,"CO2_level",summarise,N=length(Pcrit_alpha),MeanPcrit=mean(Pcrit_alpha,na.rm=TRUE),SE=sd(Pcrit_alpha,na.rm=TRUE)/sqrt(N))
-alpha_sum
-
-break_sum<-ddply(lrv_dana,"CO2_level",summarise,N=length(Pcrit_break),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),SE=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
+break_sum<-ddply(lrv_dana,"CO2_level",summarise,N=sum(!is.na(Pcrit_break)),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),SE=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
 break_sum #in both cases, Pcrit increases in elevated CO2 treatments but so does SE - may need to transform and/or check for outliers
 
-a_sum<-ddply(lrv_dana,"CO2_level",summarise,N=length(alpha),MeanPcrit=mean(alpha,na.rm=TRUE),SE=sd(alpha,na.rm=TRUE)/sqrt(N))
-a_sum
 
 #use lm and anova to test for significance
 library(lmerTest)
 library(lme4)
 
-alpha_mod<-lmer(Pcrit_alpha~CO2_level+1|Tank,data=lrv_dana) #singular fit
-ranova(alpha_mod)
+break_mod<-lmer(Pcrit_break~CO2_level+(1|Tank),data=lrv_dana) 
+ranova(break_mod) #tank doesn't affect fit
+anova(break_mod) #p=0.5869
 
-alpha_mod1<-lm(Pcrit_alpha~CO2_level,data=lrv_dana)
-anova(alpha_mod1) #not significant, p=0.5533
+#break_mod1<-lm(Pcrit_break~CO2_level,data=lrv_dana)
+#anova(break_mod1) 
 
-break_mod<-lmer(Pcrit_break~CO2_level+1|Tank,data=lrv_dana) #singular fit
-ranova(break_mod)
+#try it the other way
+break_mod2<-aov(lrv_dana$Pcrit_break~lrv_dana$CO2_level/factor(lrv_dana$Tank))
+summary(break_mod2) #neither CO2 nor tank is significant, p=0.421 for CO2
 
-break_mod1<-lm(Pcrit_break~CO2_level,data=lrv_dana)
-anova(break_mod1) #ditto, p=0.1159
 
-a_mod<-lm(alpha~CO2_level,data=lrv_dana)
-anova(a_mod)
+#diagnostics
+par(mfrow=c(2,2))
+plot(break_mod2) 
+
+#For ANOVA the assumptions are normality of the DATA and homogeneity of variances
+#normality of data
+shapiro.test(lrv_dana$Pcrit_break) #p=0.561
+hist(lrv_dana$Pcrit_break)
+
+#homogeneity of variances
+library(car)
+leveneTest(lrv_dana$Pcrit_break, lrv_dana$CO2_level) #p=0.2213 good
+
+#plot the data - means and SEs
+library(ggplot2)
+library(grid)
+danalrvpcritplot<-ggplot(break_sum, aes(x=CO2_level,y=MeanPcrit))+
+  geom_point(size=3,shape=16)+
+  geom_errorbar(aes(ymin=MeanPcrit-SE,ymax=MeanPcrit+SE),width=0.2)+
+  annotation_custom(grobTree(textGrob("5dph Larvae, Exp. 1",x=0.5,y=0.96,gp=gpar(fontsize=16,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,2))+
+  theme_classic()
+print(danalrvpcritplot)
+
+
+###############################################################################################
+#Calculate RMR as the average MO2 for which O2>Pcrit
+
+lrv_dana$RMR<-c(mean(c(P1A1$msmrs[P1A1$O2_MEAN>lrv_dana[1,9]])),
+                mean(c(P1A3$msmrs[P1A3$O2_MEAN>lrv_dana[2,9]])),
+                mean(c(P1A4$msmrs[P1A4$O2_MEAN>lrv_dana[3,9]])),
+                mean(c(P1B2$msmrs[P1B2$O2_MEAN>lrv_dana[4,9]])),
+                mean(c(P1B3$msmrs[P1B3$O2_MEAN>lrv_dana[5,9]])),
+                mean(c(P1B6$msmrs[P1B6$O2_MEAN>lrv_dana[6,9]])),
+                mean(c(P1C1$msmrs[P1C1$O2_MEAN>lrv_dana[7,9]])),
+                mean(c(P1C3$msmrs[P1C3$O2_MEAN>lrv_dana[8,9]])),
+                mean(c(P1C5$msmrs[P1C5$O2_MEAN>lrv_dana[9,9]])),
+                mean(c(P1D1$msmrs[P1D1$O2_MEAN>lrv_dana[10,9]])),
+                mean(c(P1D2$msmrs[P1D2$O2_MEAN>lrv_dana[11,9]])),
+                mean(c(P1D4$msmrs[P1D4$O2_MEAN>lrv_dana[12,9]])),
+                mean(c(P1D5$msmrs[P1D5$O2_MEAN>lrv_dana[13,9]])),
+                mean(c(P2A2$msmrs[P2A2$O2_MEAN>lrv_dana[14,9]])),
+                mean(c(P2A4$msmrs[P2A4$O2_MEAN>lrv_dana[15,9]])),
+                mean(c(P2A5$msmrs[P2A5$O2_MEAN>lrv_dana[16,9]])),
+                mean(c(P2A6$msmrs[P2A6$O2_MEAN>lrv_dana[17,9]])),
+                mean(c(P2B1$msmrs[P2B1$O2_MEAN>lrv_dana[18,9]])),
+                mean(c(P2B2$msmrs[P2B2$O2_MEAN>lrv_dana[19,9]])),
+                mean(c(P2B3$msmrs[P2B3$O2_MEAN>lrv_dana[20,9]])),
+                mean(c(P2B4$msmrs[P2B4$O2_MEAN>lrv_dana[21,9]])),
+                mean(c(P2C1$msmrs[P2C1$O2_MEAN>lrv_dana[22,9]])),
+                mean(c(P2C3$msmrs[P2C3$O2_MEAN>lrv_dana[23,9]])),
+                mean(c(P2C4$msmrs[P2C4$O2_MEAN>3])),
+                mean(c(P2D1$msmrs[P2D1$O2_MEAN>lrv_dana[25,9]])),
+                mean(c(P2D3$msmrs[P2D3$O2_MEAN>lrv_dana[26,9]])),
+                mean(c(P2D4$msmrs[P2D4$O2_MEAN>lrv_dana[27,9]])))
+
+#analyze RMR
+dana_lrv_model<-lm(lrv_dana$RMR~lrv_dana$CO2_level)
+anova(dana_lrv_model) 
+
+dana_lrv_mod<-lmer(RMR~CO2_level+(1|Tank),data=lrv_dana) 
+anova(dana_lrv_mod)
+ranova(dana_lrv_mod) #random effect of tank doesn't affect results. 
+
+#try it the other way
+dana_lrv_mdl<-aov(lrv_dana$RMR~lrv_dana$CO2_level/factor(lrv_dana$Tank))
+summary(dana_lrv_mdl) #no significant effect of tank or CO2 (p=0.288 for CO2)
+
+#diagnostics
+par(mfrow=c(2,2))
+plot(dana_lrv_mdl) 
+
+#For ANOVA the assumptions are normality of the DATA and homogeneity of variances
+#normality of data
+shapiro.test(lrv_dana$RMR) #looks good p=0.6603
+hist(lrv_dana$RMR)
+
+#homogeneity of variances
+library(car)
+leveneTest(lrv_dana$RMR, lrv_dana$CO2_level) #p=0.2131 good
+
+#calculate the group means 
+
+library(plyr)
+dana_lrv_sum<-ddply(lrv_dana,"CO2_level",summarise,N=length(na.omit(RMR)),MeanMO2=mean(RMR,na.rm=TRUE),SE=sd(RMR,na.rm=TRUE)/sqrt(N))
+dana_lrv_sum #elevated CO2 slightly decreases MO2...opposite of previous results. But may need to redo using only data before ~Pcrit if want to compare to previous experiments. 
+
+#plot the data - means and SEs
+library(ggplot2)
+library(grid)
+danalrvplot<-ggplot(dana_lrv_sum, aes(x=CO2_level,y=MeanMO2))+
+  geom_point(size=3,shape=16)+
+  geom_errorbar(aes(ymin=MeanMO2-SE,ymax=MeanMO2+SE),width=0.2)+
+  annotation_custom(grobTree(textGrob("5dph Larvae, Exp. 1",x=0.5,y=0.96,gp=gpar(fontsize=16,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,0.3))+
+  theme_classic()
+print(danalrvplot)
+
+pct_spike_amb<-100*sum(na.omit(lrv_dana$spike[lrv_dana$CO2_level=="amb"]))/length(na.omit(lrv_dana$spike[lrv_dana$CO2_level=="amb"]))
+pct_spike_med<-100*sum(na.omit(lrv_dana$spike[lrv_dana$CO2_level=="med"]))/length(na.omit(lrv_dana$spike[lrv_dana$CO2_level=="med"]))
+pct_spike_high<-100*sum(na.omit(lrv_dana$spike[lrv_dana$CO2_level=="high"]))/length(na.omit(lrv_dana$spike[lrv_dana$CO2_level=="high"]))
 
 

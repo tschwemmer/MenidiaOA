@@ -237,11 +237,28 @@ danalarplot<-ggplot(dana_lar_sum, aes(x=CO2_level,y=MeanMO2))+
   theme_classic()
 print(danalarplot)
 
-
+##############################################################################################################
 #Try using piecewise regression to isolate non fluctuating parts
 library(segmented)
 segmented.P1A3<-selgmented(lm(A3~Time.Min.,data=lar_p1),seg.Z=~Time.Min.)
 summary(segmented.P1A3)
+
+#remove first 10 minutes and parts with extremely high temperature change
+#first check temperature in 10 min bins
+library(Thermimage)
+lar_p1slope<-slopeEveryN(lar_p1$T_internal,n=10) #makes the slope with respect to the index, NOT time. In this case time=index because data was recorded once per minute, but in other ones I will have to multiply the slopes by 3 to get degrees per minute instead of per 20 seconds. 
+lar_p1slope<-data.frame(lar_p1slope)
+lar_p1slope$DegreesHour<-unlist(lapply(X=lar_p1slope$Slope, function(X) FUN=60*X)) #calculates slope as degrees/h from degrees/min
+
+lar_p2slope<-slopeEveryN(lar_p2$T_internal,n=10) #makes the slope with respect to the index, NOT time. In this case time=index because data was recorded once per minute, but in other ones I will have to multiply the slopes by 3 to get degrees per minute instead of per 20 seconds. 
+lar_p2slope<-data.frame(lar_p2slope)
+lar_p2slope$DegreesHour<-unlist(lapply(X=lar_p2slope$Slope, function(X) FUN=60*X)) #calculates slope as degrees/h from degrees/min
+
+#now identify the sections that have greater than 0.5C/h slope
+lar_p1slope$Sample[abs(lar_p1slope$DegreesHour)>0.5] #1170 to 1210 is over 0.5C/h
+lar_p2slope$Sample[abs(lar_p2slope$DegreesHour)>0.5] #1170 to 1230 and 1320 to 1330 are over 0.5C/h
+
+
 
 
 #Trim the unusable parts from the original datasets for calc_mo2() analysis
