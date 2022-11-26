@@ -1347,6 +1347,8 @@ ranova(flax_lrv_mod) #random effect of tank doesn't affect results.
 flax_lrv_mdl<-aov(lrv_flax$RMR~lrv_flax$CO2_level/factor(lrv_flax$Tank))
 summary(flax_lrv_mdl) #p=0.000964 for CO2, tank not significant
 
+TukeyHSD(flax_lrv_mdl)
+
 #diagnostics
 par(mfrow=c(2,2))
 plot(flax_lrv_mdl) 
