@@ -162,3 +162,16 @@ print(lrvrmrfig)
 
 grid.arrange(embrmrfig,pcritlegend,larrmrfig,lrvrmrfig,ncol=2)
 
+#####################################################################################
+#Calculating means using both experiments combined
+
+#RMR
+embmeanrmr<-ddply(emb_both, "CO2_level", summarise, N=length(na.omit(RMR)),MeanRMR=mean(RMR,na.rm=TRUE),se=sd(RMR,na.rm=TRUE)/sqrt(N))
+larmeanrmr<-ddply(lar_both, "CO2_level", summarise, N=length(na.omit(RMR)),MeanRMR=mean(RMR,na.rm=TRUE),se=sd(RMR,na.rm=TRUE)/sqrt(N))
+lrvmeanrmr<-ddply(lrv_both, "CO2_level", summarise, N=length(na.omit(RMR)),MeanRMR=mean(RMR,na.rm=TRUE),se=sd(RMR,na.rm=TRUE)/sqrt(N))
+
+#Pcrit
+embmeanpcrit<-ddply(emb_both, "CO2_level", summarise, N=length(na.omit(Pcrit_break)),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),se=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
+larmeanpcrit<-ddply(lar_both, "CO2_level", summarise, N=length(na.omit(Pcrit_break)),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),se=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
+lrvmeanpcrit<-ddply(lrv_both, "CO2_level", summarise, N=length(na.omit(Pcrit_break)),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),se=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
+
