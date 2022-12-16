@@ -6,7 +6,7 @@ A4,med,2A,0.085691742,122,
 A5,med,2A,0.078067375,123,
 A6,med,2A,0.11007652,124,
 B1,blankamb,1B,,,
-B2,med,2C,0.14804063,125,
+B2,med,2C,0.14804063,125,"Don't use it has too big of an increase, maybe a leak or large bubble. "
 B3,med,2C,0.138475215,126,
 B4,med,2C,0.105073036,127,
 B5,blankmed,2C,,,

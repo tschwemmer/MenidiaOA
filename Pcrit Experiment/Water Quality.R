@@ -1,0 +1,640 @@
+#Calculating table of carbonate chemistry and water quality parameters
+#Non-OA parameters: temperature, salinity
+#OA parameters: pH, pCO2, DIC, TA, fCO2, CO3, HCO3, omega-aragonite, omega-calcite
+
+#For each experiment create a table of these parameters for each sample
+#Then for each experiment create a table of mean and SE of these parameters for each tank by combining repeat samples
+#Finally for Experiment 1 only, create a table of mean and SE of these parameters for each CO2 treatment by combining tanks and repeat samples. 
+
+#Load seacarb and plotrix packages (plotrix has std.error function)
+library(seacarb)
+library(plotrix)
+
+#Load the data
+rawdata<-read.csv(file.choose(),header=TRUE)
+
+#create a dataframe for Experiment 1 (Dana)
+e1samp<-data.frame("Sample"<-c(rawdata[c(4:12,16:24),1]),
+                        "Experiment"<-c(rawdata[c(4:12,16:24),2]),
+                        "Tank"<-c(rawdata[c(4:12,16:24),3]),
+                        "CO2_level"<-c(rawdata[c(4:12,16:24),4]),
+                        "Salinity"<-c(rawdata[c(4:12,16:24),5]),
+                        "TA_umolkg"<-c(rawdata[c(4:12,16:24),6]),
+                        "DIC_umolkg"<-c(rawdata[c(4:12,16:24),8]),
+                        "pH_m"<-c(rawdata[c(4:12,16:24),10]),
+                        "Temp"<-c(rawdata[c(4:12,16:24),11]))
+names(e1samp)<-c("Sample","Experiment","Tank","CO2_level","Salinity","TA_umolkg","DIC_umolkg","pH_m","Temp")
+
+#create a dataframe for Experiment 2 (Flax)
+e2samp<-data.frame("Sample"<-c(rawdata[c(1:3,13:15,25:27),1]),
+                        "Experiment"<-c(rawdata[c(1:3,13:15,25:27),2]),
+                        "Tank"<-c(rawdata[c(1:3,13:15,25:27),3]),
+                        "CO2_level"<-c(rawdata[c(1:3,13:15,25:27),4]),
+                        "Salinity"<-c(rawdata[c(1:3,13:15,25:27),5]),
+                        "TA_umolkg"<-c(rawdata[c(1:3,13:15,25:27),6]),
+                        "DIC_umolkg"<-c(rawdata[c(1:3,13:15,25:27),8]),
+                        "pH_m"<-c(rawdata[c(1:3,13:15,25:27),10]),
+                        "Temp"<-c(rawdata[c(1:3,13:15,25:27),11]))
+names(e2samp)<-c("Sample","Experiment","Tank","CO2_level","Salinity","TA_umolkg","DIC_umolkg","pH_m","Temp")
+
+#add the calculated parameters to the table for Experiment 1
+e1samp$pCO2<-c(carb(flag=15,var1=rawdata$TA_molkg[4],var2=rawdata$DIC_molkg[4],S=rawdata$Salinity[4],T=rawdata$Temp[4])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[5],var2=rawdata$DIC_molkg[5],S=rawdata$Salinity[5],T=rawdata$Temp[5])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[6],var2=rawdata$DIC_molkg[6],S=rawdata$Salinity[6],T=rawdata$Temp[6])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[7],var2=rawdata$DIC_molkg[7],S=rawdata$Salinity[7],T=rawdata$Temp[7])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[8],var2=rawdata$DIC_molkg[8],S=rawdata$Salinity[8],T=rawdata$Temp[8])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[9],var2=rawdata$DIC_molkg[9],S=rawdata$Salinity[9],T=rawdata$Temp[9])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[10],var2=rawdata$DIC_molkg[10],S=rawdata$Salinity[10],T=rawdata$Temp[10])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[11],var2=rawdata$DIC_molkg[11],S=rawdata$Salinity[11],T=rawdata$Temp[11])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[12],var2=rawdata$DIC_molkg[12],S=rawdata$Salinity[12],T=rawdata$Temp[12])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[16],var2=rawdata$DIC_molkg[16],S=rawdata$Salinity[16],T=rawdata$Temp[16])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[17],var2=rawdata$DIC_molkg[17],S=rawdata$Salinity[17],T=rawdata$Temp[17])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[18],var2=rawdata$DIC_molkg[18],S=rawdata$Salinity[18],T=rawdata$Temp[18])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[19],var2=rawdata$DIC_molkg[19],S=rawdata$Salinity[19],T=rawdata$Temp[19])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[20],var2=rawdata$DIC_molkg[20],S=rawdata$Salinity[20],T=rawdata$Temp[20])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[21],var2=rawdata$DIC_molkg[21],S=rawdata$Salinity[21],T=rawdata$Temp[21])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[22],var2=rawdata$DIC_molkg[22],S=rawdata$Salinity[22],T=rawdata$Temp[22])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[23],var2=rawdata$DIC_molkg[23],S=rawdata$Salinity[23],T=rawdata$Temp[23])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[24],var2=rawdata$DIC_molkg[24],S=rawdata$Salinity[24],T=rawdata$Temp[24])[9])
+e1samp$pH_c<-c(carb(flag=15,var1=rawdata$TA_molkg[4],var2=rawdata$DIC_molkg[4],S=rawdata$Salinity[4],T=rawdata$Temp[4])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[5],var2=rawdata$DIC_molkg[5],S=rawdata$Salinity[5],T=rawdata$Temp[5])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[6],var2=rawdata$DIC_molkg[6],S=rawdata$Salinity[6],T=rawdata$Temp[6])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[7],var2=rawdata$DIC_molkg[7],S=rawdata$Salinity[7],T=rawdata$Temp[7])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[8],var2=rawdata$DIC_molkg[8],S=rawdata$Salinity[8],T=rawdata$Temp[8])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[9],var2=rawdata$DIC_molkg[9],S=rawdata$Salinity[9],T=rawdata$Temp[9])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[10],var2=rawdata$DIC_molkg[10],S=rawdata$Salinity[10],T=rawdata$Temp[10])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[11],var2=rawdata$DIC_molkg[11],S=rawdata$Salinity[11],T=rawdata$Temp[11])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[12],var2=rawdata$DIC_molkg[12],S=rawdata$Salinity[12],T=rawdata$Temp[12])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[16],var2=rawdata$DIC_molkg[16],S=rawdata$Salinity[16],T=rawdata$Temp[16])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[17],var2=rawdata$DIC_molkg[17],S=rawdata$Salinity[17],T=rawdata$Temp[17])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[18],var2=rawdata$DIC_molkg[18],S=rawdata$Salinity[18],T=rawdata$Temp[18])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[19],var2=rawdata$DIC_molkg[19],S=rawdata$Salinity[19],T=rawdata$Temp[19])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[20],var2=rawdata$DIC_molkg[20],S=rawdata$Salinity[20],T=rawdata$Temp[20])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[21],var2=rawdata$DIC_molkg[21],S=rawdata$Salinity[21],T=rawdata$Temp[21])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[22],var2=rawdata$DIC_molkg[22],S=rawdata$Salinity[22],T=rawdata$Temp[22])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[23],var2=rawdata$DIC_molkg[23],S=rawdata$Salinity[23],T=rawdata$Temp[23])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[24],var2=rawdata$DIC_molkg[24],S=rawdata$Salinity[24],T=rawdata$Temp[24])[6])
+e1samp$fCO2<-c(carb(flag=15,var1=rawdata$TA_molkg[4],var2=rawdata$DIC_molkg[4],S=rawdata$Salinity[4],T=rawdata$Temp[4])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[5],var2=rawdata$DIC_molkg[5],S=rawdata$Salinity[5],T=rawdata$Temp[5])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[6],var2=rawdata$DIC_molkg[6],S=rawdata$Salinity[6],T=rawdata$Temp[6])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[7],var2=rawdata$DIC_molkg[7],S=rawdata$Salinity[7],T=rawdata$Temp[7])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[8],var2=rawdata$DIC_molkg[8],S=rawdata$Salinity[8],T=rawdata$Temp[8])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[9],var2=rawdata$DIC_molkg[9],S=rawdata$Salinity[9],T=rawdata$Temp[9])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[10],var2=rawdata$DIC_molkg[10],S=rawdata$Salinity[10],T=rawdata$Temp[10])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[11],var2=rawdata$DIC_molkg[11],S=rawdata$Salinity[11],T=rawdata$Temp[11])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[12],var2=rawdata$DIC_molkg[12],S=rawdata$Salinity[12],T=rawdata$Temp[12])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[16],var2=rawdata$DIC_molkg[16],S=rawdata$Salinity[16],T=rawdata$Temp[16])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[17],var2=rawdata$DIC_molkg[17],S=rawdata$Salinity[17],T=rawdata$Temp[17])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[18],var2=rawdata$DIC_molkg[18],S=rawdata$Salinity[18],T=rawdata$Temp[18])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[19],var2=rawdata$DIC_molkg[19],S=rawdata$Salinity[19],T=rawdata$Temp[19])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[20],var2=rawdata$DIC_molkg[20],S=rawdata$Salinity[20],T=rawdata$Temp[20])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[21],var2=rawdata$DIC_molkg[21],S=rawdata$Salinity[21],T=rawdata$Temp[21])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[22],var2=rawdata$DIC_molkg[22],S=rawdata$Salinity[22],T=rawdata$Temp[22])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[23],var2=rawdata$DIC_molkg[23],S=rawdata$Salinity[23],T=rawdata$Temp[23])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[24],var2=rawdata$DIC_molkg[24],S=rawdata$Salinity[24],T=rawdata$Temp[24])[8])
+e1samp$HCO3<-c(1000000*carb(flag=15,var1=rawdata$TA_molkg[4],var2=rawdata$DIC_molkg[4],S=rawdata$Salinity[4],T=rawdata$Temp[4])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[5],var2=rawdata$DIC_molkg[5],S=rawdata$Salinity[5],T=rawdata$Temp[5])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[6],var2=rawdata$DIC_molkg[6],S=rawdata$Salinity[6],T=rawdata$Temp[6])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[7],var2=rawdata$DIC_molkg[7],S=rawdata$Salinity[7],T=rawdata$Temp[7])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[8],var2=rawdata$DIC_molkg[8],S=rawdata$Salinity[8],T=rawdata$Temp[8])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[9],var2=rawdata$DIC_molkg[9],S=rawdata$Salinity[9],T=rawdata$Temp[9])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[10],var2=rawdata$DIC_molkg[10],S=rawdata$Salinity[10],T=rawdata$Temp[10])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[11],var2=rawdata$DIC_molkg[11],S=rawdata$Salinity[11],T=rawdata$Temp[11])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[12],var2=rawdata$DIC_molkg[12],S=rawdata$Salinity[12],T=rawdata$Temp[12])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[16],var2=rawdata$DIC_molkg[16],S=rawdata$Salinity[16],T=rawdata$Temp[16])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[17],var2=rawdata$DIC_molkg[17],S=rawdata$Salinity[17],T=rawdata$Temp[17])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[18],var2=rawdata$DIC_molkg[18],S=rawdata$Salinity[18],T=rawdata$Temp[18])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[19],var2=rawdata$DIC_molkg[19],S=rawdata$Salinity[19],T=rawdata$Temp[19])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[20],var2=rawdata$DIC_molkg[20],S=rawdata$Salinity[20],T=rawdata$Temp[20])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[21],var2=rawdata$DIC_molkg[21],S=rawdata$Salinity[21],T=rawdata$Temp[21])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[22],var2=rawdata$DIC_molkg[22],S=rawdata$Salinity[22],T=rawdata$Temp[22])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[23],var2=rawdata$DIC_molkg[23],S=rawdata$Salinity[23],T=rawdata$Temp[23])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[24],var2=rawdata$DIC_molkg[24],S=rawdata$Salinity[24],T=rawdata$Temp[24])[14])
+e1samp$CO3<-c(1000000*carb(flag=15,var1=rawdata$TA_molkg[4],var2=rawdata$DIC_molkg[4],S=rawdata$Salinity[4],T=rawdata$Temp[4])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[5],var2=rawdata$DIC_molkg[5],S=rawdata$Salinity[5],T=rawdata$Temp[5])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[6],var2=rawdata$DIC_molkg[6],S=rawdata$Salinity[6],T=rawdata$Temp[6])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[7],var2=rawdata$DIC_molkg[7],S=rawdata$Salinity[7],T=rawdata$Temp[7])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[8],var2=rawdata$DIC_molkg[8],S=rawdata$Salinity[8],T=rawdata$Temp[8])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[9],var2=rawdata$DIC_molkg[9],S=rawdata$Salinity[9],T=rawdata$Temp[9])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[10],var2=rawdata$DIC_molkg[10],S=rawdata$Salinity[10],T=rawdata$Temp[10])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[11],var2=rawdata$DIC_molkg[11],S=rawdata$Salinity[11],T=rawdata$Temp[11])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[12],var2=rawdata$DIC_molkg[12],S=rawdata$Salinity[12],T=rawdata$Temp[12])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[16],var2=rawdata$DIC_molkg[16],S=rawdata$Salinity[16],T=rawdata$Temp[16])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[17],var2=rawdata$DIC_molkg[17],S=rawdata$Salinity[17],T=rawdata$Temp[17])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[18],var2=rawdata$DIC_molkg[18],S=rawdata$Salinity[18],T=rawdata$Temp[18])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[19],var2=rawdata$DIC_molkg[19],S=rawdata$Salinity[19],T=rawdata$Temp[19])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[20],var2=rawdata$DIC_molkg[20],S=rawdata$Salinity[20],T=rawdata$Temp[20])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[21],var2=rawdata$DIC_molkg[21],S=rawdata$Salinity[21],T=rawdata$Temp[21])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[22],var2=rawdata$DIC_molkg[22],S=rawdata$Salinity[22],T=rawdata$Temp[22])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[23],var2=rawdata$DIC_molkg[23],S=rawdata$Salinity[23],T=rawdata$Temp[23])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[24],var2=rawdata$DIC_molkg[24],S=rawdata$Salinity[24],T=rawdata$Temp[24])[15])
+e1samp$OmegaA<-c(carb(flag=15,var1=rawdata$TA_molkg[4],var2=rawdata$DIC_molkg[4],S=rawdata$Salinity[4],T=rawdata$Temp[4])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[5],var2=rawdata$DIC_molkg[5],S=rawdata$Salinity[5],T=rawdata$Temp[5])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[6],var2=rawdata$DIC_molkg[6],S=rawdata$Salinity[6],T=rawdata$Temp[6])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[7],var2=rawdata$DIC_molkg[7],S=rawdata$Salinity[7],T=rawdata$Temp[7])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[8],var2=rawdata$DIC_molkg[8],S=rawdata$Salinity[8],T=rawdata$Temp[8])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[9],var2=rawdata$DIC_molkg[9],S=rawdata$Salinity[9],T=rawdata$Temp[9])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[10],var2=rawdata$DIC_molkg[10],S=rawdata$Salinity[10],T=rawdata$Temp[10])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[11],var2=rawdata$DIC_molkg[11],S=rawdata$Salinity[11],T=rawdata$Temp[11])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[12],var2=rawdata$DIC_molkg[12],S=rawdata$Salinity[12],T=rawdata$Temp[12])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[16],var2=rawdata$DIC_molkg[16],S=rawdata$Salinity[16],T=rawdata$Temp[16])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[17],var2=rawdata$DIC_molkg[17],S=rawdata$Salinity[17],T=rawdata$Temp[17])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[18],var2=rawdata$DIC_molkg[18],S=rawdata$Salinity[18],T=rawdata$Temp[18])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[19],var2=rawdata$DIC_molkg[19],S=rawdata$Salinity[19],T=rawdata$Temp[19])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[20],var2=rawdata$DIC_molkg[20],S=rawdata$Salinity[20],T=rawdata$Temp[20])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[21],var2=rawdata$DIC_molkg[21],S=rawdata$Salinity[21],T=rawdata$Temp[21])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[22],var2=rawdata$DIC_molkg[22],S=rawdata$Salinity[22],T=rawdata$Temp[22])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[23],var2=rawdata$DIC_molkg[23],S=rawdata$Salinity[23],T=rawdata$Temp[23])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[24],var2=rawdata$DIC_molkg[24],S=rawdata$Salinity[24],T=rawdata$Temp[24])[18])
+e1samp$OmegaC<-c(carb(flag=15,var1=rawdata$TA_molkg[4],var2=rawdata$DIC_molkg[4],S=rawdata$Salinity[4],T=rawdata$Temp[4])[19],
+                 carb(flag=15,var1=rawdata$TA_molkg[5],var2=rawdata$DIC_molkg[5],S=rawdata$Salinity[5],T=rawdata$Temp[5])[19],
+                 carb(flag=15,var1=rawdata$TA_molkg[6],var2=rawdata$DIC_molkg[6],S=rawdata$Salinity[6],T=rawdata$Temp[6])[19],
+                 carb(flag=15,var1=rawdata$TA_molkg[7],var2=rawdata$DIC_molkg[7],S=rawdata$Salinity[7],T=rawdata$Temp[7])[19],
+                 carb(flag=15,var1=rawdata$TA_molkg[8],var2=rawdata$DIC_molkg[8],S=rawdata$Salinity[8],T=rawdata$Temp[8])[19],
+                 carb(flag=15,var1=rawdata$TA_molkg[9],var2=rawdata$DIC_molkg[9],S=rawdata$Salinity[9],T=rawdata$Temp[9])[19],
+                 carb(flag=15,var1=rawdata$TA_molkg[10],var2=rawdata$DIC_molkg[10],S=rawdata$Salinity[10],T=rawdata$Temp[10])[19],
+                 carb(flag=15,var1=rawdata$TA_molkg[11],var2=rawdata$DIC_molkg[11],S=rawdata$Salinity[11],T=rawdata$Temp[11])[19],
+                 carb(flag=15,var1=rawdata$TA_molkg[12],var2=rawdata$DIC_molkg[12],S=rawdata$Salinity[12],T=rawdata$Temp[12])[19],
+                 carb(flag=15,var1=rawdata$TA_molkg[16],var2=rawdata$DIC_molkg[16],S=rawdata$Salinity[16],T=rawdata$Temp[16])[19],
+                 carb(flag=15,var1=rawdata$TA_molkg[17],var2=rawdata$DIC_molkg[17],S=rawdata$Salinity[17],T=rawdata$Temp[17])[19],
+                 carb(flag=15,var1=rawdata$TA_molkg[18],var2=rawdata$DIC_molkg[18],S=rawdata$Salinity[18],T=rawdata$Temp[18])[19],
+                 carb(flag=15,var1=rawdata$TA_molkg[19],var2=rawdata$DIC_molkg[19],S=rawdata$Salinity[19],T=rawdata$Temp[19])[19],
+                 carb(flag=15,var1=rawdata$TA_molkg[20],var2=rawdata$DIC_molkg[20],S=rawdata$Salinity[20],T=rawdata$Temp[20])[19],
+                 carb(flag=15,var1=rawdata$TA_molkg[21],var2=rawdata$DIC_molkg[21],S=rawdata$Salinity[21],T=rawdata$Temp[21])[19],
+                 carb(flag=15,var1=rawdata$TA_molkg[22],var2=rawdata$DIC_molkg[22],S=rawdata$Salinity[22],T=rawdata$Temp[22])[19],
+                 carb(flag=15,var1=rawdata$TA_molkg[23],var2=rawdata$DIC_molkg[23],S=rawdata$Salinity[23],T=rawdata$Temp[23])[19],
+                 carb(flag=15,var1=rawdata$TA_molkg[24],var2=rawdata$DIC_molkg[24],S=rawdata$Salinity[24],T=rawdata$Temp[24])[19])
+
+#add the calculated parameters to the table for Experiment 2
+e2samp$pCO2<-c(carb(flag=15,var1=rawdata$TA_molkg[1],var2=rawdata$DIC_molkg[1],S=rawdata$Salinity[1],T=rawdata$Temp[1])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[2],var2=rawdata$DIC_molkg[2],S=rawdata$Salinity[2],T=rawdata$Temp[2])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[3],var2=rawdata$DIC_molkg[3],S=rawdata$Salinity[3],T=rawdata$Temp[3])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[13],var2=rawdata$DIC_molkg[13],S=rawdata$Salinity[13],T=rawdata$Temp[13])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[14],var2=rawdata$DIC_molkg[14],S=rawdata$Salinity[14],T=rawdata$Temp[14])[9],
+               carb(flag=15,var1=rawdata$TA_molkg[15],var2=rawdata$DIC_molkg[15],S=rawdata$Salinity[15],T=rawdata$Temp[15])[9],
+               carb(flag=8,var1=rawdata$pH[25],var2=rawdata$TA_molkg[25],S=rawdata$Salinity[25],T=rawdata$Temp[25])[9],
+               carb(flag=8,var1=rawdata$pH[26],var2=rawdata$TA_molkg[26],S=rawdata$Salinity[26],T=rawdata$Temp[26])[9],
+               carb(flag=8,var1=rawdata$pH[27],var2=rawdata$TA_molkg[27],S=rawdata$Salinity[27],T=rawdata$Temp[27])[9])
+e2samp$pH_c<-c(carb(flag=15,var1=rawdata$TA_molkg[1],var2=rawdata$DIC_molkg[1],S=rawdata$Salinity[1],T=rawdata$Temp[1])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[2],var2=rawdata$DIC_molkg[2],S=rawdata$Salinity[2],T=rawdata$Temp[2])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[3],var2=rawdata$DIC_molkg[3],S=rawdata$Salinity[3],T=rawdata$Temp[3])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[13],var2=rawdata$DIC_molkg[13],S=rawdata$Salinity[13],T=rawdata$Temp[13])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[14],var2=rawdata$DIC_molkg[14],S=rawdata$Salinity[14],T=rawdata$Temp[14])[6],
+               carb(flag=15,var1=rawdata$TA_molkg[15],var2=rawdata$DIC_molkg[15],S=rawdata$Salinity[15],T=rawdata$Temp[15])[6],
+               carb(flag=8,var1=rawdata$pH[25],var2=rawdata$TA_molkg[25],S=rawdata$Salinity[25],T=rawdata$Temp[25])[6],
+               carb(flag=8,var1=rawdata$pH[26],var2=rawdata$TA_molkg[26],S=rawdata$Salinity[26],T=rawdata$Temp[26])[6],
+               carb(flag=8,var1=rawdata$pH[27],var2=rawdata$TA_molkg[27],S=rawdata$Salinity[27],T=rawdata$Temp[27])[6])
+e2samp$fCO2<-c(carb(flag=15,var1=rawdata$TA_molkg[1],var2=rawdata$DIC_molkg[1],S=rawdata$Salinity[1],T=rawdata$Temp[1])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[2],var2=rawdata$DIC_molkg[2],S=rawdata$Salinity[2],T=rawdata$Temp[2])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[3],var2=rawdata$DIC_molkg[3],S=rawdata$Salinity[3],T=rawdata$Temp[3])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[13],var2=rawdata$DIC_molkg[13],S=rawdata$Salinity[13],T=rawdata$Temp[13])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[14],var2=rawdata$DIC_molkg[14],S=rawdata$Salinity[14],T=rawdata$Temp[14])[8],
+               carb(flag=15,var1=rawdata$TA_molkg[15],var2=rawdata$DIC_molkg[15],S=rawdata$Salinity[15],T=rawdata$Temp[15])[8],
+               carb(flag=8,var1=rawdata$pH[25],var2=rawdata$TA_molkg[25],S=rawdata$Salinity[25],T=rawdata$Temp[25])[8],
+               carb(flag=8,var1=rawdata$pH[26],var2=rawdata$TA_molkg[26],S=rawdata$Salinity[26],T=rawdata$Temp[26])[8],
+               carb(flag=8,var1=rawdata$pH[27],var2=rawdata$TA_molkg[27],S=rawdata$Salinity[27],T=rawdata$Temp[27])[8])
+e2samp$HCO3<-c(1000000*carb(flag=15,var1=rawdata$TA_molkg[1],var2=rawdata$DIC_molkg[1],S=rawdata$Salinity[1],T=rawdata$Temp[1])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[2],var2=rawdata$DIC_molkg[2],S=rawdata$Salinity[2],T=rawdata$Temp[2])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[3],var2=rawdata$DIC_molkg[3],S=rawdata$Salinity[3],T=rawdata$Temp[3])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[13],var2=rawdata$DIC_molkg[13],S=rawdata$Salinity[13],T=rawdata$Temp[13])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[14],var2=rawdata$DIC_molkg[14],S=rawdata$Salinity[14],T=rawdata$Temp[14])[14],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[15],var2=rawdata$DIC_molkg[15],S=rawdata$Salinity[15],T=rawdata$Temp[15])[14],
+               1000000*carb(flag=8,var1=rawdata$pH[25],var2=rawdata$TA_molkg[25],S=rawdata$Salinity[25],T=rawdata$Temp[25])[14],
+               1000000*carb(flag=8,var1=rawdata$pH[26],var2=rawdata$TA_molkg[26],S=rawdata$Salinity[26],T=rawdata$Temp[26])[14],
+               1000000*carb(flag=8,var1=rawdata$pH[27],var2=rawdata$TA_molkg[27],S=rawdata$Salinity[27],T=rawdata$Temp[27])[14])
+e2samp$CO3<-c(1000000*carb(flag=15,var1=rawdata$TA_molkg[1],var2=rawdata$DIC_molkg[1],S=rawdata$Salinity[1],T=rawdata$Temp[1])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[2],var2=rawdata$DIC_molkg[2],S=rawdata$Salinity[2],T=rawdata$Temp[2])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[3],var2=rawdata$DIC_molkg[3],S=rawdata$Salinity[3],T=rawdata$Temp[3])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[13],var2=rawdata$DIC_molkg[13],S=rawdata$Salinity[13],T=rawdata$Temp[13])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[14],var2=rawdata$DIC_molkg[14],S=rawdata$Salinity[14],T=rawdata$Temp[14])[15],
+               1000000*carb(flag=15,var1=rawdata$TA_molkg[15],var2=rawdata$DIC_molkg[15],S=rawdata$Salinity[15],T=rawdata$Temp[15])[15],
+               1000000*carb(flag=8,var1=rawdata$pH[25],var2=rawdata$TA_molkg[25],S=rawdata$Salinity[25],T=rawdata$Temp[25])[15],
+               1000000*carb(flag=8,var1=rawdata$pH[26],var2=rawdata$TA_molkg[26],S=rawdata$Salinity[26],T=rawdata$Temp[26])[15],
+               1000000*carb(flag=8,var1=rawdata$pH[27],var2=rawdata$TA_molkg[27],S=rawdata$Salinity[27],T=rawdata$Temp[27])[15])
+e2samp$OmegaA<-c(carb(flag=15,var1=rawdata$TA_molkg[1],var2=rawdata$DIC_molkg[1],S=rawdata$Salinity[1],T=rawdata$Temp[1])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[2],var2=rawdata$DIC_molkg[2],S=rawdata$Salinity[2],T=rawdata$Temp[2])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[3],var2=rawdata$DIC_molkg[3],S=rawdata$Salinity[3],T=rawdata$Temp[3])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[13],var2=rawdata$DIC_molkg[13],S=rawdata$Salinity[13],T=rawdata$Temp[13])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[14],var2=rawdata$DIC_molkg[14],S=rawdata$Salinity[14],T=rawdata$Temp[14])[18],
+               carb(flag=15,var1=rawdata$TA_molkg[15],var2=rawdata$DIC_molkg[15],S=rawdata$Salinity[15],T=rawdata$Temp[15])[18],
+               carb(flag=8,var1=rawdata$pH[25],var2=rawdata$TA_molkg[25],S=rawdata$Salinity[25],T=rawdata$Temp[25])[18],
+               carb(flag=8,var1=rawdata$pH[26],var2=rawdata$TA_molkg[26],S=rawdata$Salinity[26],T=rawdata$Temp[26])[18],
+               carb(flag=8,var1=rawdata$pH[27],var2=rawdata$TA_molkg[27],S=rawdata$Salinity[27],T=rawdata$Temp[27])[18])
+e2samp$OmegaC<-c(carb(flag=15,var1=rawdata$TA_molkg[1],var2=rawdata$DIC_molkg[1],S=rawdata$Salinity[1],T=rawdata$Temp[1])[19],
+               carb(flag=15,var1=rawdata$TA_molkg[2],var2=rawdata$DIC_molkg[2],S=rawdata$Salinity[2],T=rawdata$Temp[2])[19],
+               carb(flag=15,var1=rawdata$TA_molkg[3],var2=rawdata$DIC_molkg[3],S=rawdata$Salinity[3],T=rawdata$Temp[3])[19],
+               carb(flag=15,var1=rawdata$TA_molkg[13],var2=rawdata$DIC_molkg[13],S=rawdata$Salinity[13],T=rawdata$Temp[13])[19],
+               carb(flag=15,var1=rawdata$TA_molkg[14],var2=rawdata$DIC_molkg[14],S=rawdata$Salinity[14],T=rawdata$Temp[14])[19],
+               carb(flag=15,var1=rawdata$TA_molkg[15],var2=rawdata$DIC_molkg[15],S=rawdata$Salinity[15],T=rawdata$Temp[15])[19],
+               carb(flag=8,var1=rawdata$pH[25],var2=rawdata$TA_molkg[25],S=rawdata$Salinity[25],T=rawdata$Temp[25])[19],
+               carb(flag=8,var1=rawdata$pH[26],var2=rawdata$TA_molkg[26],S=rawdata$Salinity[26],T=rawdata$Temp[26])[19],
+               carb(flag=8,var1=rawdata$pH[27],var2=rawdata$TA_molkg[27],S=rawdata$Salinity[27],T=rawdata$Temp[27])[19])
+
+
+#Now make table for Experiment 1 Tank means and SEs
+e1tank<-data.frame("Experiment"<-rep("exp1",times=9),
+                   e1samp$Tank[1:9],
+                   e1samp$CO2_level[1:9])
+names(e1tank)<-c("Experiment","Tank","CO2_level")
+
+#First have to change types of the carbonate chemistry variables to numeric because they are weird
+e1samp$pCO2<-as.numeric(e1samp$pCO2)
+e1samp$pH_c<-as.numeric(e1samp$pH_c)
+e1samp$fCO2<-as.numeric(e1samp$fCO2)
+e1samp$HCO3<-as.numeric(e1samp$HCO3)
+e1samp$CO3<-as.numeric(e1samp$CO3)
+e1samp$OmegaC<-as.numeric(e1samp$OmegaC)
+e1samp$OmegaA<-as.numeric(e1samp$OmegaA)
+
+
+e1tank$Salinity<-c(mean(e1samp$Salinity[e1samp$Tank=="t1"]),
+                   mean(e1samp$Salinity[e1samp$Tank=="t2"]),
+                   mean(e1samp$Salinity[e1samp$Tank=="t3"]),
+                   mean(e1samp$Salinity[e1samp$Tank=="t4"]),
+                   mean(e1samp$Salinity[e1samp$Tank=="t5"]),
+                   mean(e1samp$Salinity[e1samp$Tank=="t6"]),
+                   mean(e1samp$Salinity[e1samp$Tank=="t7"]),
+                   mean(e1samp$Salinity[e1samp$Tank=="t8"]),
+                   mean(e1samp$Salinity[e1samp$Tank=="t9"]))
+e1tank$Temp<-c(mean(e1samp$Temp[e1samp$Tank=="t1"]),
+                   mean(e1samp$Temp[e1samp$Tank=="t2"]),
+                   mean(e1samp$Temp[e1samp$Tank=="t3"]),
+                   mean(e1samp$Temp[e1samp$Tank=="t4"]),
+                   mean(e1samp$Temp[e1samp$Tank=="t5"]),
+                   mean(e1samp$Temp[e1samp$Tank=="t6"]),
+                   mean(e1samp$Temp[e1samp$Tank=="t7"]),
+                   mean(e1samp$Temp[e1samp$Tank=="t8"]),
+                   mean(e1samp$Temp[e1samp$Tank=="t9"]))
+e1tank$TA_umolkg<-c(mean(e1samp$TA_umolkg[e1samp$Tank=="t1"]),
+                   mean(e1samp$TA_umolkg[e1samp$Tank=="t2"]),
+                   mean(e1samp$TA_umolkg[e1samp$Tank=="t3"]),
+                   mean(e1samp$TA_umolkg[e1samp$Tank=="t4"]),
+                   mean(e1samp$TA_umolkg[e1samp$Tank=="t5"]),
+                   mean(e1samp$TA_umolkg[e1samp$Tank=="t6"]),
+                   mean(e1samp$TA_umolkg[e1samp$Tank=="t7"]),
+                   mean(e1samp$TA_umolkg[e1samp$Tank=="t8"]),
+                   mean(e1samp$TA_umolkg[e1samp$Tank=="t9"]))
+e1tank$DIC_umolkg<-c(mean(e1samp$DIC_umolkg[e1samp$Tank=="t1"]),
+                   mean(e1samp$DIC_umolkg[e1samp$Tank=="t2"]),
+                   mean(e1samp$DIC_umolkg[e1samp$Tank=="t3"]),
+                   mean(e1samp$DIC_umolkg[e1samp$Tank=="t4"]),
+                   mean(e1samp$DIC_umolkg[e1samp$Tank=="t5"]),
+                   mean(e1samp$DIC_umolkg[e1samp$Tank=="t6"]),
+                   mean(e1samp$DIC_umolkg[e1samp$Tank=="t7"]),
+                   mean(e1samp$DIC_umolkg[e1samp$Tank=="t8"]),
+                   mean(e1samp$DIC_umolkg[e1samp$Tank=="t9"]))
+e1tank$pH_m<-c(mean(e1samp$pH_m[e1samp$Tank=="t1"]),
+                   mean(e1samp$pH_m[e1samp$Tank=="t2"]),
+                   mean(e1samp$pH_m[e1samp$Tank=="t3"]),
+                   mean(e1samp$pH_m[e1samp$Tank=="t4"]),
+                   mean(e1samp$pH_m[e1samp$Tank=="t5"]),
+                   mean(e1samp$pH_m[e1samp$Tank=="t6"]),
+                   mean(e1samp$pH_m[e1samp$Tank=="t7"]),
+                   mean(e1samp$pH_m[e1samp$Tank=="t8"]),
+                   mean(e1samp$pH_m[e1samp$Tank=="t9"]))
+e1tank$pCO2<-c(mean(e1samp$pCO2[e1samp$Tank=="t1"]),
+                   mean(e1samp$pCO2[e1samp$Tank=="t2"]),
+                   mean(e1samp$pCO2[e1samp$Tank=="t3"]),
+                   mean(e1samp$pCO2[e1samp$Tank=="t4"]),
+                   mean(e1samp$pCO2[e1samp$Tank=="t5"]),
+                   mean(e1samp$pCO2[e1samp$Tank=="t6"]),
+                   mean(e1samp$pCO2[e1samp$Tank=="t7"]),
+                   mean(e1samp$pCO2[e1samp$Tank=="t8"]),
+                   mean(e1samp$pCO2[e1samp$Tank=="t9"]))
+e1tank$pH_c<-c(mean(e1samp$pH_c[e1samp$Tank=="t1"]),
+                   mean(e1samp$pH_c[e1samp$Tank=="t2"]),
+                   mean(e1samp$pH_c[e1samp$Tank=="t3"]),
+                   mean(e1samp$pH_c[e1samp$Tank=="t4"]),
+                   mean(e1samp$pH_c[e1samp$Tank=="t5"]),
+                   mean(e1samp$pH_c[e1samp$Tank=="t6"]),
+                   mean(e1samp$pH_c[e1samp$Tank=="t7"]),
+                   mean(e1samp$pH_c[e1samp$Tank=="t8"]),
+                   mean(e1samp$pH_c[e1samp$Tank=="t9"]))
+e1tank$fCO2<-c(mean(e1samp$fCO2[e1samp$Tank=="t1"]),
+                   mean(e1samp$fCO2[e1samp$Tank=="t2"]),
+                   mean(e1samp$fCO2[e1samp$Tank=="t3"]),
+                   mean(e1samp$fCO2[e1samp$Tank=="t4"]),
+                   mean(e1samp$fCO2[e1samp$Tank=="t5"]),
+                   mean(e1samp$fCO2[e1samp$Tank=="t6"]),
+                   mean(e1samp$fCO2[e1samp$Tank=="t7"]),
+                   mean(e1samp$fCO2[e1samp$Tank=="t8"]),
+                   mean(e1samp$fCO2[e1samp$Tank=="t9"]))
+e1tank$HCO3<-c(mean(e1samp$HCO3[e1samp$Tank=="t1"]),
+                   mean(e1samp$HCO3[e1samp$Tank=="t2"]),
+                   mean(e1samp$HCO3[e1samp$Tank=="t3"]),
+                   mean(e1samp$HCO3[e1samp$Tank=="t4"]),
+                   mean(e1samp$HCO3[e1samp$Tank=="t5"]),
+                   mean(e1samp$HCO3[e1samp$Tank=="t6"]),
+                   mean(e1samp$HCO3[e1samp$Tank=="t7"]),
+                   mean(e1samp$HCO3[e1samp$Tank=="t8"]),
+                   mean(e1samp$HCO3[e1samp$Tank=="t9"]))
+e1tank$CO3<-c(mean(e1samp$CO3[e1samp$Tank=="t1"]),
+                   mean(e1samp$CO3[e1samp$Tank=="t2"]),
+                   mean(e1samp$CO3[e1samp$Tank=="t3"]),
+                   mean(e1samp$CO3[e1samp$Tank=="t4"]),
+                   mean(e1samp$CO3[e1samp$Tank=="t5"]),
+                   mean(e1samp$CO3[e1samp$Tank=="t6"]),
+                   mean(e1samp$CO3[e1samp$Tank=="t7"]),
+                   mean(e1samp$CO3[e1samp$Tank=="t8"]),
+                   mean(e1samp$CO3[e1samp$Tank=="t9"]))
+e1tank$OmegaA<-c(mean(e1samp$OmegaA[e1samp$Tank=="t1"]),
+                   mean(e1samp$OmegaA[e1samp$Tank=="t2"]),
+                   mean(e1samp$OmegaA[e1samp$Tank=="t3"]),
+                   mean(e1samp$OmegaA[e1samp$Tank=="t4"]),
+                   mean(e1samp$OmegaA[e1samp$Tank=="t5"]),
+                   mean(e1samp$OmegaA[e1samp$Tank=="t6"]),
+                   mean(e1samp$OmegaA[e1samp$Tank=="t7"]),
+                   mean(e1samp$OmegaA[e1samp$Tank=="t8"]),
+                   mean(e1samp$OmegaA[e1samp$Tank=="t9"]))
+e1tank$OmegaC<-c(mean(e1samp$OmegaC[e1samp$Tank=="t1"]),
+                   mean(e1samp$OmegaC[e1samp$Tank=="t2"]),
+                   mean(e1samp$OmegaC[e1samp$Tank=="t3"]),
+                   mean(e1samp$OmegaC[e1samp$Tank=="t4"]),
+                   mean(e1samp$OmegaC[e1samp$Tank=="t5"]),
+                   mean(e1samp$OmegaC[e1samp$Tank=="t6"]),
+                   mean(e1samp$OmegaC[e1samp$Tank=="t7"]),
+                   mean(e1samp$OmegaC[e1samp$Tank=="t8"]),
+                   mean(e1samp$OmegaC[e1samp$Tank=="t9"]))
+#Standard error
+e1tank$Salinity_se<-c(sd(e1samp$Salinity[e1samp$Tank=="t1"]),
+                   std.error(e1samp$Salinity[e1samp$Tank=="t2"]),
+                   std.error(e1samp$Salinity[e1samp$Tank=="t3"]),
+                   std.error(e1samp$Salinity[e1samp$Tank=="t4"]),
+                   std.error(e1samp$Salinity[e1samp$Tank=="t5"]),
+                   std.error(e1samp$Salinity[e1samp$Tank=="t6"]),
+                   std.error(e1samp$Salinity[e1samp$Tank=="t7"]),
+                   std.error(e1samp$Salinity[e1samp$Tank=="t8"]),
+                   std.error(e1samp$Salinity[e1samp$Tank=="t9"]))
+e1tank$Temp_se<-c(std.error(e1samp$Temp[e1samp$Tank=="t1"]),
+               std.error(e1samp$Temp[e1samp$Tank=="t2"]),
+               std.error(e1samp$Temp[e1samp$Tank=="t3"]),
+               std.error(e1samp$Temp[e1samp$Tank=="t4"]),
+               std.error(e1samp$Temp[e1samp$Tank=="t5"]),
+               std.error(e1samp$Temp[e1samp$Tank=="t6"]),
+               std.error(e1samp$Temp[e1samp$Tank=="t7"]),
+               std.error(e1samp$Temp[e1samp$Tank=="t8"]),
+               std.error(e1samp$Temp[e1samp$Tank=="t9"]))
+e1tank$TA_umolkg_se<-c(std.error(e1samp$TA_umolkg[e1samp$Tank=="t1"]),
+                    std.error(e1samp$TA_umolkg[e1samp$Tank=="t2"]),
+                    std.error(e1samp$TA_umolkg[e1samp$Tank=="t3"]),
+                    std.error(e1samp$TA_umolkg[e1samp$Tank=="t4"]),
+                    std.error(e1samp$TA_umolkg[e1samp$Tank=="t5"]),
+                    std.error(e1samp$TA_umolkg[e1samp$Tank=="t6"]),
+                    std.error(e1samp$TA_umolkg[e1samp$Tank=="t7"]),
+                    std.error(e1samp$TA_umolkg[e1samp$Tank=="t8"]),
+                    std.error(e1samp$TA_umolkg[e1samp$Tank=="t9"]))
+e1tank$DIC_umolkg_se<-c(std.error(e1samp$DIC_umolkg[e1samp$Tank=="t1"]),
+                     std.error(e1samp$DIC_umolkg[e1samp$Tank=="t2"]),
+                     std.error(e1samp$DIC_umolkg[e1samp$Tank=="t3"]),
+                     std.error(e1samp$DIC_umolkg[e1samp$Tank=="t4"]),
+                     std.error(e1samp$DIC_umolkg[e1samp$Tank=="t5"]),
+                     std.error(e1samp$DIC_umolkg[e1samp$Tank=="t6"]),
+                     std.error(e1samp$DIC_umolkg[e1samp$Tank=="t7"]),
+                     std.error(e1samp$DIC_umolkg[e1samp$Tank=="t8"]),
+                     std.error(e1samp$DIC_umolkg[e1samp$Tank=="t9"]))
+e1tank$pH_m_se<-c(std.error(e1samp$pH_m[e1samp$Tank=="t1"]),
+               std.error(e1samp$pH_m[e1samp$Tank=="t2"]),
+               std.error(e1samp$pH_m[e1samp$Tank=="t3"]),
+               std.error(e1samp$pH_m[e1samp$Tank=="t4"]),
+               std.error(e1samp$pH_m[e1samp$Tank=="t5"]),
+               std.error(e1samp$pH_m[e1samp$Tank=="t6"]),
+               std.error(e1samp$pH_m[e1samp$Tank=="t7"]),
+               std.error(e1samp$pH_m[e1samp$Tank=="t8"]),
+               std.error(e1samp$pH_m[e1samp$Tank=="t9"]))
+e1tank$pCO2_se<-c(std.error(e1samp$pCO2[e1samp$Tank=="t1"]),
+               std.error(e1samp$pCO2[e1samp$Tank=="t2"]),
+               std.error(e1samp$pCO2[e1samp$Tank=="t3"]),
+               std.error(e1samp$pCO2[e1samp$Tank=="t4"]),
+               std.error(e1samp$pCO2[e1samp$Tank=="t5"]),
+               std.error(e1samp$pCO2[e1samp$Tank=="t6"]),
+               std.error(e1samp$pCO2[e1samp$Tank=="t7"]),
+               std.error(e1samp$pCO2[e1samp$Tank=="t8"]),
+               std.error(e1samp$pCO2[e1samp$Tank=="t9"]))
+e1tank$pH_c_se<-c(std.error(e1samp$pH_c[e1samp$Tank=="t1"]),
+               std.error(e1samp$pH_c[e1samp$Tank=="t2"]),
+               std.error(e1samp$pH_c[e1samp$Tank=="t3"]),
+               std.error(e1samp$pH_c[e1samp$Tank=="t4"]),
+               std.error(e1samp$pH_c[e1samp$Tank=="t5"]),
+               std.error(e1samp$pH_c[e1samp$Tank=="t6"]),
+               std.error(e1samp$pH_c[e1samp$Tank=="t7"]),
+               std.error(e1samp$pH_c[e1samp$Tank=="t8"]),
+               std.error(e1samp$pH_c[e1samp$Tank=="t9"]))
+e1tank$fCO2_se<-c(std.error(e1samp$fCO2[e1samp$Tank=="t1"]),
+               std.error(e1samp$fCO2[e1samp$Tank=="t2"]),
+               std.error(e1samp$fCO2[e1samp$Tank=="t3"]),
+               std.error(e1samp$fCO2[e1samp$Tank=="t4"]),
+               std.error(e1samp$fCO2[e1samp$Tank=="t5"]),
+               std.error(e1samp$fCO2[e1samp$Tank=="t6"]),
+               std.error(e1samp$fCO2[e1samp$Tank=="t7"]),
+               std.error(e1samp$fCO2[e1samp$Tank=="t8"]),
+               std.error(e1samp$fCO2[e1samp$Tank=="t9"]))
+e1tank$HCO3_se<-c(std.error(e1samp$HCO3[e1samp$Tank=="t1"]),
+               std.error(e1samp$HCO3[e1samp$Tank=="t2"]),
+               std.error(e1samp$HCO3[e1samp$Tank=="t3"]),
+               std.error(e1samp$HCO3[e1samp$Tank=="t4"]),
+               std.error(e1samp$HCO3[e1samp$Tank=="t5"]),
+               std.error(e1samp$HCO3[e1samp$Tank=="t6"]),
+               std.error(e1samp$HCO3[e1samp$Tank=="t7"]),
+               std.error(e1samp$HCO3[e1samp$Tank=="t8"]),
+               std.error(e1samp$HCO3[e1samp$Tank=="t9"]))
+e1tank$CO3_se<-c(std.error(e1samp$CO3[e1samp$Tank=="t1"]),
+              std.error(e1samp$CO3[e1samp$Tank=="t2"]),
+              std.error(e1samp$CO3[e1samp$Tank=="t3"]),
+              std.error(e1samp$CO3[e1samp$Tank=="t4"]),
+              std.error(e1samp$CO3[e1samp$Tank=="t5"]),
+              std.error(e1samp$CO3[e1samp$Tank=="t6"]),
+              std.error(e1samp$CO3[e1samp$Tank=="t7"]),
+              std.error(e1samp$CO3[e1samp$Tank=="t8"]),
+              std.error(e1samp$CO3[e1samp$Tank=="t9"]))
+e1tank$OmegaA_se<-c(std.error(e1samp$OmegaA[e1samp$Tank=="t1"]),
+                 std.error(e1samp$OmegaA[e1samp$Tank=="t2"]),
+                 std.error(e1samp$OmegaA[e1samp$Tank=="t3"]),
+                 std.error(e1samp$OmegaA[e1samp$Tank=="t4"]),
+                 std.error(e1samp$OmegaA[e1samp$Tank=="t5"]),
+                 std.error(e1samp$OmegaA[e1samp$Tank=="t6"]),
+                 std.error(e1samp$OmegaA[e1samp$Tank=="t7"]),
+                 std.error(e1samp$OmegaA[e1samp$Tank=="t8"]),
+                 std.error(e1samp$OmegaA[e1samp$Tank=="t9"]))
+e1tank$OmegaC_se<-c(std.error(e1samp$OmegaC[e1samp$Tank=="t1"]),
+                 std.error(e1samp$OmegaC[e1samp$Tank=="t2"]),
+                 std.error(e1samp$OmegaC[e1samp$Tank=="t3"]),
+                 std.error(e1samp$OmegaC[e1samp$Tank=="t4"]),
+                 std.error(e1samp$OmegaC[e1samp$Tank=="t5"]),
+                 std.error(e1samp$OmegaC[e1samp$Tank=="t6"]),
+                 std.error(e1samp$OmegaC[e1samp$Tank=="t7"]),
+                 std.error(e1samp$OmegaC[e1samp$Tank=="t8"]),
+                 std.error(e1samp$OmegaC[e1samp$Tank=="t9"]))
+
+#Now make table for Experiment 2 Tank means (also treatment means for this exp)
+e2tank<-data.frame("Experiment"<-rep("exp2",times=3),
+                   e2samp$Tank[1:3],
+                   e2samp$CO2_level[1:3])
+names(e2tank)<-c("Experiment","Tank","CO2_level")
+
+#First have to change types of the carbonate chemistry variables to numeric because they are weird
+e2samp$pCO2<-as.numeric(e2samp$pCO2)
+e2samp$pH_c<-as.numeric(e2samp$pH_c)
+e2samp$fCO2<-as.numeric(e2samp$fCO2)
+e2samp$HCO3<-as.numeric(e2samp$HCO3)
+e2samp$CO3<-as.numeric(e2samp$CO3)
+e2samp$OmegaC<-as.numeric(e2samp$OmegaC)
+e2samp$OmegaA<-as.numeric(e2samp$OmegaA)
+
+e2tank$Salinity<-c(mean(e2samp$Salinity[e2samp$Tank=="1E"]),
+                   mean(e2samp$Salinity[e2samp$Tank=="2E"]),
+                   mean(e2samp$Salinity[e2samp$Tank=="3E"]))
+e2tank$Temp<-c(mean(e2samp$Temp[e2samp$Tank=="1E"]),
+                   mean(e2samp$Temp[e2samp$Tank=="2E"]),
+                   mean(e2samp$Temp[e2samp$Tank=="3E"]))
+e2tank$TA_umolkg<-c(mean(e2samp$TA_umolkg[e2samp$Tank=="1E"]),
+                   mean(e2samp$TA_umolkg[e2samp$Tank=="2E"]),
+                   mean(e2samp$TA_umolkg[e2samp$Tank=="3E"]))
+e2tank$DIC_umolkg<-c(mean(e2samp$DIC_umolkg[e2samp$Tank=="1E"]),
+                   mean(e2samp$DIC_umolkg[e2samp$Tank=="2E"]),
+                   mean(e2samp$DIC_umolkg[e2samp$Tank=="3E"]))
+e2tank$pH_m<-c(mean(e2samp$pH_m[e2samp$Tank=="1E"]),
+                   mean(e2samp$pH_m[e2samp$Tank=="2E"]),
+                   mean(e2samp$pH_m[e2samp$Tank=="3E"]))
+e2tank$pCO2<-c(mean(e2samp$pCO2[e2samp$Tank=="1E"]),
+                   mean(e2samp$pCO2[e2samp$Tank=="2E"]),
+                   mean(e2samp$pCO2[e2samp$Tank=="3E"]))
+e2tank$pH_c<-c(mean(e2samp$pH_c[e2samp$Tank=="1E"]),
+                   mean(e2samp$pH_c[e2samp$Tank=="2E"]),
+                   mean(e2samp$pH_c[e2samp$Tank=="3E"]))
+e2tank$fCO2<-c(mean(e2samp$fCO2[e2samp$Tank=="1E"]),
+                   mean(e2samp$fCO2[e2samp$Tank=="2E"]),
+                   mean(e2samp$fCO2[e2samp$Tank=="3E"]))
+e2tank$HCO3<-c(mean(e2samp$HCO3[e2samp$Tank=="1E"]),
+                   mean(e2samp$HCO3[e2samp$Tank=="2E"]),
+                   mean(e2samp$HCO3[e2samp$Tank=="3E"]))
+e2tank$CO3<-c(mean(e2samp$CO3[e2samp$Tank=="1E"]),
+                   mean(e2samp$CO3[e2samp$Tank=="2E"]),
+                   mean(e2samp$CO3[e2samp$Tank=="3E"]))
+e2tank$OmegaA<-c(mean(e2samp$OmegaA[e2samp$Tank=="1E"]),
+                   mean(e2samp$OmegaA[e2samp$Tank=="2E"]),
+                   mean(e2samp$OmegaA[e2samp$Tank=="3E"]))
+e2tank$OmegaC<-c(mean(e2samp$OmegaC[e2samp$Tank=="1E"]),
+                   mean(e2samp$OmegaC[e2samp$Tank=="2E"]),
+                   mean(e2samp$OmegaC[e2samp$Tank=="3E"]))
+
+#Standard Error
+e2tank$Salinity_se<-c(std.error(e2samp$Salinity[e2samp$Tank=="1E"]),
+                   std.error(e2samp$Salinity[e2samp$Tank=="2E"]),
+                   std.error(e2samp$Salinity[e2samp$Tank=="3E"]))
+e2tank$Temp_se<-c(std.error(e2samp$Temp[e2samp$Tank=="1E"]),
+               std.error(e2samp$Temp[e2samp$Tank=="2E"]),
+               std.error(e2samp$Temp[e2samp$Tank=="3E"]))
+e2tank$TA_umolkg_se<-c(std.error(e2samp$TA_umolkg[e2samp$Tank=="1E"]),
+                    std.error(e2samp$TA_umolkg[e2samp$Tank=="2E"]),
+                    std.error(e2samp$TA_umolkg[e2samp$Tank=="3E"]))
+e2tank$DIC_umolkg_se<-c(std.error(e2samp$DIC_umolkg[e2samp$Tank=="1E"]),
+                     std.error(e2samp$DIC_umolkg[e2samp$Tank=="2E"]),
+                     std.error(e2samp$DIC_umolkg[e2samp$Tank=="3E"]))
+e2tank$pH_m_se<-c(std.error(e2samp$pH_m[e2samp$Tank=="1E"]),
+               std.error(e2samp$pH_m[e2samp$Tank=="2E"]),
+               std.error(e2samp$pH_m[e2samp$Tank=="3E"]))
+e2tank$pCO2_se<-c(std.error(e2samp$pCO2[e2samp$Tank=="1E"]),
+               std.error(e2samp$pCO2[e2samp$Tank=="2E"]),
+               std.error(e2samp$pCO2[e2samp$Tank=="3E"]))
+e2tank$pH_c_se<-c(std.error(e2samp$pH_c[e2samp$Tank=="1E"]),
+               std.error(e2samp$pH_c[e2samp$Tank=="2E"]),
+               std.error(e2samp$pH_c[e2samp$Tank=="3E"]))
+e2tank$fCO2_se<-c(std.error(e2samp$fCO2[e2samp$Tank=="1E"]),
+               std.error(e2samp$fCO2[e2samp$Tank=="2E"]),
+               std.error(e2samp$fCO2[e2samp$Tank=="3E"]))
+e2tank$HCO3_se<-c(std.error(e2samp$HCO3[e2samp$Tank=="1E"]),
+               std.error(e2samp$HCO3[e2samp$Tank=="2E"]),
+               std.error(e2samp$HCO3[e2samp$Tank=="3E"]))
+e2tank$CO3_se<-c(std.error(e2samp$CO3[e2samp$Tank=="1E"]),
+              std.error(e2samp$CO3[e2samp$Tank=="2E"]),
+              std.error(e2samp$CO3[e2samp$Tank=="3E"]))
+e2tank$OmegaA_se<-c(std.error(e2samp$OmegaA[e2samp$Tank=="1E"]),
+                 std.error(e2samp$OmegaA[e2samp$Tank=="2E"]),
+                 std.error(e2samp$OmegaA[e2samp$Tank=="3E"]))
+e2tank$OmegaC_se<-c(std.error(e2samp$OmegaC[e2samp$Tank=="1E"]),
+                 std.error(e2samp$OmegaC[e2samp$Tank=="2E"]),
+                 std.error(e2samp$OmegaC[e2samp$Tank=="3E"]))
+
+
+#Now make a table for Experiment 1 treatment means and SEs
+e1trmt<-data.frame(e1tank$Experiment[1:3],
+                   e1tank$CO2_level[c(1:3)])
+names(e1trmt)<-c("Experiment","CO2_level")
+
+e1trmt$Salinity<-c(mean(e1samp$Salinity[e1samp$CO2_level=="amb"]),
+                   mean(e1samp$Salinity[e1samp$CO2_level=="med"]),
+                   mean(e1samp$Salinity[e1samp$CO2_level=="high"]))
+e1trmt$Temp<-c(mean(e1samp$Temp[e1samp$CO2_level=="amb"]),
+               mean(e1samp$Temp[e1samp$CO2_level=="med"]),
+               mean(e1samp$Temp[e1samp$CO2_level=="high"]))
+e1trmt$TA_umolkg<-c(mean(e1samp$TA_umolkg[e1samp$CO2_level=="amb"]),
+                    mean(e1samp$TA_umolkg[e1samp$CO2_level=="med"]),
+                    mean(e1samp$TA_umolkg[e1samp$CO2_level=="high"]))
+e1trmt$DIC_umolkg<-c(mean(e1samp$DIC_umolkg[e1samp$CO2_level=="amb"]),
+                     mean(e1samp$DIC_umolkg[e1samp$CO2_level=="med"]),
+                     mean(e1samp$DIC_umolkg[e1samp$CO2_level=="high"]))
+e1trmt$pH_m<-c(mean(e1samp$pH_m[e1samp$CO2_level=="amb"]),
+               mean(e1samp$pH_m[e1samp$CO2_level=="med"]),
+               mean(e1samp$pH_m[e1samp$CO2_level=="high"]))
+e1trmt$pCO2<-c(mean(e1samp$pCO2[e1samp$CO2_level=="amb"]),
+               mean(e1samp$pCO2[e1samp$CO2_level=="med"]),
+               mean(e1samp$pCO2[e1samp$CO2_level=="high"]))
+e1trmt$pH_c<-c(mean(e1samp$pH_c[e1samp$CO2_level=="amb"]),
+               mean(e1samp$pH_c[e1samp$CO2_level=="med"]),
+               mean(e1samp$pH_c[e1samp$CO2_level=="high"]))
+e1trmt$fCO2<-c(mean(e1samp$fCO2[e1samp$CO2_level=="amb"]),
+               mean(e1samp$fCO2[e1samp$CO2_level=="med"]),
+               mean(e1samp$fCO2[e1samp$CO2_level=="high"]))
+e1trmt$HCO3<-c(mean(e1samp$HCO3[e1samp$CO2_level=="amb"]),
+               mean(e1samp$HCO3[e1samp$CO2_level=="med"]),
+               mean(e1samp$HCO3[e1samp$CO2_level=="high"]))
+e1trmt$CO3<-c(mean(e1samp$CO3[e1samp$CO2_level=="amb"]),
+              mean(e1samp$CO3[e1samp$CO2_level=="med"]),
+              mean(e1samp$CO3[e1samp$CO2_level=="high"]))
+e1trmt$OmegaA<-c(mean(e1samp$OmegaA[e1samp$CO2_level=="amb"]),
+                 mean(e1samp$OmegaA[e1samp$CO2_level=="med"]),
+                 mean(e1samp$OmegaA[e1samp$CO2_level=="high"]))
+e1trmt$OmegaC<-c(mean(e1samp$OmegaC[e1samp$CO2_level=="amb"]),
+                 mean(e1samp$OmegaC[e1samp$CO2_level=="med"]),
+                 mean(e1samp$OmegaC[e1samp$CO2_level=="high"]))
+
+#Standard Error
+e1trmt$Salinity_se<-c(std.error(e1samp$Salinity[e1samp$CO2_level=="amb"]),
+                      std.error(e1samp$Salinity[e1samp$CO2_level=="med"]),
+                      std.error(e1samp$Salinity[e1samp$CO2_level=="high"]))
+e1trmt$Temp_se<-c(std.error(e1samp$Temp[e1samp$CO2_level=="amb"]),
+                  std.error(e1samp$Temp[e1samp$CO2_level=="med"]),
+                  std.error(e1samp$Temp[e1samp$CO2_level=="high"]))
+e1trmt$TA_umolkg_se<-c(std.error(e1samp$TA_umolkg[e1samp$CO2_level=="amb"]),
+                       std.error(e1samp$TA_umolkg[e1samp$CO2_level=="med"]),
+                       std.error(e1samp$TA_umolkg[e1samp$CO2_level=="high"]))
+e1trmt$DIC_umolkg_se<-c(std.error(e1samp$DIC_umolkg[e1samp$CO2_level=="amb"]),
+                        std.error(e1samp$DIC_umolkg[e1samp$CO2_level=="med"]),
+                        std.error(e1samp$DIC_umolkg[e1samp$CO2_level=="high"]))
+e1trmt$pH_m_se<-c(std.error(e1samp$pH_m[e1samp$CO2_level=="amb"]),
+                  std.error(e1samp$pH_m[e1samp$CO2_level=="med"]),
+                  std.error(e1samp$pH_m[e1samp$CO2_level=="high"]))
+e1trmt$pCO2_se<-c(std.error(e1samp$pCO2[e1samp$CO2_level=="amb"]),
+                  std.error(e1samp$pCO2[e1samp$CO2_level=="med"]),
+                  std.error(e1samp$pCO2[e1samp$CO2_level=="high"]))
+e1trmt$pH_c_se<-c(std.error(e1samp$pH_c[e1samp$CO2_level=="amb"]),
+                  std.error(e1samp$pH_c[e1samp$CO2_level=="med"]),
+                  std.error(e1samp$pH_c[e1samp$CO2_level=="high"]))
+e1trmt$fCO2_se<-c(std.error(e1samp$fCO2[e1samp$CO2_level=="amb"]),
+                  std.error(e1samp$fCO2[e1samp$CO2_level=="med"]),
+                  std.error(e1samp$fCO2[e1samp$CO2_level=="high"]))
+e1trmt$HCO3_se<-c(std.error(e1samp$HCO3[e1samp$CO2_level=="amb"]),
+                  std.error(e1samp$HCO3[e1samp$CO2_level=="med"]),
+                  std.error(e1samp$HCO3[e1samp$CO2_level=="high"]))
+e1trmt$CO3_se<-c(std.error(e1samp$CO3[e1samp$CO2_level=="amb"]),
+                 std.error(e1samp$CO3[e1samp$CO2_level=="med"]),
+                 std.error(e1samp$CO3[e1samp$CO2_level=="high"]))
+e1trmt$OmegaA_se<-c(std.error(e1samp$OmegaA[e1samp$CO2_level=="amb"]),
+                    std.error(e1samp$OmegaA[e1samp$CO2_level=="med"]),
+                    std.error(e1samp$OmegaA[e1samp$CO2_level=="high"]))
+e1trmt$OmegaC_se<-c(std.error(e1samp$OmegaC[e1samp$CO2_level=="amb"]),
+                    std.error(e1samp$OmegaC[e1samp$CO2_level=="med"]),
+                    std.error(e1samp$OmegaC[e1samp$CO2_level=="high"]))
+
+#Join the two experiments into one table
+e2trmt<-e2tank[,c(1,3:27)]
