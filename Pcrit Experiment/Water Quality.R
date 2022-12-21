@@ -638,3 +638,17 @@ e1trmt$OmegaC_se<-c(std.error(e1samp$OmegaC[e1samp$CO2_level=="amb"]),
 
 #Join the two experiments into one table
 e2trmt<-e2tank[,c(1,3:27)]
+bothcarbchem<-rbind(e1trmt,e2trmt)
+bothcarb<-data.frame(bothcarbchem$Experiment,bothcarbchem$CO2_level,bothcarbchem$Salinity,bothcarbchem$Salinity_se,
+                     bothcarbchem$Temp,bothcarbchem$Temp_se,bothcarbchem$pCO2,bothcarbchem$pCO2_se,
+                     bothcarbchem$pH_m,bothcarbchem$pH_m_se,bothcarbchem$pH_c,bothcarbchem$pH_c_se,
+                     bothcarbchem$TA_umolkg,bothcarbchem$TA_umolkg_se,bothcarbchem$DIC_umolkg,bothcarbchem$DIC_umolkg_se,
+                     bothcarbchem$fCO2,bothcarbchem$fCO2_se,bothcarbchem$HCO3,bothcarbchem$HCO3_se,
+                     bothcarbchem$CO3,bothcarbchem$CO3_se,bothcarbchem$OmegaA,bothcarbchem$OmegaA_se,
+                     bothcarbchem$OmegaC,bothcarbchem$OmegaC_se)
+names(bothcarb)<-c("Experiment","CO2_level","Salinity","Salinity_se","Temp","Temp_se","pCO2","pCO2_se",
+                   "pH_m","pH_m_se","pH_c","pH_c_se","TA_umolkg","TA_umolkg_se","DIC_umolkg","DIC_umolkg_se",
+                   "fCO2","fCO2_se","HCO3","HCO3_se","CO3","CO3_se","OmegaA","OmegaA_se","OmegaC","OmegaC_se")
+
+#export to a csv
+write.csv(bothcarb,file.choose(),sep=" ")
