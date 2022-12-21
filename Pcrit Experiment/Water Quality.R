@@ -652,3 +652,19 @@ names(bothcarb)<-c("Experiment","CO2_level","Salinity","Salinity_se","Temp","Tem
 
 #export to a csv
 write.csv(bothcarb,file.choose(),sep=" ")
+
+
+#Plot the mean and se for both experiments next to each other
+library(ggplot2)
+
+bothcarb$CO2_level<-factor(bothcarb$CO2_level,levels=c("amb","med","high")) #set order of levels
+
+bothplot<-ggplot(bothcarb,aes(x=Experiment,y=pCO2,fill=CO2_level))+
+  geom_errorbar(aes(ymin=pCO2-pCO2_se,ymax=pCO2+pCO2_se),width=.1,color="black")+
+  geom_point(shape=21,size=3,color="black")+
+  scale_fill_manual(values=c("#0e40ff","#028602","#D00000"),labels=c("Ambient","Moderate","High"))+
+  labs(fill=expression(paste("CO"[2]," Treatment")),y=expression(paste("pCO"[2]," (",mu,"atm)")),x=NULL)+
+  scale_x_discrete(labels=c("Experiment 1","Experiment 2"))+
+  theme_classic()+
+  theme(axis.text.x=element_text(size=11,color="black"),axis.text.y=element_text(color="black"))
+print(bothplot)
