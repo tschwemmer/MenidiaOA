@@ -85,7 +85,8 @@ library(dplyr)
 d1_emb<-full_join(all_emb,trmt_emb,by="Sample")
 d1_1dph<-full_join(all_1dph,trmt_1dph,by="Sample")
 d1_10mm<-full_join(all_10mm,trmt_10mm,by="Sample")
-#These are the full datasets with all available information about ionocyte density, treatments, stdev, and metabolic rates. 
+#These are the full datasets with all available information about ionocyte density, treatments, stdev, and metabolic rates.
+#When inspecting the dataframes remember to scroll to all columns using arrow buttons because there are >50 columns. 
 
 #Now create smaller dataframes with only the necessary information for the analysis (everything else is just in case we want it for later analyses).
 d2_emb<-d1_emb[,c(1,2,4,43,47,51,54,56,57,58,60,62)]
@@ -133,8 +134,6 @@ anova(modeltotal,modeltotal_lm)
 #Including experiment as a random effect significantly affects all models. ranova() shows this as well. 
 
 #Now use an lm and the continuous (not categorical) independent variables
-#Use emmeans to examine significance
-library(emmeans)
 lmyolk<-lm(AverageYolkDensitymm~CO2*Temp,data=d2_emb)
 summary(lmyolk)
 
@@ -146,6 +145,7 @@ summary(lmtotal)
 
 #Run diagnostics and look for outliers
 library(car)
+library(olsrr)
 
 #Yolk diagnostics
 plot(lm(d2_emb$AverageYolkDensitymm~d2_emb$CO2.level*d2_emb$Temp.level),1) #Residuals vs. fitted
@@ -154,8 +154,10 @@ yolkres<-residuals(modelyolk)
 hist(yolkres,breaks=20) #somewhat longer tail on right
 shapiro.test(yolkres) #normality test
 leveneTest(modelyolk_lm) #Homogeneity of variances test
+ols_test_normality(lmyolk)
+ols_test_breusch_pagan(lmyolk)
 
-cook<-cooks.distance(modelyolk)
+cook<-cooks.distance(lmyolk)
 plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
 abline(h=4/(length(d2_emb$AverageYolkDensitymm)-3-1), col="red")
 text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageYolkDensitymm)-3-1),names(cook),""),col="red")
@@ -168,8 +170,10 @@ bodyres<-residuals(modelbody)
 hist(bodyres,breaks=20) #pretty symmetrical except for one observation with residual above 400. 
 shapiro.test(bodyres) #normality test
 leveneTest(modelbody_lm) #Homogeneity of variances test
+ols_test_normality(lmbody)
+ols_test_breusch_pagan(lmbody)
 
-cook<-cooks.distance(modelbody)
+cook<-cooks.distance(lmbody)
 plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
 abline(h=4/(length(d2_emb$AverageBodyDensitymm)-3-1), col="red")
 text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageBodyDensitymm)-3-1),names(cook),""),col="red")
@@ -182,6 +186,8 @@ totalres<-residuals(modeltotal)
 hist(totalres,breaks=20) #pretty symmetrical except for two observations with residuals around 400. 
 shapiro.test(totalres) #normality test
 leveneTest(modeltotal_lm) #Homogeneity of variances test
+ols_test_normality(lmtotal)
+ols_test_breusch_pagan(lmtotal)
 
 cook<-cooks.distance(modeltotal)
 plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
@@ -189,6 +195,92 @@ abline(h=4/(length(d2_emb$AverageTotalDensitymm)-3-1), col="red")
 text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageTotalDensitymm)-3-1),names(cook),""),col="red")
 #similar to other two
 
+
+#Try transforming to fix the positive skew, violations of assumptions
+lmyolk_log<-lm(log(AverageYolkDensitymm)~CO2*Temp,data=d2_emb)
+summary(lmyolk_log)
+hist(residuals(lmyolk_log),breaks=20)
+ols_test_normality(lmyolk_log)
+ols_test_breusch_pagan(lmyolk_log)
+
+lmyolk_sqrt<-lm(sqrt(AverageYolkDensitymm)~CO2*Temp,data=d2_emb)
+summary(lmyolk_sqrt)
+hist(residuals(lmyolk_sqrt),breaks=20)
+ols_test_normality(lmyolk_sqrt)
+ols_test_breusch_pagan(lmyolk_sqrt)
+
+
+lmbody_log<-lm(log(AverageBodyDensitymm)~CO2*Temp,data=d2_emb)
+summary(lmbody_log)
+hist(residuals(lmbody_log),breaks=20)
+ols_test_normality(lmbody_log)
+ols_test_breusch_pagan(lmbody_log)
+
+lmbody_sqrt<-lm(sqrt(AverageBodyDensitymm)~CO2*Temp,data=d2_emb)
+summary(lmbody_sqrt)
+hist(residuals(lmbody_sqrt),breaks=20)
+ols_test_normality(lmbody_sqrt)
+ols_test_breusch_pagan(lmbody_sqrt)
+
+#Try removing data points with the most extreme residuals, if they are also influential outliers IDed by Cook's distance
+sort(residuals(lmyolk)) #256 and 200 are most extreme residuals, 205 is most extreme cook's distance
+sort(residuals(lmbody)) #256 is most extreme residual, 277 is most extreme cook's distance
+d3_emb<-d2_emb[-c(256),]
+
+#Now repeat analysis and diagnostics
+lmyolk3<-lm(AverageYolkDensitymm~CO2*Temp,data=d3_emb)
+summary(lmyolk3)
+
+lmbody3<-lm(AverageBodyDensitymm~CO2*Temp,data=d3_emb)
+summary(lmbody3)
+
+#Yolk diagnostics
+plot(lm(d3_emb$AverageYolkDensitymm~d3_emb$CO2.level*d3_emb$Temp.level),1) #Residuals vs. fitted
+plot(lm(d3_emb$AverageYolkDensitymm~d3_emb$CO2.level*d3_emb$Temp.level),2) #Q-Q plot
+yolkres<-residuals(lmyolk3)
+hist(yolkres,breaks=20) 
+ols_test_normality(lmyolk3)
+ols_test_breusch_pagan(lmyolk3)
+
+cook<-cooks.distance(lmyolk3)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(d3_emb$AverageYolkDensitymm)-3-1), col="red")
+text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d3_emb$AverageYolkDensitymm)-3-1),names(cook),""),col="red")
+
+#Body diagnostics
+plot(lm(d3_emb$AverageBodyDensitymm~d3_emb$CO2.level*d3_emb$Temp.level),1) #Residuals vs. fitted
+plot(lm(d3_emb$AverageBodyDensitymm~d3_emb$CO2.level*d3_emb$Temp.level),2) #Q-Q plot
+bodyres<-residuals(lmbody3)
+hist(bodyres,breaks=20) #pretty symmetrical except for one observation with residual above 400. 
+ols_test_normality(lmbody3)
+ols_test_breusch_pagan(lmbody3)
+
+cook<-cooks.distance(lmbody)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(d2_emb$AverageBodyDensitymm)-3-1), col="red")
+text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageBodyDensitymm)-3-1),names(cook),""),col="red")
+
+#and try square root transformation
+lmyolk_log<-lm(log(AverageYolkDensitymm)~CO2*Temp,data=d3_emb)
+summary(lmyolk_log)
+hist(residuals(lmyolk_log),breaks=20)
+ols_test_normality(lmyolk_log)
+ols_test_breusch_pagan(lmyolk_log)
+
+lmbody_log<-lm(sqrt(AverageBodyDensitymm)~CO2*Temp,data=d3_emb)
+summary(lmbody_log)
+hist(residuals(lmbody_log),breaks=20)
+ols_test_normality(lmbody_log)
+ols_test_breusch_pagan(lmbody_log)
+#this worked for both assumptions and both yolk and body, so use these models!
+
+
+#Post hoc testing - multiple comparisons among the factors in the linear model using emmeans
+#This requires using factors so have to use the LMER model
+library(emmeans)
+emmeans(lmer(log(AverageYolkDensitymm)~CO2.level*Temp.level+(1|Experiment.x),data=d3_emb),list(pairwise~CO2.level*Temp.level),adjust="tukey")
+
+#_______________________________________________________________________________________________________________
 #make plots for yolk and body; then do separate ones for each experiment. 
 library(ggplot2)
 library(grid)
@@ -202,11 +294,11 @@ yolkplot<-ggplot(summary_emb,aes(x=Temp.level,y=Mean.yolk,group=CO2.level,color=
   scale_x_discrete(labels=c("17","20","24","28"))+
   annotation_custom(grobTree(textGrob("Yolk Sac Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
   coord_cartesian(ylim=c(0,500))+
-  xlab("Temperature (C)")+
-  ylab("Ionocyte Density (ionocytes/mm^2)")+
+  labs(x=expression(paste("Temperature ("*degree,"C)")),y=expression(paste("Ionocyte Density (ionocytes mm"^"-2",")")))+
   theme_classic()+
   theme(legend.position="none")
 print(yolkplot)
+ggsave(yolkplot,file="yolkmeans.pdf",width=100,height=100,units="mm",dpi=350)
 
 bodyplot<-ggplot(summary_emb,aes(x=Temp.level,y=Mean.body,group=CO2.level,color=CO2.level))+
   scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
