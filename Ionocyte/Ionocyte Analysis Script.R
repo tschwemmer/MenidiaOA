@@ -279,12 +279,22 @@ ols_test_breusch_pagan(lmbody_log)
 #This requires using factors so have to use the LMER model
 library(emmeans)
 emmeans(lmer(log(AverageYolkDensitymm)~CO2.level*Temp.level+(1|Experiment.x),data=d3_emb),list(pairwise~CO2.level*Temp.level),adjust="tukey")
+emmeans(lmer(log(AverageBodyDensitymm)~CO2.level*Temp.level+(1|Experiment.x),data=d3_emb),list(pairwise~CO2.level*Temp.level),adjust="tukey")
+
+#Redo the summary table because of the outlier removal (2200uatm/24C would change)
+summary_emb<-ddply(d3_emb,c("CO2.level","Temp.level"),summarise,
+                   N.yolk=length(AverageYolkDensitymm),Mean.yolk=mean(AverageYolkDensitymm),se.yolk=sd(AverageYolkDensitymm)/sqrt(N.yolk),
+                   N.body=length(AverageBodyDensitymm),Mean.body=mean(AverageBodyDensitymm),se.body=sd(AverageBodyDensitymm)/sqrt(N.body),
+                   N.total=length(AverageTotalDensitymm),Mean.total=mean(AverageTotalDensitymm),se.total=sd(AverageTotalDensitymm)/sqrt(N.total))
+summary_emb
+
 
 #_______________________________________________________________________________________________________________
 #make plots for yolk and body; then do separate ones for each experiment. 
 library(ggplot2)
 library(grid)
 library(gridExtra)
+library(ggsignif)
 
 yolkplot<-ggplot(summary_emb,aes(x=Temp.level,y=Mean.yolk,group=CO2.level,color=CO2.level))+
   scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
@@ -292,9 +302,11 @@ yolkplot<-ggplot(summary_emb,aes(x=Temp.level,y=Mean.yolk,group=CO2.level,color=
   geom_point(size=3,position=position_dodge(0.1),shape=16)+
   geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
   scale_x_discrete(labels=c("17","20","24","28"))+
-  annotation_custom(grobTree(textGrob("Yolk Sac Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
-  coord_cartesian(ylim=c(0,500))+
+  scale_y_continuous(breaks=seq(0,500,100))+
+  annotation_custom(grobTree(textGrob("A",x=0.06,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,530))+
   labs(x=expression(paste("Temperature ("*degree,"C)")),y=expression(paste("Ionocyte Density (ionocytes mm"^"-2",")")))+
+  geom_signif(annotations=c("*","*","*"),comparisons=list(c("17C","28C"),c("20C","28C"),c("24C","28C")),map_signif_level=TRUE,textsize=6,color="black",y_position=c(480,380,210))+
   theme_classic()+
   theme(legend.position="none")
 print(yolkplot)
@@ -306,13 +318,15 @@ bodyplot<-ggplot(summary_emb,aes(x=Temp.level,y=Mean.body,group=CO2.level,color=
   geom_point(size=3,position=position_dodge(0.1),shape=16)+
   geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
   scale_x_discrete(labels=c("17","20","24","28"))+
-  annotation_custom(grobTree(textGrob("Body (non-yolk) Ionocytes",x=0.1,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
-  coord_cartesian(ylim=c(0,500))+
-  xlab("Temperature (C)")+
-  ylab("Ionocyte Density (ionocytes/mm^2)")+
+  scale_y_continuous(breaks=seq(0,500,100))+
+  annotation_custom(grobTree(textGrob("B",x=0.06,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,530))+
+  labs(x=expression(paste("Temperature ("*degree,"C)")),y=expression(paste("Ionocyte Density (ionocytes mm"^"-2",")")))+
+  geom_signif(annotations=c("*","*","*"),comparisons=list(c("17C","28C"),c("20C","28C"),c("24C","28C")),map_signif_level=TRUE,textsize=6,color="black",y_position=c(400,350,300))+
   theme_classic()+
   theme(legend.position="none")
 print(bodyplot)
+ggsave(bodyplot,file="bodymeans.pdf",width=100,height=100,units="mm",dpi=350)
 
 #legend
 
