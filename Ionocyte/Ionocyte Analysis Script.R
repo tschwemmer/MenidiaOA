@@ -314,6 +314,9 @@ bodyplot<-ggplot(summary_emb,aes(x=Temp.level,y=Mean.body,group=CO2.level,color=
   theme(legend.position="none")
 print(bodyplot)
 
+#legend
+
+
 #to separate by experiment need to make plyr summaries for each experiment
 e1embsum<-ddply(d2_emb[d2_emb$Experiment.x=="exp1",],c("CO2.level","Temp.level"),summarise,
                    N.yolk=length(AverageYolkDensitymm),Mean.yolk=mean(AverageYolkDensitymm),se.yolk=sd(AverageYolkDensitymm)/sqrt(N.yolk),
