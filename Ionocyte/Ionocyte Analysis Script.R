@@ -342,15 +342,117 @@ library(ggpubr)
 ionocytelegend<-get_legend(legendplot)
 
 #save version with both panels and legend all together
-bodyplot+labs(y=NULL)
 embfig<-grid.arrange(yolkplot,bodyplot+labs(y=NULL),ionocytelegend,ncol=3,widths=c(2,1.83,0.8))
 ggsave(embfig,file="embmeans.pdf",width=180,height=80,units="mm",dpi=350)
 
+#problem might be imbalanced sample sizes? This could be another reason it is better to present the data the way we did in the resp paper. 
+#In exp 3 the overall yolk sac densities at 17C are higher but when all of the data are combined, the lower CO2 levels get dragged down more because the
+#sample size is greater (~30 as opposed to 10) - so there are more low values from Exp 1 to bring it down compared to 4200uatm, because 4200uatm wasn't even in Exp 1. 
+
+#Make a plot for yolk and body like the ones in the resp paper, where every data point is printed but lines are fitted to show the interaction.
+yolkplot2<-ggplot(d3_emb,aes(x=Temp,y=AverageYolkDensitymm,colour=CO2.level,shape=CO2.level))+
+  theme_classic()+
+  geom_point(size=1.3,alpha=0.4)+
+  geom_smooth(method="lm",linewidth=1.7,se=FALSE)+
+  labs(x=expression(paste("Temperature ("*degree,"C)")),y=expression(paste("Ionocyte Density (ionocytes mm"^"-2",")")))+
+  scale_shape_manual(values=c(16,16,16))+
+  scale_colour_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  scale_x_continuous(breaks=seq(15,30,5))+
+  scale_y_continuous(breaks=seq(0,700,100))+
+  coord_cartesian(ylim=c(0,750),xlim=c(15,30))+
+  annotation_custom(grobTree(textGrob("A",x=0.06,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
+  theme(legend.position="none")
+print(yolkplot2)
+ggsave(yolkplot2,file="yolkalldata.pdf",width=100,height=100,units="mm",dpi=350)
+
+bodyplot2<-ggplot(d3_emb,aes(x=Temp,y=AverageBodyDensitymm,colour=CO2.level,shape=CO2.level))+
+  theme_classic()+
+  geom_point(size=1.3,alpha=0.4)+
+  geom_smooth(method="lm",lwd=1.7,se=FALSE)+
+  labs(x=expression(paste("Temperature ("*degree,"C)")),y=expression(paste("Ionocyte Density (ionocytes mm"^"-2",")")))+
+  scale_shape_manual(values=c(16,16,16))+
+  scale_colour_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  scale_x_continuous(breaks=seq(15,30,5))+
+  scale_y_continuous(breaks=seq(0,700,100))+
+  coord_cartesian(ylim=c(0,750),xlim=c(15,30))+
+  annotation_custom(grobTree(textGrob("B",x=0.06,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
+  theme(legend.position="none")
+print(bodyplot2)
+ggsave(bodyplot2,file="bodyalldata.pdf",width=100,height=100,units="mm",dpi=350)
+
+emballfig<-grid.arrange(yolkplot2,bodyplot2+labs(y=NULL),ionocytelegend,ncol=3,widths=c(2,1.91,0.8))
+ggsave(emballfig,file="emballdata.pdf",width=180,height=80,units="mm",dpi=350)
+
+#this also shows the positive skew of the data - try transforming. https://www.datanovia.com/en/lessons/transform-data-to-normal-distribution-in-r/
+
+
+
+#Transforming embryo data
+#square-root for moderate skew: sqrt(x)
+#log10 for greater skew: log10(x) - try this first
+#inverse for severe skew: 1/x
+sqrtmodelyolk<-lm(sqrt(AverageYolkDensitymm)~CO2*Temp,data=d2_emb)
+summary(sqrtmodelyolk)
+
+sqrtmodelbody<-lm(sqrt(AverageBodyDensitymm)~CO2*Temp,data=d2_emb)
+summary(sqrtmodelbody)
+
+sqrtmodeltotal<-lm(sqrt(AverageTotalDensitymm)~CO2*Temp,data=d2_emb)
+summary(sqrtmodeltotal)
+
+#Yolk diagnostics - transformed
+plot(sqrtmodelyolk,1) #Residuals vs. fitted
+plot(sqrtmodelyolk,2) #Q-Q plot
+yolkres<-residuals(sqrtmodelyolk)
+hist(yolkres,breaks=20) #somewhat longer tail on right
+shapiro.test(yolkres) #normality test - with log transformation now it is slight negative skew
+ #Homogeneity of variances test
+ols_test_normality(sqrtmodelbody)
+ols_test_breusch_pagan(sqrtmodelbody)
+
+cook<-cooks.distance(modelyolk)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(d2_emb$AverageYolkDensitymm)-3-1), col="red")
+text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageYolkDensitymm)-3-1),names(cook),""),col="red")
+#I think I need to transform the data, there are a ton of 'outliers'
+
+#Body diagnostics - transformed
+plot(sqrtmodelbody,1) #Residuals vs. fitted
+plot(sqrtmodelbody,2) #Q-Q plot
+bodyres<-residuals(sqrtmodelbody)
+hist(bodyres,breaks=20) #pretty symmetrical except for one observation with residual above 400. 
+shapiro.test(bodyres) #normality test
+ #Homogeneity of variances test
+
+cook<-cooks.distance(modelbody)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(d2_emb$AverageBodyDensitymm)-3-1), col="red")
+text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageBodyDensitymm)-3-1),names(cook),""),col="red")
+#similar to yolk; exp 3 and 4 have most 'influential' observations
+
+#Total diagnostics
+plot(lm(d2_emb$AverageTotalDensitymm~d2_emb$CO2.level*d2_emb$Temp.level),1) #Residuals vs. fitted
+plot(lm(d2_emb$AverageTotalDensitymm~d2_emb$CO2.level*d2_emb$Temp.level),2) #Q-Q plot
+totalres<-residuals(modeltotal)
+hist(totalres,breaks=20) #pretty symmetrical except for two observations with residuals around 400. 
+shapiro.test(totalres) #normality test
+leveneTest(modeltotal_lm) #Homogeneity of variances test
+
+cook<-cooks.distance(modeltotal)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(d2_emb$AverageTotalDensitymm)-3-1), col="red")
+text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageTotalDensitymm)-3-1),names(cook),""),col="red")
+
+
+grid.arrange(yolkplot2,bodyplot2,legend1dph,ncol=3,widths=c(2,2,1))
+grid.arrange(yolkplot,bodyplot,legend1dph,ncol=3,widths=c(2,2,1))
+
+
 #to separate by experiment need to make plyr summaries for each experiment
 e1embsum<-ddply(d2_emb[d2_emb$Experiment.x=="exp1",],c("CO2.level","Temp.level"),summarise,
-                   N.yolk=length(AverageYolkDensitymm),Mean.yolk=mean(AverageYolkDensitymm),se.yolk=sd(AverageYolkDensitymm)/sqrt(N.yolk),
-                   N.body=length(AverageBodyDensitymm),Mean.body=mean(AverageBodyDensitymm),se.body=sd(AverageBodyDensitymm)/sqrt(N.body),
-                   N.total=length(AverageTotalDensitymm),Mean.total=mean(AverageTotalDensitymm),se.total=sd(AverageTotalDensitymm)/sqrt(N.total))
+                N.yolk=length(AverageYolkDensitymm),Mean.yolk=mean(AverageYolkDensitymm),se.yolk=sd(AverageYolkDensitymm)/sqrt(N.yolk),
+                N.body=length(AverageBodyDensitymm),Mean.body=mean(AverageBodyDensitymm),se.body=sd(AverageBodyDensitymm)/sqrt(N.body),
+                N.total=length(AverageTotalDensitymm),Mean.total=mean(AverageTotalDensitymm),se.total=sd(AverageTotalDensitymm)/sqrt(N.total))
 e1embsum
 
 e3embsum<-ddply(d2_emb[d2_emb$Experiment.x=="exp3",],c("CO2.level","Temp.level"),summarise,
@@ -442,104 +544,6 @@ e4bodyplot<-ggplot(e4embsum,aes(x=Temp.level,y=Mean.body,group=CO2.level,color=C
   theme_classic()
 
 grid.arrange(e4yolkplot,e4bodyplot,ncol=2)
-
-#problem might be imbalanced sample sizes? This could be another reason it is better to present the data the way we did in the resp paper. 
-#In exp 3 the overall yolk sac densities at 17C are higher but when all of the data are combined, the lower CO2 levels get dragged down more because the
-#sample size is greater (~30 as opposed to 10) - so there are more low values from Exp 1 to bring it down compared to 4200uatm, because 4200uatm wasn't even in Exp 1. 
-
-#Make a plot for yolk and body like the ones in the resp paper, where every data point is printed but lines are fitted to show the interaction.
-yolkplot2<-ggplot(d2_emb,aes(x=Temp,y=AverageYolkDensitymm,colour=CO2.level,shape=CO2.level))+
-  theme_classic()+
-  geom_point(size=1.3,alpha=0.4)+
-  geom_smooth(method="lm",lwd=1.7,se=FALSE)+
-  labs(x="Temperature (C)",y="Ionocyte Density (ionocytes/mm^2)")+
-  scale_shape_manual(values=c(16,16,16))+
-  scale_colour_manual(values=c("skyblue","steelblue3","steelblue4"))+
-  coord_cartesian(ylim=c(0,750))+
-  annotation_custom(grobTree(textGrob("Yolk Sac Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
-  theme(legend.position="none")
-print(yolkplot2)
-#lines are still affected by sample sizes/the fact that exp 1 didn't have 4200uatm 
-#BUT regardless of the balance issue, there is still a different effect when you look at yolk vs body - just have to examine exp 3 and 1 separately. 
-
-bodyplot2<-ggplot(d2_emb,aes(x=Temp,y=AverageBodyDensitymm,colour=CO2.level,shape=CO2.level))+
-  theme_classic()+
-  geom_point(size=1.3,alpha=0.4)+
-  geom_smooth(method="lm",lwd=1.7,se=FALSE)+
-  labs(x="Temperature (C)",y="Ionocyte Density (ionocytes/mm^2)")+
-  scale_shape_manual(values=c(16,16,16))+
-  scale_colour_manual(values=c("skyblue","steelblue3","steelblue4"))+
-  coord_cartesian(ylim=c(0,750))+
-  annotation_custom(grobTree(textGrob("Body (non-yolk) Ionocytes",x=0.1,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
-  theme(legend.position="none")
-  print(bodyplot2)
-#actually the body one looks similar to the yolk one this way. 
-
-grid.arrange(yolkplot2,bodyplot2,ncol=2)
-
-#this also shows the positive skew of the data - try transforming. https://www.datanovia.com/en/lessons/transform-data-to-normal-distribution-in-r/
-
-
-#Transforming embryo data
-#square-root for moderate skew: sqrt(x)
-#log10 for greater skew: log10(x) - try this first
-#inverse for severe skew: 1/x
-sqrtmodelyolk<-lm(sqrt(AverageYolkDensitymm)~CO2*Temp,data=d2_emb)
-summary(sqrtmodelyolk)
-
-sqrtmodelbody<-lm(sqrt(AverageBodyDensitymm)~CO2*Temp,data=d2_emb)
-summary(sqrtmodelbody)
-
-sqrtmodeltotal<-lm(sqrt(AverageTotalDensitymm)~CO2*Temp,data=d2_emb)
-summary(sqrtmodeltotal)
-
-#Yolk diagnostics - transformed
-plot(sqrtmodelyolk,1) #Residuals vs. fitted
-plot(sqrtmodelyolk,2) #Q-Q plot
-yolkres<-residuals(sqrtmodelyolk)
-hist(yolkres,breaks=20) #somewhat longer tail on right
-shapiro.test(yolkres) #normality test - with log transformation now it is slight negative skew
- #Homogeneity of variances test
-ols_test_normality(sqrtmodelbody)
-ols_test_breusch_pagan(sqrtmodelbody)
-
-cook<-cooks.distance(modelyolk)
-plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
-abline(h=4/(length(d2_emb$AverageYolkDensitymm)-3-1), col="red")
-text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageYolkDensitymm)-3-1),names(cook),""),col="red")
-#I think I need to transform the data, there are a ton of 'outliers'
-
-#Body diagnostics - transformed
-plot(sqrtmodelbody,1) #Residuals vs. fitted
-plot(sqrtmodelbody,2) #Q-Q plot
-bodyres<-residuals(sqrtmodelbody)
-hist(bodyres,breaks=20) #pretty symmetrical except for one observation with residual above 400. 
-shapiro.test(bodyres) #normality test
- #Homogeneity of variances test
-
-cook<-cooks.distance(modelbody)
-plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
-abline(h=4/(length(d2_emb$AverageBodyDensitymm)-3-1), col="red")
-text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageBodyDensitymm)-3-1),names(cook),""),col="red")
-#similar to yolk; exp 3 and 4 have most 'influential' observations
-
-#Total diagnostics
-plot(lm(d2_emb$AverageTotalDensitymm~d2_emb$CO2.level*d2_emb$Temp.level),1) #Residuals vs. fitted
-plot(lm(d2_emb$AverageTotalDensitymm~d2_emb$CO2.level*d2_emb$Temp.level),2) #Q-Q plot
-totalres<-residuals(modeltotal)
-hist(totalres,breaks=20) #pretty symmetrical except for two observations with residuals around 400. 
-shapiro.test(totalres) #normality test
-leveneTest(modeltotal_lm) #Homogeneity of variances test
-
-cook<-cooks.distance(modeltotal)
-plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
-abline(h=4/(length(d2_emb$AverageTotalDensitymm)-3-1), col="red")
-text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageTotalDensitymm)-3-1),names(cook),""),col="red")
-
-
-grid.arrange(yolkplot2,bodyplot2,legend1dph,ncol=3,widths=c(2,2,1))
-grid.arrange(yolkplot,bodyplot,legend1dph,ncol=3,widths=c(2,2,1))
-
 
 
 
