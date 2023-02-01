@@ -306,7 +306,7 @@ yolkplot<-ggplot(summary_emb,aes(x=Temp.level,y=Mean.yolk,group=CO2.level,color=
   annotation_custom(grobTree(textGrob("A",x=0.06,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
   coord_cartesian(ylim=c(0,530))+
   labs(x=expression(paste("Temperature ("*degree,"C)")),y=expression(paste("Ionocyte Density (ionocytes mm"^"-2",")")))+
-  geom_signif(annotations=c("*","*","*"),comparisons=list(c("17C","28C"),c("20C","28C"),c("24C","28C")),map_signif_level=TRUE,textsize=6,color="black",y_position=c(480,380,210))+
+  geom_signif(annotations=c("*","*","*"),comparisons=list(c("17C","28C"),c("20C","28C"),c("24C","28C")),map_signif_level=TRUE,textsize=6,color="black",y_position=c(480,350,230))+
   theme_classic()+
   theme(legend.position="none")
 print(yolkplot)
@@ -329,7 +329,22 @@ print(bodyplot)
 ggsave(bodyplot,file="bodymeans.pdf",width=100,height=100,units="mm",dpi=350)
 
 #legend
+legendplot<-ggplot(summary_emb,aes(x=Temp.level,y=Mean.body,group=CO2.level,color=CO2.level))+
+  scale_color_manual(values=c("skyblue","steelblue3","steelblue4"),labels=c("400","2200","4200"))+
+  geom_errorbar(aes(ymin=Mean.body-se.body,ymax=Mean.body+se.body),width=0.2,position=position_dodge(0.1))+
+  geom_point(size=3,position=position_dodge(0.1),shape=16)+
+  geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
+  labs(color=expression(paste("pCO"[2]," (",mu,"atm)")))+
+  theme_classic()
+print(legendplot)
 
+library(ggpubr)
+ionocytelegend<-get_legend(legendplot)
+
+#save version with both panels and legend all together
+bodyplot+labs(y=NULL)
+embfig<-grid.arrange(yolkplot,bodyplot+labs(y=NULL),ionocytelegend,ncol=3,widths=c(2,1.83,0.8))
+ggsave(embfig,file="embmeans.pdf",width=180,height=80,units="mm",dpi=350)
 
 #to separate by experiment need to make plyr summaries for each experiment
 e1embsum<-ddply(d2_emb[d2_emb$Experiment.x=="exp1",],c("CO2.level","Temp.level"),summarise,
