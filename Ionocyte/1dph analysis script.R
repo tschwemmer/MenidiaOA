@@ -50,6 +50,12 @@ summary(lmback)
 lmtotal1<-lm(AverageTotalDensitymm~CO2*Temp,data=d2_1dph)
 summary(lmtotal1)
 
+#Try plotting CO2 with linear regression
+plot(d2_1dph$AverageTotalDensitymm~d2_1dph$CO2)
+co2mod1dph<-lm(AverageTotalDensitymm~CO2,data=d2_1dph)
+abline(co2mod1dph)
+summary(co2mod1dph)
+
 #Run diagnostics and look for outliers
 library(car)
 
@@ -98,16 +104,41 @@ ols_test_breusch_pagan(lmtotal1)
 #I also think there is more biological justification for singling out the yolk sac, compared to little biological
 #justification (that I know of) for looking at the head/abdomen vs the trunk/tail. 
 
-#cook<-cooks.distance(modeltotal)
-#plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
-#abline(h=4/(length(d2_emb$AverageTotalDensitymm)-3-1), col="red")
-#text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageTotalDensitymm)-3-1),names(cook),""),col="red")
+cook<-cooks.distance(lmtotal1)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(d2_1dph$AverageTotalDensitymm)-3-1), col="red")
+text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_1dph$AverageTotalDensitymm)-3-1),names(cook),""),col="red")
+
+sort(total1res) #the highest residual is line 365, which also has a high Cook's distance
+
+d3_1dph<-d2_1dph[-c(365),]
+
+#Try model and diagnostics again
+lmtotal1<-lm(AverageTotalDensitymm~CO2*Temp,data=d3_1dph)
+summary(lmtotal1)
+
+total1res<-residuals(lmtotal1)
+hist(total1res,breaks=20) #pretty symmetrical 
+ols_test_normality(lmtotal1)
+ols_test_breusch_pagan(lmtotal1)
+
+#Use emmeans to test for significant differences between groups
+library(emmeans)
+emmeans(lmer(AverageTotalDensitymm~CO2.level*Temp.level+(1|Experiment.x),data=d3_1dph),list(pairwise~CO2.level*Temp.level),adjust="tukey")
 
 
+
+#________________________________________________________________________________________________________
 #make plots of means and SEs for yolk and body; then do separate ones for each experiment. 
 library(ggplot2)
 library(grid)
 library(gridExtra)
+
+summary_1dph<-ddply(d3_1dph,c("CO2.level","Temp.level"),summarise,
+                    N.front=length(AverageFrontDensitymm),Mean.front=mean(AverageFrontDensitymm),se.front=sd(AverageFrontDensitymm)/sqrt(N.front),
+                    N.back=length(AverageBackDensitymm),Mean.back=mean(AverageBackDensitymm),se.back=sd(AverageBackDensitymm)/sqrt(N.back),
+                    N.total=length(AverageTotalDensitymm),Mean.total=mean(AverageTotalDensitymm),se.total=sd(AverageTotalDensitymm)/sqrt(N.total))
+summary_1dph
 
 frontplot<-ggplot(summary_1dph,aes(x=Temp.level,y=Mean.front,group=CO2.level,color=CO2.level))+
   scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
@@ -115,10 +146,10 @@ frontplot<-ggplot(summary_1dph,aes(x=Temp.level,y=Mean.front,group=CO2.level,col
   geom_point(size=3,position=position_dodge(0.1),shape=16)+
   geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
   scale_x_discrete(labels=c("17","20","24","28"))+
-  annotation_custom(grobTree(textGrob("Front (head) Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
+  scale_y_continuous(breaks=seq(0,600,100))+
+  annotation_custom(grobTree(textGrob("A",x=0.06,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
   coord_cartesian(ylim=c(0,600))+
-  xlab("Temperature (C)")+
-  ylab("Ionocyte Density (ionocytes/mm^2)")+
+  labs(x=expression(paste("Temperature ("*degree,"C)")),y=expression(paste("Ionocyte Density (ionocytes mm"^"-2",")")))+
   theme_classic()+
   theme(legend.position="none")
 print(frontplot)
@@ -139,17 +170,18 @@ print(backplot)
 
 total1plot<-ggplot(summary_1dph,aes(x=Temp.level,y=Mean.total,group=CO2.level,color=CO2.level))+
   scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
-  geom_errorbar(aes(ymin=Mean.total-se.total,ymax=Mean.total+se.total),width=0.2,position=position_dodge(0.1))+
+  geom_errorbar(aes(ymin=Mean.total-se.front,ymax=Mean.total+se.front),width=0.2,position=position_dodge(0.1))+
   geom_point(size=3,position=position_dodge(0.1),shape=16)+
   geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
   scale_x_discrete(labels=c("17","20","24","28"))+
-  annotation_custom(grobTree(textGrob("1dph Larvae Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
+  scale_y_continuous(breaks=seq(0,600,100))+
+  annotation_custom(grobTree(textGrob("A",x=0.06,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
   coord_cartesian(ylim=c(0,600))+
-  xlab("Temperature (C)")+
-  ylab("Ionocyte Density (ionocytes/mm^2)")+
+  labs(x=expression(paste("Temperature ("*degree,"C)")),y=expression(paste("Ionocyte Density (ionocytes mm"^"-2",")")))+
   theme_classic()+
   theme(legend.position="none")
 print(total1plot)
+ggsave(total1plot,file="larvae1dphmeans.pdf",width=100,height=100,units="mm",dpi=350)
 
 #Make a plot for front, back, and total like the ones in the resp paper, where every data point is printed but lines are fitted to show the interaction.
 frontplot2<-ggplot(d2_1dph,aes(x=Temp,y=AverageFrontDensitymm,colour=CO2.level,shape=CO2.level))+
@@ -179,18 +211,23 @@ backplot2<-ggplot(d2_1dph,aes(x=Temp,y=AverageBackDensitymm,colour=CO2.level,sha
 print(backplot2)
 #for back, the ionocyte density always increases with temperature but slope is highest at 4200 uatm CO2.
 
-total1plot2<-ggplot(d2_1dph,aes(x=Temp,y=AverageTotalDensitymm,colour=CO2.level,shape=CO2.level))+
+total1plot2<-ggplot(d3_1dph,aes(x=Temp,y=AverageTotalDensitymm,colour=CO2.level,shape=CO2.level))+
   theme_classic()+
   geom_point(size=1.3,alpha=0.4)+
-  geom_smooth(method="lm",lwd=1.7,se=FALSE)+
-  labs(x="Temperature (C)",y="Ionocyte Density (ionocytes/mm^2)")+
+  geom_smooth(method="lm",linewidth=1.7,se=FALSE)+
+  labs(x=expression(paste("Temperature ("*degree,"C)")),y=expression(paste("Ionocyte Density (ionocytes mm"^"-2",")")))+
   scale_shape_manual(values=c(16,16,16))+
   scale_colour_manual(values=c("skyblue","steelblue3","steelblue4"))+
-  coord_cartesian(ylim=c(0,800),xlim=c(15,30))+
-  annotation_custom(grobTree(textGrob("1dph Larvae Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,700),xlim=c(15,30))+
+  annotation_custom(grobTree(textGrob("A",x=0.06,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
   theme(legend.position="none")
 print(total1plot2)
+ggsave(total1plot2,file="lar1dphalldata.pdf",width=100,height=100,units="mm",dpi=350)
 #400uatm is pretty flat, then slope increases with CO2. 
+
+
+
+
 
 library(cowplot)
 legend1dph<-get_legend(total1plot2)

@@ -63,10 +63,10 @@ ols_test_normality(lmfront10)
 ols_test_breusch_pagan(lmfront10)
 #passes all tests
 
-#cook<-cooks.distance(modelyolk)
-#plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
-#abline(h=4/(length(d2_emb$AverageYolkDensitymm)-3-1), col="red")
-#text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageYolkDensitymm)-3-1),names(cook),""),col="red")
+cook<-cooks.distance(modelyolk)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(d2_emb$AverageYolkDensitymm)-3-1), col="red")
+text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageYolkDensitymm)-3-1),names(cook),""),col="red")
 #I think I need to transform the data, there are a ton of 'outliers'
 
 #Back diagnostics
@@ -98,12 +98,31 @@ ols_test_breusch_pagan(lmtotal10)
 #I also think there is more biological justification for singling out the yolk sac, compared to little biological
 #justification (that I know of) for looking at the head/abdomen vs the trunk/tail. 
 
-#cook<-cooks.distance(modeltotal)
-#plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
-#abline(h=4/(length(d2_emb$AverageTotalDensitymm)-3-1), col="red")
-#text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageTotalDensitymm)-3-1),names(cook),""),col="red")
+cook<-cooks.distance(lmtotal10)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(d2_10mm$AverageTotalDensitymm)-3-1), col="red")
+text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_10mm$AverageTotalDensitymm)-3-1),names(cook),""),col="red")
+
+sort(total10res) #highest residual is line 2 and also has high Cook's distance. 
+
+d3_10mm<-d2_10mm[-c(2),]
+
+#Try model and diagnostics again
+lmtotal10<-lm(AverageTotalDensitymm~CO2*Temp,data=d3_10mm)
+summary(lmtotal10)
+
+total10res<-residuals(lmtotal10)
+hist(total10res,breaks=20) #pretty symmetrical 
+ols_test_normality(lmtotal10)
+ols_test_breusch_pagan(lmtotal10)
+
+#Use emmeans to test for significant differences between groups
+library(emmeans)
+emmeans(lmer(AverageTotalDensitymm~CO2.level*Temp.level+(1|Experiment.x),data=d3_10mm),list(pairwise~CO2.level*Temp.level),adjust="tukey")
 
 
+
+#__________________________________________________________________________________________________________
 #make plots of means and SEs for yolk and body; then do separate ones for each experiment. 
 library(ggplot2)
 library(grid)
@@ -139,17 +158,22 @@ print(back10plot)
 
 total10plot<-ggplot(summary_10mm,aes(x=Temp.level,y=Mean.total,group=CO2.level,color=CO2.level))+
   scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
-  geom_errorbar(aes(ymin=Mean.total-se.total,ymax=Mean.total+se.total),width=0.2,position=position_dodge(0.1))+
+  geom_errorbar(aes(ymin=Mean.total-se.front,ymax=Mean.total+se.front),width=0.2,position=position_dodge(0.1))+
   geom_point(size=3,position=position_dodge(0.1),shape=16)+
   geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
-  scale_x_discrete(labels=c("17","20","24"))+
-  annotation_custom(grobTree(textGrob("10-mm Larvae Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
-  coord_cartesian(ylim=c(0,400))+
-  xlab("Temperature (C)")+
-  ylab("Ionocyte Density (ionocytes/mm^2)")+
+  scale_x_discrete(labels=c("17","20","24","28"))+
+  scale_y_continuous(breaks=seq(0,600,100))+
+  annotation_custom(grobTree(textGrob("B",x=0.06,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,600))+
+  labs(x=expression(paste("Temperature ("*degree,"C)")),y=expression(paste("Ionocyte Density (ionocytes mm"^"-2",")")))+
   theme_classic()+
   theme(legend.position="none")
 print(total10plot)
+ggsave(total10plot,file="larvae10mmmeans.pdf",width=100,height=100,units="mm",dpi=350)
+
+larfig<-grid.arrange(total1plot,total10plot+labs(y=NULL),ionocytelegend,ncol=3,widths=c(2,1.83,0.8))
+ggsave(larfig,file="larmeans.pdf",width=180,height=80,units="mm",dpi=350)
+
 
 #Make a plot for front, back, and total like the ones in the resp paper, where every data point is printed but lines are fitted to show the interaction.
 front10plot2<-ggplot(d2_10mm,aes(x=Temp,y=AverageFrontDensitymm,colour=CO2.level,shape=CO2.level))+
@@ -182,15 +206,24 @@ print(back10plot2)
 total10plot2<-ggplot(d2_10mm,aes(x=Temp,y=AverageTotalDensitymm,colour=CO2.level,shape=CO2.level))+
   theme_classic()+
   geom_point(size=1.3,alpha=0.4)+
-  geom_smooth(method="lm",lwd=1.7,se=FALSE)+
-  labs(x="Temperature (C)",y="Ionocyte Density (ionocytes/mm^2)")+
+  geom_smooth(method="lm",linewidth=1.7,se=FALSE)+
+  labs(x=expression(paste("Temperature ("*degree,"C)")),y=expression(paste("Ionocyte Density (ionocytes mm"^"-2",")")))+
   scale_shape_manual(values=c(16,16,16))+
   scale_colour_manual(values=c("skyblue","steelblue3","steelblue4"))+
-  coord_cartesian(ylim=c(0,500),xlim=c(16,26))+
-  annotation_custom(grobTree(textGrob("10-mm Larvae Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,700),xlim=c(15,25))+
+  scale_x_continuous(breaks=seq(15,25,5))+
+  annotation_custom(grobTree(textGrob("B",x=0.06,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
   theme(legend.position="none")
 print(total10plot2)
+ggsave(total10plot2,file="lar10mmalldata.pdf",width=100,height=100,units="mm",dpi=350)
 #400uatm is pretty flat, then slope increases with CO2. 
+
+
+larfig2<-grid.arrange(total1plot2,total10plot2+labs(y=NULL),ionocytelegend,ncol=3,widths=c(2,1.7,0.8))
+ggsave(larfig2,file="laralldata.pdf",width=180,height=80,units="mm",dpi=350)
+
+
+
 
 library(cowplot)
 legend1dph<-get_legend(total1plot2) #can use same legend for all figures because same 3 CO2 levels for all. 
