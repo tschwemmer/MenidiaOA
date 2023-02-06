@@ -546,5 +546,31 @@ e4bodyplot<-ggplot(e4embsum,aes(x=Temp.level,y=Mean.body,group=CO2.level,color=C
 grid.arrange(e4yolkplot,e4bodyplot,ncol=2)
 
 
+#_________________________________________________________________________________________________________________
+
+#Test for significant difference between yolk and body ionocyte density across all treatments
+yolkvbodyttest<-t.test(d3_emb$AverageYolkDensitymm,d3_emb$AverageBodyDensitymm)
+yolkvbodyttest #p=0.000238 with body being significantly greater than yolk
+
+#Try within temperature treatments using ANOVA
+t.test(d3_emb$AverageYolkDensitymm[d3_emb$Temp.level=="28C"],d3_emb$AverageBodyDensitymm[d3_emb$Temp.level=="28C"])
+#It looks like the 24C treatment is driving this entirely. 
 
 
+
+summary(lm(d3_emb$MO2~d3_emb$AverageTotalDensitymm))
+plot(d3_emb$MO2~sqrt(d3_emb$AverageTotalDensitymm))
+
+summary(lm(d3_1dph$MO2~d3_1dph$AverageTotalDensitymm))
+plot(d3_1dph$MO2~sqrt(d3_1dph$AverageTotalDensitymm))
+
+
+
+#Or maybe I should use a correlation test instead of linear regression
+embcor<-cor.test(d3_emb$AverageTotalDensitymm,d3_emb$MO2,method="pearson")
+embcor
+
+larcor<-cor.test(d3_1dph$AverageTotalDensitymm,d3_1dph$MO2,method="pearson")
+larcor
+
+#pearson's gives the same results

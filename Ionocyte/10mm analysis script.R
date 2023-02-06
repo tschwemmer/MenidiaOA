@@ -128,6 +128,14 @@ library(ggplot2)
 library(grid)
 library(gridExtra)
 
+library(plyr)
+summary_10mm<-ddply(d3_10mm,c("CO2.level","Temp.level"),summarise,
+                    N.front=length(AverageFrontDensitymm),Mean.front=mean(AverageFrontDensitymm),se.front=sd(AverageFrontDensitymm)/sqrt(N.front),
+                    N.back=length(AverageBackDensitymm),Mean.back=mean(AverageBackDensitymm),se.back=sd(AverageBackDensitymm)/sqrt(N.back),
+                    N.total=length(AverageTotalDensitymm),Mean.total=mean(AverageTotalDensitymm),se.total=sd(AverageTotalDensitymm)/sqrt(N.total))
+summary_10mm
+
+
 front10plot<-ggplot(summary_10mm,aes(x=Temp.level,y=Mean.front,group=CO2.level,color=CO2.level))+
   scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
   geom_errorbar(aes(ymin=Mean.front-se.front,ymax=Mean.front+se.front),width=0.2,position=position_dodge(0.1))+
