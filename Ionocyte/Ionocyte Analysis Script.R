@@ -255,10 +255,10 @@ hist(bodyres,breaks=20) #pretty symmetrical except for one observation with resi
 ols_test_normality(lmbody3)
 ols_test_breusch_pagan(lmbody3)
 
-cook<-cooks.distance(lmbody)
+cook<-cooks.distance(lmbody3)
 plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
-abline(h=4/(length(d2_emb$AverageBodyDensitymm)-3-1), col="red")
-text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d2_emb$AverageBodyDensitymm)-3-1),names(cook),""),col="red")
+abline(h=4/(length(d3_emb$AverageBodyDensitymm)-3-1), col="red")
+text(x=1:length(cook)+10,y=cook,labels=ifelse(cook>4/(length(d3_emb$AverageBodyDensitymm)-3-1),names(cook),""),col="red")
 
 #and try square root transformation
 lmyolk_log<-lm(log(AverageYolkDensitymm)~CO2*Temp,data=d3_emb)
@@ -267,7 +267,7 @@ hist(residuals(lmyolk_log),breaks=20)
 ols_test_normality(lmyolk_log)
 ols_test_breusch_pagan(lmyolk_log)
 
-lmbody_log<-lm(sqrt(AverageBodyDensitymm)~CO2*Temp,data=d3_emb)
+lmbody_log<-lm(log(AverageBodyDensitymm)~CO2*Temp,data=d3_emb)
 summary(lmbody_log)
 hist(residuals(lmbody_log),breaks=20)
 ols_test_normality(lmbody_log)
