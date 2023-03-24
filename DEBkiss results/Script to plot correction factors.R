@@ -32,8 +32,45 @@ print(c1plot)
 
 grid.arrange(cplot,c1plot,ncol=1)
 
+#calculating values of yVA, mu_emb, and mu_lar with K=1.315
+my_equation5<-function(x){1-exp(-1.315*(x-2.044))}
+#yVA
+c7.7<-my_equation5(7.7)*.3646
+c4.2<-my_equation5(4.2)*.3646
+c3.1<-my_equation5(3.1)*.3646
+c2.7<-my_equation5(2.7)*.3646
 
-my_equation5<-function(x){1-exp(-1.326*(x-2.044))}
+#mu_emb
+c1.7.7<-my_equation4(c7.7)*.06393
+c1.4.2<-my_equation4(c4.2)*.06393
+c1.3.1<-my_equation4(c3.1)*.06393
+c1.2.7<-my_equation4(c2.7)*.06393
+
+#mu_lar
+c2.7.7<-my_equation4(c7.7)*.0294
+c2.4.2<-my_equation4(c4.2)*.0294
+c2.3.1<-my_equation4(c3.1)*.0294
+c2.2.7<-my_equation4(c2.7)*.0294
+
+#Lower limit of 95% CI
+my_equation5<-function(x){1-exp(-1.196*(x-2.044))}
+c7.7<-my_equation5(7.7)*.3646
+c4.2<-my_equation5(4.2)*.3646
+c3.1<-my_equation5(3.1)*.3646
+c2.7<-my_equation5(2.7)*.3646
+
+c1.7.7<-my_equation4(c7.7)*.06393
+c1.4.2<-my_equation4(c4.2)*.06393
+c1.3.1<-my_equation4(c3.1)*.06393
+c1.2.7<-my_equation4(c2.7)*.06393
+
+c2.7.7<-my_equation4(c7.7)*.0294
+c2.4.2<-my_equation4(c4.2)*.0294
+c2.3.1<-my_equation4(c3.1)*.0294
+c2.2.7<-my_equation4(c2.7)*.0294
+
+#Upper limit of 95% CI
+my_equation5<-function(x){1-exp(-1.756*(x-2.044))}
 c7.7<-my_equation5(7.7)*.3646
 c4.2<-my_equation5(4.2)*.3646
 c3.1<-my_equation5(3.1)*.3646
