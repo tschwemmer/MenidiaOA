@@ -1164,6 +1164,14 @@ danaembpcritplot<-ggplot(break_sum, aes(x=CO2_level,y=MeanPcrit))+
   theme_classic()
 print(danaembpcritplot)
 
+#Check for outliers
+cook<-cooks.distance(break_mod)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(emb_dana$Pcrit_break)-2-1), col="red")
+text(x=1:length(cook)+1,y=cook,labels=ifelse(cook>4/(length(emb_dana$Pcrit_break)-2-1),names(cook),""),col="red")
+#Rows 12 and 23 are particularly influential
+
+
 
 #Calculate the percent from each treatment that are NA (oxygen-dependent the whole time)
 #but since three of them were not oxygen-dependent but still have NAs we subtract those from the corresponding trmt
@@ -1224,13 +1232,22 @@ plot(dana_emb_mdl)
 
 #For ANOVA the assumptions are normality of the DATA and homogeneity of variances
 #normality of data
-shapiro.test(sqrt(emb_dana$RMR)) #good p=0.7352
+shapiro.test((emb_dana$RMR)) #good p=0.7352
 par(mfrow=c(1,1))
 hist(emb_dana$RMR) #it is right skewed by a 5 individuals that are >0.005
 
 #homogeneity of variances
 library(car)
-leveneTest(sqrt(emb_dana$RMR), emb_dana$CO2_level) #p=0.0496 may need to transform
+leveneTest((emb_dana$RMR), emb_dana$CO2_level)
+
+#Check for outliers
+cook<-cooks.distance(dana_emb_mod)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(emb_dana$RMR)-2-1), col="red")
+text(x=1:length(cook)+1,y=cook,labels=ifelse(cook>4/(length(emb_dana$RMR)-2-1),names(cook),""),col="red")
+#None
+
+
 
 #calculate the group means 
 
@@ -1253,4 +1270,15 @@ print(danaembplot)
 pct_spike_amb<-100*sum(emb_dana$spike[emb_dana$CO2_level=="amb"])/length(emb_dana$spike[emb_dana$CO2_level=="amb"])
 pct_spike_med<-100*sum(emb_dana$spike[emb_dana$CO2_level=="med"])/length(emb_dana$spike[emb_dana$CO2_level=="med"])
 pct_spike_high<-100*sum(emb_dana$spike[emb_dana$CO2_level=="high"])/length(emb_dana$spike[emb_dana$CO2_level=="high"])
+
+#test for significant differences in spike percentage between groups
+spike<-c(1,2,1)
+fish<-c(10,9,9)
+prop.test(spike,fish,correct=F) #no, p=0.7093
+
+#test for significant differences in oxyconformer percentages between groups
+oxyconf<-c(4,2,3)
+fish1<-c(10,9,9)
+prop.test(oxyconf,fish1,correct=F) #no, p=0.7065
+
 

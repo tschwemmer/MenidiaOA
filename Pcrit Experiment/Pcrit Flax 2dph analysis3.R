@@ -1364,12 +1364,21 @@ plot(break_mod2)
 
 #For ANOVA the assumptions are normality of the DATA and homogeneity of variances
 #normality of data
-shapiro.test(lar_flax$Pcrit_break) #p=0.0467, but ANOVA is robust to violations of normality and there are not sig results anyway
+shapiro.test(lar_flax$Pcrit_break[-c(14,30,32)]) #p=0.0467, but ANOVA is robust to violations of normality and there are not sig results anyway
 hist(lar_flax$Pcrit_break)
 
 #homogeneity of variances
 library(car)
-leveneTest(lar_flax$Pcrit_break, lar_flax$CO2_level) #p=0.31 good
+leveneTest(lar_flax$Pcrit_break[-c(14,30,32)], lar_flax$CO2_level[-c(14,30,32)]) #p=0.31 good
+
+#Check for outliers
+cook<-cooks.distance(break_mod2)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(lar_flax$Pcrit_break)-2-1), col="red")
+text(x=1:length(cook)+1,y=cook,labels=ifelse(cook>4/(length(lar_flax$Pcrit_break)-2-1),names(cook),""),col="red")
+#Three outliers identified: 14, 30, and 32. 
+boxplot(lar_flax$Pcrit_break~lar_flax$CO2_level)
+sort(residuals(break_mod2))
 
 #plot the data - means and SEs
 library(ggplot2)
@@ -1442,12 +1451,21 @@ plot(flax_lar_mdl)
 
 #For ANOVA the assumptions are normality of the DATA and homogeneity of variances
 #normality of data
-shapiro.test(1/(lar_flax$RMR)) #looks good p=0.08424
-hist(lar_flax$RMR)
+shapiro.test(1/(lar_flax$RMR[-c(10,19)])) #looks good p=0.08424
+hist(lar_flax$RMR, breaks=15)
 
 #homogeneity of variances
 library(car)
-leveneTest(1/(lar_flax$RMR), lar_flax$CO2_level) #p=0.003516, reciprocal transformation works
+leveneTest(1/(lar_flax$RMR[-c(10,19)]), lar_flax$CO2_level[-c(10,19)]) #p=0.003516, reciprocal transformation works
+
+#Check for outliers
+cook<-cooks.distance(flax_lar_mdl)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(lar_flax$RMR)-2-1), col="red")
+text(x=1:length(cook)+1,y=cook,labels=ifelse(cook>4/(length(lar_flax$RMR)-2-1),names(cook),""),col="red")
+#Two outliers identified: 10 and 19. Both are low, 10 is high co2 and 19 is ambient.  
+boxplot(lar_flax$RMR~lar_flax$CO2_level)
+sort(residuals(flax_lar_mdl))
 
 
 library(plyr)
@@ -1468,3 +1486,55 @@ print(flaxlarplot)
 pct_spike_amb<-100*sum(na.omit(lar_flax$spike[lar_flax$CO2_level=="amb"]))/length(na.omit(lar_flax$spike[lar_flax$CO2_level=="amb"]))
 pct_spike_med<-100*sum(na.omit(lar_flax$spike[lar_flax$CO2_level=="med"]))/length(na.omit(lar_flax$spike[lar_flax$CO2_level=="med"]))
 pct_spike_high<-100*sum(na.omit(lar_flax$spike[lar_flax$CO2_level=="high"]))/length(na.omit(lar_flax$spike[lar_flax$CO2_level=="high"]))
+
+#test for significant differences in spike percentage between groups
+spike<-c(6,10,7)
+fish<-c(9,12,13)
+prop.test(spike,fish,correct=F) #no, p=0.2887
+
+#no oxyconformity in larvae
+
+
+#Remove outliers and redo tests and summaries 
+lar_flaxo<-lar_flax
+lar_flaxo$Pcrit_break[c(14,30,32)]<-NA
+lar_flaxo$RMR[c(10,19)]<-NA
+
+
+break_mod3<-aov((lar_flaxo$Pcrit_break)~lar_flaxo$CO2_level/factor(lar_flaxo$Tank))
+summary(break_mod3)
+
+flax_lar_mdl3<-aov(1/(lar_flaxo$RMR)~lar_flaxo$CO2_level/factor(lar_flaxo$Tank))
+summary(flax_lar_mdl3)
+
+shapiro.test(lar_flaxo$Pcrit_break)
+shapiro.test(1/(lar_flaxo$RMR))
+leveneTest(lar_flaxo$Pcrit_break~lar_flaxo$CO2_level)
+leveneTest(1/(lar_flaxo$RMR)~lar_flaxo$CO2_level)
+
+#means etc
+library(plyr)
+break_sum<-ddply(lar_flaxo,"CO2_level",summarise,N=length(na.omit(Pcrit_break)),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),SE=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
+break_sum #in both cases, Pcrit increases in elevated CO2 treatments but so does SE - may need to transform and/or check for outliers
+flax_lar_sum<-ddply(lar_flaxo,"CO2_level",summarise,N=length(na.omit(RMR)),MeanMO2=mean(RMR,na.rm=TRUE),SE=sd(RMR,na.rm=TRUE)/sqrt(N))
+flax_lar_sum #elevated CO2 slightly decreases MO2...opposite of previous results. But may need to redo using only data before ~Pcrit if want to compare to previous experiments. 
+
+#plots
+#plot the data - means and SEs
+library(ggplot2)
+library(grid)
+flaxlarpcritplot<-ggplot(break_sum, aes(x=CO2_level,y=MeanPcrit))+
+  geom_point(size=3,shape=16)+
+  geom_errorbar(aes(ymin=MeanPcrit-SE,ymax=MeanPcrit+SE),width=0.2)+
+  annotation_custom(grobTree(textGrob("2dph Larvae, Exp. 2",x=0.5,y=0.98,gp=gpar(fontsize=16,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,3))+
+  theme_classic()
+print(flaxlarpcritplot)
+
+flaxlarplot<-ggplot(flax_lar_sum, aes(x=CO2_level,y=MeanMO2))+
+  geom_point(size=3,shape=16)+
+  geom_errorbar(aes(ymin=MeanMO2-SE,ymax=MeanMO2+SE),width=0.2)+
+  annotation_custom(grobTree(textGrob("2dph Larvae, Exp. 2",x=0.5,y=0.98,gp=gpar(fontsize=16,fontface="bold"))))+
+  coord_cartesian(ylim=c(0.1,0.25))+
+  theme_classic()
+print(flaxlarplot)

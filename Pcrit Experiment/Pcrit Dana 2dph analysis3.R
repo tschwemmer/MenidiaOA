@@ -1293,11 +1293,11 @@ anova(break_mod,break_mod1) #this isn't significantly different than the lmer on
 break_mod2<-aov(lar_dana$Pcrit_break~lar_dana$CO2_level/factor(lar_dana$Tank))
 summary(break_mod2) #CO2 is significant (p=0.0488), tank is not (p=0.1727)
 
-break_mod3<-aov(lar_dana$Pcrit_break~lar_dana$CO2_level)
-summary(break_mod3)
+#break_mod3<-aov(lar_dana$Pcrit_break~lar_dana$CO2_level)
+#summary(break_mod3)
 
-break_mod4<-aov(Pcrit_break~CO2_level+Error(Tank),data=lar_dana)
-summary(break_mod4)
+#break_mod4<-aov(Pcrit_break~CO2_level+Error(Tank),data=lar_dana)
+#summary(break_mod4)
 
 
 
@@ -1314,6 +1314,15 @@ shapiro.test(lar_dana$Pcrit_break) #looks good p=0.18
 #homogeneity of variances
 library(car)
 leveneTest(lar_dana$Pcrit_break, lar_dana$CO2_level) #p=0.7317 good
+
+#Check for outliers
+cook<-cooks.distance(break_mod2)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(lar_dana$Pcrit_break)-2-1), col="red")
+text(x=1:length(cook)+1,y=cook,labels=ifelse(cook>4/(length(lar_dana$Pcrit_break)-2-1),names(cook),""),col="red")
+#Three outliers identified: 14, 22, 26
+boxplot(lar_dana$Pcrit_break~lar_dana$CO2_level) #no outliers
+sort(residuals(break_mod2))
 
 #plot the data - means and SEs
 library(ggplot2)
@@ -1375,6 +1384,15 @@ summary(dana_lar_mdl) #no significance
 shapiro.test(1/(lar_dana$RMR))
 leveneTest(1/(lar_dana$RMR),lar_dana$CO2_level)
 
+#Check for outliers
+cook<-cooks.distance(dana_lar_mdl)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(lar_dana$RMR)-2-1), col="red")
+text(x=1:length(cook)+1,y=cook,labels=ifelse(cook>4/(length(lar_dana$RMR)-2-1),names(cook),""),col="red")
+#Two outliers: 5 and 15
+boxplot(lar_dana$RMR~lar_dana$CO2_level)
+sort(residuals(dana_lar_mdl))
+
 #calculate the group means 
 
 library(plyr)
@@ -1395,3 +1413,11 @@ print(danalarplot)
 pct_spike_amb<-100*sum(na.omit(lar_dana$spike[lar_dana$CO2_level=="amb"]))/length(na.omit(lar_dana$spike[lar_dana$CO2_level=="amb"]))
 pct_spike_med<-100*sum(na.omit(lar_dana$spike[lar_dana$CO2_level=="med"]))/length(na.omit(lar_dana$spike[lar_dana$CO2_level=="med"]))
 pct_spike_high<-100*sum(na.omit(lar_dana$spike[lar_dana$CO2_level=="high"]))/length(na.omit(lar_dana$spike[lar_dana$CO2_level=="high"]))
+
+#test for significant differences in spike percentage between groups
+spike<-c(10,9,7)
+fish<-c(10,10,9)
+prop.test(spike,fish,correct=F) #no, p=0.2831
+
+#no oxyconformity in larvae
+

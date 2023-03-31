@@ -12,38 +12,38 @@ emb_dana$CO2mean[emb_dana$CO2_level=="amb"]<-680.1
 emb_dana$CO2mean[emb_dana$CO2_level=="med"]<-1682.8
 emb_dana$CO2mean[emb_dana$CO2_level=="high"]<-3609.8
 
-emb_flax$CO2mean<-rep(NA)
-emb_flax$CO2mean[emb_flax$CO2_level=="amb"]<-358.8
-emb_flax$CO2mean[emb_flax$CO2_level=="med"]<-2114.7
-emb_flax$CO2mean[emb_flax$CO2_level=="high"]<-4324.5
+emb_flaxo$CO2mean<-rep(NA)
+emb_flaxo$CO2mean[emb_flaxo$CO2_level=="amb"]<-358.8
+emb_flaxo$CO2mean[emb_flaxo$CO2_level=="med"]<-2114.7
+emb_flaxo$CO2mean[emb_flaxo$CO2_level=="high"]<-4324.5
 
 lar_dana$CO2mean<-rep(NA)
 lar_dana$CO2mean[lar_dana$CO2_level=="amb"]<-680.1
 lar_dana$CO2mean[lar_dana$CO2_level=="med"]<-1682.8
 lar_dana$CO2mean[lar_dana$CO2_level=="high"]<-3609.8
 
-lar_flax$CO2mean<-rep(NA)
-lar_flax$CO2mean[lar_flax$CO2_level=="amb"]<-358.8
-lar_flax$CO2mean[lar_flax$CO2_level=="med"]<-2114.7
-lar_flax$CO2mean[lar_flax$CO2_level=="high"]<-4324.5
+lar_flaxo$CO2mean<-rep(NA)
+lar_flaxo$CO2mean[lar_flaxo$CO2_level=="amb"]<-358.8
+lar_flaxo$CO2mean[lar_flaxo$CO2_level=="med"]<-2114.7
+lar_flaxo$CO2mean[lar_flaxo$CO2_level=="high"]<-4324.5
 
-lrv_dana$CO2mean<-rep(NA)
-lrv_dana$CO2mean[lrv_dana$CO2_level=="amb"]<-680.1
-lrv_dana$CO2mean[lrv_dana$CO2_level=="med"]<-1682.8
-lrv_dana$CO2mean[lrv_dana$CO2_level=="high"]<-3609.8
+lrv_danao$CO2mean<-rep(NA)
+lrv_danao$CO2mean[lrv_danao$CO2_level=="amb"]<-680.1
+lrv_danao$CO2mean[lrv_danao$CO2_level=="med"]<-1682.8
+lrv_danao$CO2mean[lrv_danao$CO2_level=="high"]<-3609.8
 
-lrv_flax$CO2mean<-rep(NA)
-lrv_flax$CO2mean[lrv_flax$CO2_level=="amb"]<-358.8
-lrv_flax$CO2mean[lrv_flax$CO2_level=="med"]<-2114.7
-lrv_flax$CO2mean[lrv_flax$CO2_level=="high"]<-4324.5
+lrv_flaxo$CO2mean<-rep(NA)
+lrv_flaxo$CO2mean[lrv_flaxo$CO2_level=="amb"]<-358.8
+lrv_flaxo$CO2mean[lrv_flaxo$CO2_level=="med"]<-2114.7
+lrv_flaxo$CO2mean[lrv_flaxo$CO2_level=="high"]<-4324.5
 
 emb_dana$TargTemp<-rep("24C")
 lar_dana$TargTemp<-rep("24C")
-lrv_dana$TargTemp<-rep("24C")
+lrv_danao$TargTemp<-rep("24C")
 
-emb_flax$TargTemp<-rep("22C")
-lar_flax$TargTemp<-rep("22C")
-lrv_flax$TargTemp<-rep("22C")
+emb_flaxo$TargTemp<-rep("22C")
+lar_flaxo$TargTemp<-rep("22C")
+lrv_flaxo$TargTemp<-rep("22C")
 
 #need to make columns match then rbind into one dataframe per life stage
 emb_dana$ID<-rep(NA)
@@ -51,11 +51,11 @@ emb_dana$probs<-rep(NA)
 emb_dana$Pcrit_NLR<-rep(NA)
 lar_dana$ID<-rep(NA)
 lar_dana$probs<-rep(NA)
-lrv_dana$ID<-rep(NA)
+lrv_danao$ID<-rep(NA)
 
-emb_both<-rbind(emb_dana,emb_flax)
-lar_both<-rbind(lar_dana,lar_flax)
-lrv_both<-rbind(lrv_dana,lrv_flax)
+emb_both<-rbind(emb_dana,emb_flaxo)
+lar_both<-rbind(lar_dana,lar_flaxo)
+lrv_both<-rbind(lrv_danao,lrv_flaxo)
 
 #Make the figures
 library(ggplot2)
@@ -174,4 +174,37 @@ lrvmeanrmr<-ddply(lrv_both, "CO2_level", summarise, N=length(na.omit(RMR)),MeanR
 embmeanpcrit<-ddply(emb_both, "CO2_level", summarise, N=length(na.omit(Pcrit_break)),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),se=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
 larmeanpcrit<-ddply(lar_both, "CO2_level", summarise, N=length(na.omit(Pcrit_break)),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),se=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
 lrvmeanpcrit<-ddply(lrv_both, "CO2_level", summarise, N=length(na.omit(Pcrit_break)),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),se=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
+
+######################################################################################
+#Plotting distribution of Pcrit and RMR at each life stage
+
+hist(emb_both$Pcrit_break,breaks=10) #reciprocal transformed
+hist(lar_both$Pcrit_break,breaks=10)
+hist(lrv_both$Pcrit_break,breaks=10)
+
+hist(emb_both$RMR,breaks=10) #square-root transformed
+hist(lar_both$RMR,breaks=10) #reciprocal transformed
+hist(lrv_both$RMR,breaks=10)
+
+boxplot(emb_dana$RMR~emb_dana$CO2_level)
+boxplot(lar_dana$RMR~lar_dana$CO2_level)
+boxplot(lrv_dana$RMR~lrv_dana$CO2_level)
+boxplot(emb_flax$RMR~emb_flax$CO2_level)
+boxplot(lar_flax$RMR~lar_flax$CO2_level)
+boxplot(lrv_flax$RMR~lrv_flax$CO2_level)
+
+
+#Plot sample curves for a typical curve, one with a spike, and an oxyconforming one
+typseg<-segmented(lm(msmrs~O2_MEAN,data=E2P2B3lrv),seg.Z=~O2_MEAN)
+plot(msmrs~O2_MEAN,data=E2P2B3lrv)
+plot(typseg,add=T)
+
+spikeseg<-selgmented(lm(msmrs~O2_MEAN,data=E1P1C1lar),seg.Z=~O2_MEAN,type='bic',Kmax=6,msg=F)
+plot(msmrs~O2_MEAN,data=E1P1C1lar)
+plot(spikeseg,add=T)
+
+ocline<-lm(MO2b~O2_MEAN,data=E2P2B2emb)
+ocseg<-selgmented(lm(MO2b~O2_MEAN,data=E2P2B2emb),seg.Z=~O2_MEAN,type='bic',Kmax=2,msg=F)
+plot(MO2b~O2_MEAN,data=E2P2B2emb)
+abline(ocline,col="black")
 

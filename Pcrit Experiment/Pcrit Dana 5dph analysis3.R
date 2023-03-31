@@ -1190,12 +1190,21 @@ plot(break_mod2)
 
 #For ANOVA the assumptions are normality of the DATA and homogeneity of variances
 #normality of data
-shapiro.test(lrv_dana$Pcrit_break) #p=0.561
+shapiro.test(lrv_dana$Pcrit_break[-c(2,3,4,5)]) #p=0.561
 hist(lrv_dana$Pcrit_break)
 
 #homogeneity of variances
 library(car)
-leveneTest(lrv_dana$Pcrit_break, lrv_dana$CO2_level) #p=0.2213 good
+leveneTest(lrv_dana$Pcrit_break[-c(2,3,4,5)], lrv_dana$CO2_level[-c(2,3,4,5)]) #p=0.2213 good
+
+#Check for outliers
+cook<-cooks.distance(break_mod2)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(lrv_dana$Pcrit_break)-2-1), col="red")
+text(x=1:length(cook)+1,y=cook,labels=ifelse(cook>4/(length(lrv_dana$Pcrit_break)-2-1),names(cook),""),col="red")
+#Five outliers identified: 9 and 14 worst, 11, 12 and 26 on borderline. 
+boxplot(lrv_dana$Pcrit_break~lrv_dana$CO2_level)
+sort(residuals(break_mod2))
 
 #plot the data - means and SEs
 library(ggplot2)
@@ -1258,12 +1267,21 @@ plot(dana_lrv_mdl)
 
 #For ANOVA the assumptions are normality of the DATA and homogeneity of variances
 #normality of data
-shapiro.test(lrv_dana$RMR) #looks good p=0.6603
+shapiro.test(lrv_dana$RMR[-c(2,4,5,8,9)]) #looks good p=0.6603
 hist(lrv_dana$RMR)
 
 #homogeneity of variances
 library(car)
-leveneTest(lrv_dana$RMR, lrv_dana$CO2_level) #p=0.2131 good
+leveneTest(lrv_dana$RMR[-c(2,4,5,8,9)], lrv_dana$CO2_level[-c(2,4,5,8,9)]) #p=0.2131 good
+
+#Check for outliers
+cook<-cooks.distance(dana_lrv_mdl)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=9/(length(lrv_dana$RMR)-2-1), col="red")
+text(x=1:length(cook)+1,y=cook,labels=ifelse(cook>4/(length(lrv_dana$RMR)-2-1),names(cook),""),col="red")
+#Four outliers identified: 20, 24, 25, 26. First three are high, last one low. 
+boxplot(lrv_dana$RMR~lrv_dana$CO2_level)
+sort(residuals(dana_lrv_mdl))
 
 #calculate the group means 
 
@@ -1286,4 +1304,55 @@ pct_spike_amb<-100*sum(na.omit(lrv_dana$spike[lrv_dana$CO2_level=="amb"]))/lengt
 pct_spike_med<-100*sum(na.omit(lrv_dana$spike[lrv_dana$CO2_level=="med"]))/length(na.omit(lrv_dana$spike[lrv_dana$CO2_level=="med"]))
 pct_spike_high<-100*sum(na.omit(lrv_dana$spike[lrv_dana$CO2_level=="high"]))/length(na.omit(lrv_dana$spike[lrv_dana$CO2_level=="high"]))
 
+#test for significant differences in spike percentage between groups
+spike<-c(5,3,3)
+fish<-c(9,8,9)
+prop.test(spike,fish,correct=F) #no, p=0.6005
 
+#no oxyconformity in larvae
+
+
+#remove outliers and redo tests and plots and summary
+lrv_danao<-lrv_dana
+lrv_danao$Pcrit_break[c(2,3,4,5)]<-NA
+lrv_danao$RMR[c(2,4,5,8,9)]<-NA
+
+break_mod3<-aov((lrv_danao$Pcrit_break)~lrv_danao$CO2_level/factor(lrv_danao$Tank))
+summary(break_mod3)
+TukeyHSD(break_mod3)
+
+dana_lrv_mdl3<-aov(sqrt(lrv_danao$RMR)~lrv_danao$CO2_level/factor(lrv_danao$Tank))
+summary(dana_lrv_mdl3) #CO2 is significant p=4.46e-6
+TukeyHSD(dana_lrv_mdl3)
+
+shapiro.test(lrv_danao$Pcrit_break)
+shapiro.test(lrv_danao$RMR)
+leveneTest(lrv_danao$Pcrit_break~lrv_danao$CO2_level)
+leveneTest((lrv_danao$RMR)~lrv_danao$CO2_level)
+
+#means etc
+library(plyr)
+break_sum<-ddply(lrv_danao,"CO2_level",summarise,N=length(na.omit(Pcrit_break)),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),SE=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
+break_sum 
+flax_emb_sum<-ddply(lrv_danao,"CO2_level",summarise,N=length(na.omit(RMR)),MeanMO2=mean(RMR,na.rm=TRUE),SE=sd(RMR,na.rm=TRUE)/sqrt(N))
+flax_emb_sum  
+
+#plots
+#plot the data - means and SEs
+library(ggplot2)
+library(grid)
+danalrvpcritplot<-ggplot(break_sum, aes(x=CO2_level,y=MeanPcrit))+
+  geom_point(size=3,shape=16)+
+  geom_errorbar(aes(ymin=MeanPcrit-SE,ymax=MeanPcrit+SE),width=0.2)+
+  annotation_custom(grobTree(textGrob("5dph Larvae, Exp. 1",x=0.5,y=0.96,gp=gpar(fontsize=16,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,2))+
+  theme_classic()
+print(danalrvpcritplot)
+
+danalrvplot<-ggplot(dana_lrv_sum, aes(x=CO2_level,y=MeanMO2))+
+  geom_point(size=3,shape=16)+
+  geom_errorbar(aes(ymin=MeanMO2-SE,ymax=MeanMO2+SE),width=0.2)+
+  annotation_custom(grobTree(textGrob("5dph Larvae, Exp. 1",x=0.5,y=0.96,gp=gpar(fontsize=16,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,0.3))+
+  theme_classic()
+print(danalrvplot)

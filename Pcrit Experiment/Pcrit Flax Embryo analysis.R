@@ -1208,7 +1208,7 @@ break_mod1<-lm(Pcrit_break~CO2_level,data=emb_flax)
 anova(break_mod1) #p=0.5403
 
 #try it the other way
-break_mod2<-aov(1/(emb_flax$Pcrit_break)~emb_flax$CO2_level/factor(emb_flax$Tank))
+break_mod2<-aov((emb_flax$Pcrit_break)~emb_flax$CO2_level/factor(emb_flax$Tank))
 summary(break_mod2) #neither CO2 nor tank is significant
 
 
@@ -1218,13 +1218,24 @@ plot(break_mod2)
 
 #For ANOVA the assumptions are normality of the DATA and homogeneity of variances
 #normality of data
-shapiro.test(1/(emb_flax$Pcrit_break)) #p=0.07972
+shapiro.test((emb_flax$Pcrit_break[-c(11)])) #p=0.07972
 par(mfrow=c(1,1))
 hist(emb_flax$Pcrit_break)
 
 #homogeneity of variances
 library(car)
-leveneTest(1/(emb_flax$Pcrit_break), emb_flax$CO2_level) #p=0.0291 (the variance is lower in the high CO2 trmt)
+leveneTest((emb_flax$Pcrit_break[-c(11,12,26)]), emb_flax$CO2_level[-c(11,12,26)]) #p=0.0291 (the variance is lower in the high CO2 trmt)
+
+#Check for outliers
+cook<-cooks.distance(break_mod2)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(emb_flax$Pcrit_break)-2-1), col="red")
+text(x=1:length(cook)+1,y=cook,labels=ifelse(cook>4/(length(emb_flax$Pcrit_break)-2-1),names(cook),""),col="red")
+#Five outliers identified: 9 and 14 worst, 11, 12 and 26 on borderline. 
+boxplot(emb_flax$Pcrit_break~emb_flax$CO2_level)
+sort(residuals(break_mod2))
+
+
 
 #plot the data - means and SEs
 library(ggplot2)
@@ -1314,6 +1325,15 @@ hist(emb_flax$RMR) #it is right skewed by a 5 individuals that are >0.005
 library(car)
 leveneTest(sqrt(emb_flax$RMR), emb_flax$CO2_level) #p=0.1588 with sqrt transformation, reciprocal doesn't work
 
+#Check for outliers
+cook<-cooks.distance(flax_emb_mdl)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(emb_flax$RMR)-2-1), col="red")
+text(x=1:length(cook)+1,y=cook,labels=ifelse(cook>4/(length(emb_flax$RMR)-2-1),names(cook),""),col="red")
+#Four outliers identified: 20, 24, 25, 26. First three are high, last one low. 
+boxplot(emb_flax$RMR~emb_flax$CO2_level)
+sort(residuals(flax_emb_mdl))
+
 #calculate the group means 
 
 library(plyr)
@@ -1335,3 +1355,59 @@ print(flaxembplot)
 pct_spike_amb<-100*sum(emb_flax$spike[emb_flax$CO2_level=="amb"])/length(emb_flax$spike[emb_flax$CO2_level=="amb"])
 pct_spike_med<-100*sum(emb_flax$spike[emb_flax$CO2_level=="med"])/length(emb_flax$spike[emb_flax$CO2_level=="med"])
 pct_spike_high<-100*sum(emb_flax$spike[emb_flax$CO2_level=="high"])/length(emb_flax$spike[emb_flax$CO2_level=="high"])
+
+#test for significant differences in spike percentage between groups
+spike<-c(2,2,5)
+fish<-c(11,12,14)
+prop.test(spike,fish,correct=F) #no, p=0.4506
+
+#test for significant differences in oxyconformer percentages between groups
+oxyconf<-c(0,1,10)
+fish1<-c(11,12,14)
+prop.test(oxyconf,fish1,correct=F) #yes, p=7.729e-5
+
+
+#After removing outliers, redo tests, plots, and means
+emb_flaxo<-emb_flax
+emb_flaxo$Pcrit_break[c(11,12,26)]<-NA
+emb_flaxo$RMR[c(20,26)]<-NA
+
+break_mod3<-aov((emb_flaxo$Pcrit_break)~emb_flaxo$CO2_level/factor(emb_flaxo$Tank))
+summary(break_mod3)
+
+flax_emb_mdl3<-aov(sqrt(emb_flaxo$RMR)~emb_flaxo$CO2_level/factor(emb_flaxo$Tank))
+summary(flax_emb_mdl3) #CO2 is significant p=4.46e-6
+TukeyHSD(flax_emb_mdl3)
+
+shapiro.test(emb_flaxo$Pcrit_break)
+shapiro.test(sqrt(emb_flaxo$RMR))
+leveneTest(emb_flaxo$Pcrit_break~emb_flaxo$CO2_level)
+leveneTest(sqrt(emb_flaxo$RMR)~emb_flaxo$CO2_level)
+
+#means etc
+library(plyr)
+break_sum<-ddply(emb_flaxo,"CO2_level",summarise,N=length(na.omit(Pcrit_break)),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),SE=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
+break_sum #in both cases, Pcrit increases in elevated CO2 treatments but so does SE - may need to transform and/or check for outliers
+flax_emb_sum<-ddply(emb_flaxo,"CO2_level",summarise,N=length(na.omit(RMR)),MeanMO2=mean(RMR,na.rm=TRUE),SE=sd(RMR,na.rm=TRUE)/sqrt(N))
+flax_emb_sum #elevated CO2 slightly decreases MO2...opposite of previous results. But may need to redo using only data before ~Pcrit if want to compare to previous experiments. 
+
+#plots
+#plot the data - means and SEs
+library(ggplot2)
+library(grid)
+flaxembpcritplot<-ggplot(break_sum, aes(x=CO2_level,y=MeanPcrit))+
+  geom_point(size=3,shape=16)+
+  geom_errorbar(aes(ymin=MeanPcrit-SE,ymax=MeanPcrit+SE),width=0.2)+
+  annotation_custom(grobTree(textGrob("Embryos, Exp. 2",x=0.5,y=0.98,gp=gpar(fontsize=16,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,3))+
+  theme_classic()
+print(flaxembpcritplot)
+
+flaxembplot<-ggplot(flax_emb_sum, aes(x=CO2_level,y=MeanMO2))+
+  geom_point(size=3,shape=16)+
+  geom_errorbar(aes(ymin=MeanMO2-SE,ymax=MeanMO2+SE),width=0.2)+
+  annotation_custom(grobTree(textGrob("Embryos, Exp. 2",x=0.5,y=0.98,gp=gpar(fontsize=16,fontface="bold"))))+
+  coord_cartesian(ylim=c(0.0,0.006))+
+  theme_classic()
+print(flaxembplot)
+

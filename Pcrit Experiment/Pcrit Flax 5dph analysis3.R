@@ -1279,12 +1279,22 @@ plot(break_mod2)
 
 #For ANOVA the assumptions are normality of the DATA and homogeneity of variances
 #normality of data
-shapiro.test(lrv_flax$Pcrit_break) #p=0.3904
+shapiro.test(lrv_flax$Pcrit_break[-c(31)]) #p=0.3904
 hist(lrv_flax$Pcrit_break)
 
 #homogeneity of variances
 library(car)
-leveneTest(lrv_flax$Pcrit_break, lrv_flax$CO2_level) #p=0.7352 good
+leveneTest(lrv_flax$Pcrit_break[-c(31)], lrv_flax$CO2_level[-c(31)]) #p=0.7352 good
+
+#Check for outliers
+cook<-cooks.distance(break_mod2)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(lrv_flax$Pcrit_break)-2-1), col="red")
+text(x=1:length(cook)+1,y=cook,labels=ifelse(cook>4/(length(lrv_flax$Pcrit_break)-2-1),names(cook),""),col="red")
+#One outlier, 31, from high co2, slightly low but not that extreme
+boxplot(lrv_flax$Pcrit_break~lrv_flax$CO2_level)
+sort(residuals(break_mod2))
+
 
 #plot the data - means and SEs
 library(ggplot2)
@@ -1355,11 +1365,20 @@ plot(flax_lrv_mdl)
 
 #For ANOVA the assumptions are normality of the DATA and homogeneity of variances
 #normality of data
-shapiro.test(lrv_flax$RMR) #looks good p=0.829
+shapiro.test(lrv_flax$RMR[-c(4,6,14)]) #looks good p=0.829
 
 #homogeneity of variances
 library(car)
-leveneTest(lrv_flax$RMR, lrv_flax$CO2_level) #p=0.1433 good
+leveneTest(lrv_flax$RMR[-c(4,6,14)], lrv_flax$CO2_level[-c(4,6,14)]) #p=0.1433 good
+
+#Check for outliers
+cook<-cooks.distance(flax_lrv_mdl)
+plot(cook,pch="*",cex=2,main="Influential Obs by Cooks Distance") 
+abline(h=4/(length(lrv_flax$RMR)-2-1), col="red")
+text(x=1:length(cook)+1,y=cook,labels=ifelse(cook>4/(length(lrv_flax$RMR)-2-1),names(cook),""),col="red")
+#three outliers identified, 4, 6, and 14
+boxplot(lrv_flax$RMR~lrv_flax$CO2_level)
+sort(residuals(flax_lrv_mdl))
 
 #calculate the group means 
 
@@ -1382,3 +1401,54 @@ pct_spike_amb<-100*sum(na.omit(lrv_flax$spike[lrv_flax$CO2_level=="amb"]))/lengt
 pct_spike_med<-100*sum(na.omit(lrv_flax$spike[lrv_flax$CO2_level=="med"]))/length(na.omit(lrv_flax$spike[lrv_flax$CO2_level=="med"]))
 pct_spike_high<-100*sum(na.omit(lrv_flax$spike[lrv_flax$CO2_level=="high"]))/length(na.omit(lrv_flax$spike[lrv_flax$CO2_level=="high"]))
 
+#test for significant differences in spike percentage between groups
+spike<-c(6,9,4)
+fish<-c(7,12,10)
+prop.test(spike,fish,correct=F) #no, p=0.09908
+
+#no oxyconformity in larvae
+
+#Remove outliers and redo tests and summaries
+lrv_flaxo<-lrv_flax
+lrv_flaxo$Pcrit_break[c(31)]<-NA
+lrv_flaxo$RMR[c(4,6,14)]<-NA
+
+break_mod3<-aov((lrv_flaxo$Pcrit_break)~lrv_flaxo$CO2_level/factor(lrv_flaxo$Tank))
+summary(break_mod3)
+TukeyHSD(break_mod3)
+
+flax_lrv_mdl3<-aov(sqrt(lrv_flaxo$RMR)~lrv_flaxo$CO2_level/factor(lrv_flaxo$Tank))
+summary(flax_lrv_mdl3) #CO2 is significant p=4.46e-6
+TukeyHSD(flax_lrv_mdl3)
+
+shapiro.test(lrv_flaxo$Pcrit_break)
+shapiro.test(sqrt(lrv_flaxo$RMR))
+leveneTest(lrv_flaxo$Pcrit_break~lrv_flaxo$CO2_level)
+leveneTest(sqrt(lrv_flaxo$RMR)~lrv_flaxo$CO2_level)
+
+#means etc
+library(plyr)
+break_sum<-ddply(lrv_flaxo,"CO2_level",summarise,N=length(na.omit(Pcrit_break)),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),SE=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
+break_sum #in both cases, Pcrit increases in elevated CO2 treatments but so does SE - may need to transform and/or check for outliers
+flax_lrv_sum<-ddply(lrv_flaxo,"CO2_level",summarise,N=length(na.omit(RMR)),MeanMO2=mean(RMR,na.rm=TRUE),SE=sd(RMR,na.rm=TRUE)/sqrt(N))
+flax_lrv_sum #elevated CO2 slightly decreases MO2...opposite of previous results. But may need to redo using only data before ~Pcrit if want to compare to previous experiments. 
+
+#plots
+#plot the data - means and SEs
+library(ggplot2)
+library(grid)
+flaxlrvpcritplot<-ggplot(break_sum, aes(x=CO2_level,y=MeanPcrit))+
+  geom_point(size=3,shape=16)+
+  geom_errorbar(aes(ymin=MeanPcrit-SE,ymax=MeanPcrit+SE),width=0.2)+
+  annotation_custom(grobTree(textGrob("5dph Larvae, Exp. 2",x=0.5,y=0.96,gp=gpar(fontsize=16,fontface="bold"))))+
+  coord_cartesian(ylim=c(0,3))+
+  theme_classic()
+print(flaxlrvpcritplot)
+
+flaxlrvplot<-ggplot(flax_lrv_sum, aes(x=CO2_level,y=MeanMO2))+
+  geom_point(size=3,shape=16)+
+  geom_errorbar(aes(ymin=MeanMO2-SE,ymax=MeanMO2+SE),width=0.2)+
+  annotation_custom(grobTree(textGrob("5dph Larvae, Exp. 2",x=0.5,y=0.98,gp=gpar(fontsize=16,fontface="bold"))))+
+  coord_cartesian(ylim=c(0.1,0.25))+
+  theme_classic()
+print(flaxlrvplot)
