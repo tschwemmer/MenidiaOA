@@ -478,6 +478,7 @@ e1yolkplot<-ggplot(e1embsum,aes(x=Temp.level,y=Mean.yolk,group=CO2.level,color=C
   xlab("Temperature (C)")+
   ylab("Ionocyte Density (ionocytes/mm^2)")+
   theme_classic()
+print(e1yolkplot)
 
 e1bodyplot<-ggplot(e1embsum,aes(x=Temp.level,y=Mean.body,group=CO2.level,color=CO2.level))+
   scale_color_manual(values=c("skyblue","steelblue3"))+
@@ -574,3 +575,101 @@ larcor<-cor.test(d3_1dph$AverageTotalDensitymm,d3_1dph$MO2,method="pearson")
 larcor
 
 #pearson's gives the same results
+
+
+
+
+#######################################################################################################
+
+#figures of distribution at each life stage
+hist(d3_emb$AverageYolkDensitymm,breaks=30)
+hist(d3_emb$AverageBodyDensitymm,breaks=30)
+hist(d3_emb$AverageTotalDensitymm,breaks=30)
+hist(d3_1dph$AverageTotalDensitymm,breaks=30)
+hist(d3_10mm$AverageTotalDensitymm,breaks=30)
+
+#Add a column to dataframe saying what stage
+d3_emb$Stage<-rep("emb",times=284)
+d3_1dph$Stage<-rep("1dph",times=397)
+d3_10mm$Stage<-rep("10mm",times=341)
+
+#combine the relevant columns into a new dataframe
+allstg<-data.frame("Density"<-cbind(c(d3_emb$AverageBodyDensitymm,d3_1dph$AverageTotalDensitymm,d3_emb$AverageYolkDensitymm)),
+                   "Stage"<-cbind(c(d3_emb$Stage,d3_1dph$Stage,rep("Yolk",times=length(d3_emb$Stage)))))
+names(allstg)<-c("Density","Stage")
+allstg$Stage<-factor(allstg$Stage,levels=c("Yolk","emb","1dph"))
+
+#make histogram with ggplot
+library(ggplot2)
+iondist<-ggplot(allstg,aes(x=Density,fill=Stage))+
+  geom_histogram(color="#e9ecef",alpha=0.6,position="identity")+
+  scale_fill_manual(values=c("skyblue","#404080","#8b043e"),labels=c("Embryos, Yolk","Embryos, Body","Hatchlings"))+
+  theme_classic()+
+  labs(fill="Stage",x=expression(paste("Ionocyte density (ionocytes mm"^"-2",")")),y="Frequency")
+print(iondist)
+
+
+#look at it by treatment
+hist(d3_emb$AverageYolkDensitymm[d3_emb$CO2.level=="400uatm"])
+hist(d3_emb$AverageYolkDensitymm[d3_emb$CO2.level=="2200uatm"])
+hist(d3_emb$AverageYolkDensitymm[d3_emb$CO2.level=="4200uatm"])
+hist(d3_emb$AverageYolkDensitymm[d3_emb$Temp.level=="17C"])
+hist(d3_emb$AverageYolkDensitymm[d3_emb$Temp.level=="20C"])
+hist(d3_emb$AverageYolkDensitymm[d3_emb$Temp.level=="24C"])
+hist(d3_emb$AverageYolkDensitymm[d3_emb$Temp.level=="28C"])
+
+hist(d3_emb$AverageBodyDensitymm[d3_emb$CO2.level=="400uatm"])
+hist(d3_emb$AverageBodyDensitymm[d3_emb$CO2.level=="2200uatm"])
+hist(d3_emb$AverageBodyDensitymm[d3_emb$CO2.level=="4200uatm"])
+hist(d3_emb$AverageBodyDensitymm[d3_emb$Temp.level=="17C"])
+hist(d3_emb$AverageBodyDensitymm[d3_emb$Temp.level=="20C"])
+hist(d3_emb$AverageBodyDensitymm[d3_emb$Temp.level=="24C"])
+hist(d3_emb$AverageBodyDensitymm[d3_emb$Temp.level=="28C"])
+
+hist(d3_1dph$AverageTotalDensitymm[d3_1dph$CO2.level=="400uatm"])
+hist(d3_1dph$AverageTotalDensitymm[d3_1dph$CO2.level=="2200uatm"])
+hist(d3_1dph$AverageTotalDensitymm[d3_1dph$CO2.level=="4200uatm"])
+hist(d3_1dph$AverageTotalDensitymm[d3_1dph$Temp.level=="17C"])
+hist(d3_1dph$AverageTotalDensitymm[d3_1dph$Temp.level=="20C"])
+hist(d3_1dph$AverageTotalDensitymm[d3_1dph$Temp.level=="24C"])
+hist(d3_1dph$AverageTotalDensitymm[d3_1dph$Temp.level=="28C"])
+
+hist(d3_10mm$AverageTotalDensitymm[d3_10mm$CO2.level=="400uatm"])
+hist(d3_10mm$AverageTotalDensitymm[d3_10mm$CO2.level=="2200uatm"])
+hist(d3_10mm$AverageTotalDensitymm[d3_10mm$CO2.level=="4200uatm"])
+hist(d3_10mm$AverageTotalDensitymm[d3_10mm$Temp.level=="17C"])
+hist(d3_10mm$AverageTotalDensitymm[d3_10mm$Temp.level=="20C"])
+hist(d3_10mm$AverageTotalDensitymm[d3_10mm$Temp.level=="24C"])
+
+#no major differences across treatments, dif between before and after hatching is the most prominent. 
+
+plot(d3_emb$AverageYolkDensitymm~d3_emb$MO2)
+plot(d3_emb$AverageBodyDensitymm~d3_emb$MO2)
+plot(d3_emb$AverageTotalDensitymm~d3_emb$MO2)
+
+plot(d3_1dph$AverageTotalDensitymm~d3_1dph$MO2)
+
+#Try making a ggplot with CO2 color coded
+embrmrplot<-ggplot(d3_emb, aes(x=AverageTotalDensitymm,y=MO2,color=Temp.level))+
+  scale_color_manual(values=c("skyblue","steelblue3","steelblue4","#090057"),labels=c("17","20","24","28"))+
+  geom_point(size=1.5,shape=16,show.legend=FALSE)+
+  geom_smooth(mapping=aes(x=AverageTotalDensitymm,y=MO2),method="lm",formula=y~x,inherit.aes=FALSE,color="black")+
+  annotation_custom(grobTree(textGrob("A",x=0.01,y=0.96,hjust=0,gp=gpar(col="black",fontsize=12,fontface="bold"))))+
+  labs(color=expression(paste("Temperature ("*degree,"C)")),x=expression(paste("Ionocyte Density (ionocytes mm"^"-2",")")),y=expression(paste("Routine Metabolic Rate (",mu,"mol ind."^"-1"," h"^"-1",")")))+
+  theme_classic()
+print(embrmrplot)
+
+larrmrplot<-ggplot(d3_1dph, aes(x=AverageTotalDensitymm,y=MO2,color=Temp.level))+
+  scale_color_manual(values=c("skyblue","steelblue3","steelblue4","#090057"),labels=c("17","20","24","28"))+
+  geom_point(size=1.5,shape=16,show.legend=FALSE)+
+  geom_smooth(mapping=aes(x=AverageTotalDensitymm,y=MO2),method="lm",formula=y~x,inherit.aes=FALSE,color="black")+
+  annotation_custom(grobTree(textGrob("B",x=0.01,y=0.96,hjust=0,gp=gpar(col="black",fontsize=12,fontface="bold"))))+
+  labs(color=expression(paste("Temperature ("*degree,"C)")),x=expression(paste("Ionocyte Density (ionocytes mm"^"-2",")")),y=expression(paste("Routine Metabolic Rate (",mu,"mol mg"^"-1"," h"^"-1",")")))+
+  theme_classic()
+print(larrmrplot)
+
+library(ggpubr)
+rmrplotleg<-get_legend(larrmrplot)
+
+library(gridExtra)
+grid.arrange(embrmrplot,larrmrplot,rmrplotleg,ncol=3,widths=c(2,2,1))
