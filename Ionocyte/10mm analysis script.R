@@ -256,6 +256,8 @@ e310mmsum<-ddply(d2_10mm[d2_10mm$Experiment.x=="exp3",],c("CO2.level","Temp.leve
 e310mmsum
 
 
+
+
 #Then make a plot for each experiment and display as one row
 e210mmplot<-ggplot(e210mmsum,aes(x=Temp.level,y=Mean.total,group=CO2.level,color=CO2.level))+
   scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
