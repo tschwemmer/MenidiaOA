@@ -2,6 +2,7 @@
 
 library(ggplot2)
 library(grid)
+library(gridExtra)
 
 my_equation1<-function(x){1-exp(-0.3*(x-2.044))}
 my_equation2<-function(x){1-exp(-0.8*(x-2.044))}
@@ -12,9 +13,9 @@ cplot<-ggplot(data.frame(x=c(0,10)),aes(x=x))+
   stat_function(fun=my_equation2)+
   stat_function(fun=my_equation3)+
   coord_cartesian(ylim=c(0,1))+
-  annotation_custom(grobTree(textGrob("K=0.3",x=0.49,y=0.49,hjust=0,gp=gpar(col="black",fontsize=11))))+
-  annotation_custom(grobTree(textGrob("K=0.8",x=0.4,y=0.68,hjust=0,gp=gpar(col="black",fontsize=11))))+
-  annotation_custom(grobTree(textGrob("K=1.8",x=0.26,y=0.91,hjust=0,gp=gpar(col="black",fontsize=11))))+
+  annotation_custom(grobTree(textGrob(expression(paste(italic("Z"),"=0.3")),x=0.49,y=0.49,hjust=0,gp=gpar(col="black",fontsize=11))))+
+  annotation_custom(grobTree(textGrob(expression(paste(italic("Z"),"=0.8")),x=0.4,y=0.68,hjust=0,gp=gpar(col="black",fontsize=11))))+
+  annotation_custom(grobTree(textGrob(expression(paste(italic("Z"),"=1.8")),x=0.26,y=0.91,hjust=0,gp=gpar(col="black",fontsize=11))))+
   labs(x=expression(paste("Dissolved Oxygen (mg L"^-1,")")),y=expression(paste("Correction Factor ",italic("c"))))+
   theme_classic()
 print(cplot)
