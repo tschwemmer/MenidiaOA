@@ -1,0 +1,54 @@
+Things to study and review before defense
+
+Chapter 1
+
+
+
+Chapter 2
+-What were the pH levels corresponding to the CO2 levels? how much did salinity increase? Other difs between the two experiments
+-Why didn't I calculate alpha (and will I)
+
+
+
+
+Meeting with Janet
+-Lunch for defense?
+	-email mike bob and janet, either janet will pick it up or someone from the lab will
+	-i will get snacks
+-Where is she staying, does she want to get dinner?
+-How to prepare for committee meeting?
+-DEB symposium - should I register with MOU P-card? There will be a special issue we can submit to in Ecological Modelling
+	-RF - can't use p-card, probably best to just pay and do concur
+-Hotspots postdoc meeting
+	-Grace seemed to be willing to let me use the glider data but i would have to learn how
+	-She has a technician that made the maps, might need to get code
+	-Graces' and Charlie's data is publicly available
+	-I can use the NYB data but Baoshan and Janet would have to be involved
+	-What is Grace's role in this project? If any??
+	-Samantha Siedlecki is organizing symposium on monitoring for NECAN, they want to do something in the Northeast
+		-She does a lot of modeling
+		-Associated with NECAN but still would be good person to talk to
+	-Would be good earlier rather than later to figure out what I want to do
+	-
+-Questions from yesterday
+	-Is it really that unbelievable that a threshold could exist between 3600 and 4500?
+		-Temperature corrected pCO2
+	-Ok to combine Chapters 1 and 2 to make it more brief? Mainly by having a shared conclusions section and leaving out most of the methods for Ch 2.
+	-How important is it to show the different treatment levels for each experiment? Like the 3x3 factorial diagrams
+		-don't show table, just mention that they are locally relevant
+	-What does 'do you really need JA etc for your public talk' mean? I should use words instead of abbreviations?
+		-keep kappa because important to show reproduction is whatever is leftover from somatic
+
+Main takehome points to bring chapters together
+-OA is important when other stressors are also at play (temp and hypoxia), even if it isn't usually affecting them by itself (give examples)
+-Silversides will be resilient because they have mechanisms to respond, but there may be tradeoffs (give examples)
+-Many fisheries people wonder why we care about OA for fish but with other stressors also occurring, it is important to think about
+
+Show time series of how these stressors covary in an estuary
+-Wallace and/or Baumann papers – and point out how high it goes because that is close to treatments we used
+-say it makes sense to study them together since they vary/occur together
+
+-Many people have looked at the more visible effects such as growth and mortality, but few people have gotten into the underlying mechanisms
+	-Underlying mechanisms show how they are compensating, or in some cases why they can't compensate
+-just cause no effect now doesn’t mean no effect later and vice versa, just because they are affected early on doesn't mean it will have whole life consequences
+	-this is why its important to look at the mechanisms in order to go to population level
