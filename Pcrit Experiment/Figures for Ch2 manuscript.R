@@ -13,9 +13,9 @@ emb_dana$CO2mean[emb_dana$CO2_level=="med"]<-1682.8
 emb_dana$CO2mean[emb_dana$CO2_level=="high"]<-3609.8
 
 emb_flaxo$CO2mean<-rep(NA)
-emb_flaxo$CO2mean[emb_flaxo$CO2_level=="amb"]<-358.8
-emb_flaxo$CO2mean[emb_flaxo$CO2_level=="med"]<-2114.7
-emb_flaxo$CO2mean[emb_flaxo$CO2_level=="high"]<-4324.5
+emb_flaxo$CO2mean[emb_flaxo$CO2_level=="amb"]<-441.7
+emb_flaxo$CO2mean[emb_flaxo$CO2_level=="med"]<-2299.2
+emb_flaxo$CO2mean[emb_flaxo$CO2_level=="high"]<-4530.9
 
 lar_dana$CO2mean<-rep(NA)
 lar_dana$CO2mean[lar_dana$CO2_level=="amb"]<-680.1
@@ -23,9 +23,9 @@ lar_dana$CO2mean[lar_dana$CO2_level=="med"]<-1682.8
 lar_dana$CO2mean[lar_dana$CO2_level=="high"]<-3609.8
 
 lar_flaxo$CO2mean<-rep(NA)
-lar_flaxo$CO2mean[lar_flaxo$CO2_level=="amb"]<-358.8
-lar_flaxo$CO2mean[lar_flaxo$CO2_level=="med"]<-2114.7
-lar_flaxo$CO2mean[lar_flaxo$CO2_level=="high"]<-4324.5
+lar_flaxo$CO2mean[lar_flaxo$CO2_level=="amb"]<-441.7
+lar_flaxo$CO2mean[lar_flaxo$CO2_level=="med"]<-2299.2
+lar_flaxo$CO2mean[lar_flaxo$CO2_level=="high"]<-4530.9
 
 lrv_danao$CO2mean<-rep(NA)
 lrv_danao$CO2mean[lrv_danao$CO2_level=="amb"]<-680.1
@@ -33,9 +33,9 @@ lrv_danao$CO2mean[lrv_danao$CO2_level=="med"]<-1682.8
 lrv_danao$CO2mean[lrv_danao$CO2_level=="high"]<-3609.8
 
 lrv_flaxo$CO2mean<-rep(NA)
-lrv_flaxo$CO2mean[lrv_flaxo$CO2_level=="amb"]<-358.8
-lrv_flaxo$CO2mean[lrv_flaxo$CO2_level=="med"]<-2114.7
-lrv_flaxo$CO2mean[lrv_flaxo$CO2_level=="high"]<-4324.5
+lrv_flaxo$CO2mean[lrv_flaxo$CO2_level=="amb"]<-441.7
+lrv_flaxo$CO2mean[lrv_flaxo$CO2_level=="med"]<-2299.2
+lrv_flaxo$CO2mean[lrv_flaxo$CO2_level=="high"]<-4530.9
 
 emb_dana$TargTemp<-rep("24C")
 lar_dana$TargTemp<-rep("24C")
