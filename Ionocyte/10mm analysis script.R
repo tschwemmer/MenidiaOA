@@ -165,9 +165,9 @@ back10plot<-ggplot(summary_10mm,aes(x=Temp.level,y=Mean.back,group=CO2.level,col
 print(back10plot)
 
 total10plot<-ggplot(summary_10mm,aes(x=Temp.level,y=Mean.total,group=CO2.level,color=CO2.level))+
-  scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  scale_color_manual(values=c("#63ACBE","#601A4A","#EE442F"))+
   geom_errorbar(aes(ymin=Mean.total-se.front,ymax=Mean.total+se.front),width=0.2,position=position_dodge(0.1))+
-  geom_point(size=3,position=position_dodge(0.1),shape=16)+
+  geom_point(size=2,position=position_dodge(0.1),shape=16)+
   geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
   scale_x_discrete(labels=c("17","20","24","28"))+
   scale_y_continuous(breaks=seq(0,600,100))+

@@ -141,9 +141,9 @@ summary_1dph<-ddply(d3_1dph,c("CO2.level","Temp.level"),summarise,
 summary_1dph
 
 frontplot<-ggplot(summary_1dph,aes(x=Temp.level,y=Mean.front,group=CO2.level,color=CO2.level))+
-  scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  scale_color_manual(values=c("#63ACBE","#601A4A","#EE442F"))+
   geom_errorbar(aes(ymin=Mean.front-se.front,ymax=Mean.front+se.front),width=0.2,position=position_dodge(0.1))+
-  geom_point(size=3,position=position_dodge(0.1),shape=16)+
+  geom_point(size=2,position=position_dodge(0.1),shape=16)+
   geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
   scale_x_discrete(labels=c("17","20","24","28"))+
   scale_y_continuous(breaks=seq(0,600,100))+
@@ -155,9 +155,9 @@ frontplot<-ggplot(summary_1dph,aes(x=Temp.level,y=Mean.front,group=CO2.level,col
 print(frontplot)
 
 backplot<-ggplot(summary_1dph,aes(x=Temp.level,y=Mean.back,group=CO2.level,color=CO2.level))+
-  scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  scale_color_manual(values=c("#63ACBE","#601A4A","#EE442F"))+
   geom_errorbar(aes(ymin=Mean.back-se.back,ymax=Mean.back+se.back),width=0.2,position=position_dodge(0.1))+
-  geom_point(size=3,position=position_dodge(0.1),shape=16)+
+  geom_point(size=2,position=position_dodge(0.1),shape=16)+
   geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
   scale_x_discrete(labels=c("17","20","24","28"))+
   annotation_custom(grobTree(textGrob("Back (trunk) Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=17,fontface="bold"))))+
@@ -169,9 +169,9 @@ backplot<-ggplot(summary_1dph,aes(x=Temp.level,y=Mean.back,group=CO2.level,color
 print(backplot)
 
 total1plot<-ggplot(summary_1dph,aes(x=Temp.level,y=Mean.total,group=CO2.level,color=CO2.level))+
-  scale_color_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  scale_color_manual(values=c("#63ACBE","#601A4A","#EE442F"))+
   geom_errorbar(aes(ymin=Mean.total-se.front,ymax=Mean.total+se.front),width=0.2,position=position_dodge(0.1))+
-  geom_point(size=3,position=position_dodge(0.1),shape=16)+
+  geom_point(size=2,position=position_dodge(0.1),shape=16)+
   geom_line(position=position_dodge(0.1),linetype="dashed",show.legend=FALSE)+
   scale_x_discrete(labels=c("17","20","24","28"))+
   scale_y_continuous(breaks=seq(0,600,100))+
@@ -190,7 +190,7 @@ frontplot2<-ggplot(d2_1dph,aes(x=Temp,y=AverageFrontDensitymm,colour=CO2.level,s
   geom_smooth(method="lm",lwd=1.7,se=FALSE)+
   labs(x="Temperature (C)",y="Ionocyte Density (ionocytes/mm^2)")+
   scale_shape_manual(values=c(16,16,16))+
-  scale_colour_manual(values=c("skyblue","steelblue3","steelblue4"))+
+  scale_colour_manual(values=c("#63ACBE","#601A4A","#EE442F"))+
   coord_cartesian(ylim=c(0,800),xlim=c(15,30))+
   annotation_custom(grobTree(textGrob("Front (head) Ionocytes",x=0.2,y=0.95,hjust=0,gp=gpar(col="black",fontsize=15,fontface="bold"))))+
   theme(legend.position="none")
