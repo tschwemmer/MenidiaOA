@@ -230,3 +230,32 @@ lrvall$pH<-c(7.13,7.13,7.13,7.13,7.13,7.41,7.94,7.94,7.94,7.13,7.13,7.13,7.13,
              7.39,7.39,7.39,7.09,7.09,7.09,7.39,7.39,7.39,7.39,8.08,8.08,8.08,8.08,8.08,8.08,8.08,8.08,
              7.39,7.39,7.39,7.39,7.39,7.09,7.09,7.09,7.09,7.09,7.09,7.09,7.09,7.09,7.09)
 
+embplotph<-ggplot(emball,aes(x=pH,y=RMR,color=Experiment))+
+  geom_point(size=2,shape=1)+
+  geom_smooth(method="lm",se=FALSE)+
+  annotation_custom(grobTree(textGrob("Embryos",x=0.5,y=0.95,gp=gpar(fontsize=16,fontface="bold"))))+
+  coord_cartesian(ylim=c(0.0,0.012))+
+  theme_classic()
+print(embplotph)
+
+larplotph<-ggplot(larall,aes(x=pH,y=RMR,color=Experiment))+
+  geom_point(size=2,shape=1)+
+  geom_smooth(method="lm",se=FALSE)+
+  annotation_custom(grobTree(textGrob("2dph Larvae",x=0.5,y=0.95,gp=gpar(fontsize=16,fontface="bold"))))+
+  coord_cartesian(ylim=c(0.0,0.65))+
+  theme_classic()
+print(larplotph)
+
+lrvplotpH<-ggplot(lrvall,aes(x=pH,y=RMR,color=Experiment))+
+  geom_point(size=2,shape=1)+
+  geom_smooth(method="lm",se=FALSE)+
+  annotation_custom(grobTree(textGrob("5dph Larvae",x=0.5,y=0.95,gp=gpar(fontsize=16,fontface="bold"))))+
+  coord_cartesian(ylim=c(0.0,0.65))+
+  theme_classic()
+print(lrvplotpH)
+
+grid.arrange(embplotph,larplotph,lrvplotpH,ncol=3)
+
+#Redo the models with pH too
+#But first need to enter the correct CO2 values for each individual tank in Exp 1
+emball$CO2<-c()
