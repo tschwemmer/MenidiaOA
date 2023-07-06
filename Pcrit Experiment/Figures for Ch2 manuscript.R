@@ -196,16 +196,19 @@ boxplot(lrv_flax$RMR~lrv_flax$CO2_level)
 
 
 #Plot sample curves for a typical curve, one with a spike, and an oxyconforming one
+library(segmented)
+par(mar=c(5.1,5.1,4.1,2.1))
+
 typseg<-segmented(lm(msmrs~O2_MEAN,data=E2P2B3lrv),seg.Z=~O2_MEAN)
-plot(msmrs~O2_MEAN,data=E2P2B3lrv)
-plot(typseg,add=T)
+plot(msmrs~O2_MEAN,data=E2P2B3lrv,xlab=expression(paste("O"[2]," (mg L"^"-1",")")),ylab=expression(paste("MO"[2]," (",mu,"mol mg"^"-1"," h"^"-1",")")),xlim=c(0,5))
+plot(typseg,add=T,col="black",lwd=1.5)
 
 spikeseg<-selgmented(lm(msmrs~O2_MEAN,data=E1P1C1lar),seg.Z=~O2_MEAN,type='bic',Kmax=6,msg=F)
-plot(msmrs~O2_MEAN,data=E1P1C1lar)
-plot(spikeseg,add=T)
+plot(msmrs~O2_MEAN,data=E1P1C1lar,xlab=expression(paste("O"[2]," (mg L"^"-1",")")),ylab=expression(paste("MO"[2]," (",mu,"mol mg"^"-1"," h"^"-1",")")),xlim=c(0,5))
+plot(spikeseg,add=T,col="black",lwd=1.5)
 
 ocline<-lm(MO2b~O2_MEAN,data=E2P2B2emb)
 ocseg<-selgmented(lm(MO2b~O2_MEAN,data=E2P2B2emb),seg.Z=~O2_MEAN,type='bic',Kmax=2,msg=F)
-plot(MO2b~O2_MEAN,data=E2P2B2emb)
-abline(ocline,col="black")
+plot(MO2b~O2_MEAN,data=E2P2B2emb,xlab=expression(paste("O"[2]," (mg L"^"-1",")")),ylab=expression(paste("MO"[2]," (",mu,"mol h"^"-1",")")),xlim=c(0,5))
+abline(ocline,col="black",lwd=1.5)
 

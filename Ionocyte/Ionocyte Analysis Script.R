@@ -671,3 +671,8 @@ rmrplotleg<-get_legend(larrmrplot)
 
 library(gridExtra)
 grid.arrange(embrmrplot,larrmrplot,rmrplotleg,ncol=3,widths=c(2,2,1))
+
+
+#_________________________________________________________________________________________________________________________________________
+
+#Calculate Q10 of ionocyte density for embryo yolk and body
