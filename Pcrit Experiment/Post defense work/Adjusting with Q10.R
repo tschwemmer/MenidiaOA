@@ -676,3 +676,144 @@ print(oxyconfplotomega)
 oxyconflegend<-get_legend(oxyconfplotpco2)
 
 grid.arrange(oxyconfplotpco2,oxyconfplotpH,oxyconfplotomega,oxyconflegend,ncol=4,widths=c(2,2,2,1))
+
+
+#Now plot the RMR spike for each stage and explanatory variables
+#Embryos
+embspikeplotpco2<-ggplot(percents,aes(x=pCO2,y=embspike,color=Experiment))+
+  geom_point(size=2,shape=16)+
+  scale_color_discrete(labels=c("Experiment 1","Experiment 2"))+
+  labs(color=NULL,x=expression(paste("pCO"[2]," (",mu,"atm)")),y=expression(paste("% Prevalence in Embryos")))+
+  coord_cartesian(ylim=c(0,100))+
+  theme_classic()+
+  theme(legend.position="none")
+print(embspikeplotpco2)
+
+embspikeplotpH<-ggplot(percents,aes(x=pH,y=embspike,color=Experiment))+
+  geom_point(size=2,shape=16)+
+  scale_color_discrete(labels=c("Experiment 1","Experiment 2"))+
+  scale_x_reverse(limits=c(8.15,7.00))+
+  labs(color=NULL,x=expression(paste("pH")),y=expression(paste(NULL)))+
+  coord_cartesian(ylim=c(0,100))+
+  theme_classic()+
+  theme(legend.position="none")
+print(embspikeplotpH)
+
+embspikeplotomega<-ggplot(percents,aes(x=Omega,y=embspike,color=Experiment))+
+  geom_point(size=2,shape=16)+
+  scale_color_discrete(labels=c("Experiment 1","Experiment 2"))+
+  scale_x_reverse(limits=c(2.5,0))+
+  labs(color=NULL,x=expression(paste("Aragonite Saturation State")),y=expression(paste(NULL)))+
+  coord_cartesian(ylim=c(0,100))+
+  theme_classic()+
+  theme(legend.position="none")
+print(embspikeplotomega)
+
+grid.arrange(embspikeplotpco2,embspikeplotpH,embspikeplotomega,oxyconflegend,ncol=4,widths=c(2,2,2,1))
+
+#2dph Larvae
+larspikeplotpco2<-ggplot(percents,aes(x=pCO2,y=larspike,color=Experiment))+
+  geom_point(size=2,shape=16)+
+  scale_color_discrete(labels=c("Experiment 1","Experiment 2"))+
+  labs(color=NULL,x=expression(paste("pCO"[2]," (",mu,"atm)")),y=expression(paste("% Prevalence in 2dph Larvae")))+
+  coord_cartesian(ylim=c(0,100))+
+  theme_classic()+
+  theme(legend.position="none")
+print(larspikeplotpco2)
+
+larspikeplotpH<-ggplot(percents,aes(x=pH,y=larspike,color=Experiment))+
+  geom_point(size=2,shape=16)+
+  scale_color_discrete(labels=c("Experiment 1","Experiment 2"))+
+  scale_x_reverse(limits=c(8.15,7.00))+
+  labs(color=NULL,x=expression(paste("pH")),y=expression(paste(NULL)))+
+  coord_cartesian(ylim=c(0,100))+
+  theme_classic()+
+  theme(legend.position="none")
+print(larspikeplotpH)
+
+larspikeplotomega<-ggplot(percents,aes(x=Omega,y=larspike,color=Experiment))+
+  geom_point(size=2,shape=16)+
+  scale_color_discrete(labels=c("Experiment 1","Experiment 2"))+
+  scale_x_reverse(limits=c(2.5,0))+
+  labs(color=NULL,x=expression(paste("Aragonite Saturation State")),y=expression(paste(NULL)))+
+  coord_cartesian(ylim=c(0,100))+
+  theme_classic()+
+  theme(legend.position="none")
+print(larspikeplotomega)
+
+grid.arrange(larspikeplotpco2,larspikeplotpH,larspikeplotomega,oxyconflegend,ncol=4,widths=c(2,2,2,1))
+
+
+#5dph Larvae
+lrvspikeplotpco2<-ggplot(percents,aes(x=pCO2,y=lrvspike,color=Experiment))+
+  geom_point(size=2,shape=16)+
+  scale_color_discrete(labels=c("Experiment 1","Experiment 2"))+
+  labs(color=NULL,x=expression(paste("pCO"[2]," (",mu,"atm)")),y=expression(paste("% Prevalence in 5dph Larvae")))+
+  coord_cartesian(ylim=c(0,100))+
+  theme_classic()+
+  theme(legend.position="none")
+print(lrvspikeplotpco2)
+
+lrvspikeplotpH<-ggplot(percents,aes(x=pH,y=lrvspike,color=Experiment))+
+  geom_point(size=2,shape=16)+
+  scale_color_discrete(labels=c("Experiment 1","Experiment 2"))+
+  scale_x_reverse(limits=c(8.15,7.00))+
+  labs(color=NULL,x=expression(paste("pH")),y=expression(paste(NULL)))+
+  coord_cartesian(ylim=c(0,100))+
+  theme_classic()+
+  theme(legend.position="none")
+print(lrvspikeplotpH)
+
+lrvspikeplotomega<-ggplot(percents,aes(x=Omega,y=lrvspike,color=Experiment))+
+  geom_point(size=2,shape=16)+
+  scale_color_discrete(labels=c("Experiment 1","Experiment 2"))+
+  scale_x_reverse(limits=c(2.5,0))+
+  labs(color=NULL,x=expression(paste("Aragonite Saturation State")),y=expression(paste(NULL)))+
+  coord_cartesian(ylim=c(0,100))+
+  theme_classic()+
+  theme(legend.position="none")
+print(lrvspikeplotomega)
+
+grid.arrange(lrvspikeplotpco2,lrvspikeplotpH,lrvspikeplotomega,oxyconflegend,ncol=4,widths=c(2,2,2,1))
+
+
+#Temperature-corrected pCO2
+#First create an empty column for pCO2c (pCO2 corrected) - it will be the same as original for 24C
+emball$pCO2c<-rep(NA,times=65)
+larall$pCO2c<-rep(NA,times=66)
+lrvall$pCO2c<-rep(NA,times=60)
+
+#Make a vector of the corrected pCO2 values
+embpco2c<-sapply(X=emball$pCO2[emball$Experiment=="flax"], function(X) X*exp(0.0423*1.5))
+larpco2c<-sapply(X=larall$pCO2[larall$Experiment=="flax"], function(X) X*exp(0.0423*1.5))
+lrvpco2c<-sapply(X=lrvall$pCO2[lrvall$Experiment=="flax"], function(X) X*exp(0.0423*1.5))
+
+#Now insert original values (dana) and corrected values (flax) into that column
+emball$pCO2c<-c(emball$pCO2[1:28],embpco2c)
+larall$pCO2c<-c(larall$pCO2[1:29],larpco2c)
+lrvall$pCO2c<-c(lrvall$pCO2[1:27],lrvpco2c)
+
+
+#Try doing the percent tests on both experiments combined for oxyconformity and low DO spike
+
+#oxyconformity
+#test for significant differences in oxyconformer percentages between groups
+#data points and sample sizes will be listed by Experiment 1 then Experiment 2
+oxyconf<-c(4,2,3,0,1,10)
+fish1<-c(10,9,9,11,12,14)
+prop.test(oxyconf,fish1,correct=F) #yes, p=0.001671
+
+#spike, embryos
+spikeemb<-c(1,2,1,2,2,5)
+fish2<-c(10,9,9,11,12,14)
+prop.test(spikeemb,fish2,correct=F) #still no, p=0.6441
+
+#spike, 2dph larvae
+spikelar<-c(10,9,7,6,10,7)
+fish3<-c(10,10,9,9,12,13)
+prop.test(spikelar,fish3,correct=F) #still no, p=0.1137
+
+#spike, 5dph larvae
+spikelrv<-c(5,3,3,6,9,4)
+fish4<-c(9,8,9,7,12,10)
+prop.test(spikelrv,fish4,correct=F) #still no, p=0.1458
