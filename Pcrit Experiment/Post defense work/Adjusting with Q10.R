@@ -817,3 +817,135 @@ prop.test(spikelar,fish3,correct=F) #still no, p=0.1137
 spikelrv<-c(5,3,3,6,9,4)
 fish4<-c(9,8,9,7,12,10)
 prop.test(spikelrv,fish4,correct=F) #still no, p=0.1458
+
+
+
+###########################################################################################################
+#For Pcrit plot it the same way as RMR, with panels for pCO2 and pH
+#plot all points with respect to pCO2
+embpcritplot3<-ggplot(emball,aes(x=pCO2,y=Pcrit,color=Experiment))+
+  geom_point(size=1.5,shape=1)+
+  geom_smooth(mapping=aes(x=pCO2,y=Pcrit),formula=y~x,data=emball,method="lm",se=FALSE,inherit.aes=FALSE,color="black",lwd=0.5)+
+  scale_color_discrete(labels=c("Experiment 1","Experiment 2"))+
+  annotation_custom(grobTree(textGrob("A",x=0.1,y=0.95,gp=gpar(fontsize=16,fontface="bold"))))+
+  annotation_custom(grobTree(textGrob(expression(paste("R"^2,"=0.039")),x=0.8,y=0.92,gp=gpar(fontsize=12))))+
+  labs(color=NULL,x=expression(paste("pCO"[2]," (",mu,"atm)")),y=expression(paste("P"["crit"]," (mg L"^-1,")")))+
+  coord_cartesian(ylim=c(0.0,4.5))+
+  theme_classic()+
+  theme(legend.position="none")
+print(embpcritplot3)
+
+larpcritplot3<-ggplot(larall,aes(x=pCO2,y=Pcrit,color=Experiment))+
+  geom_point(size=1.5,shape=1)+
+  geom_smooth(mapping=aes(x=pCO2,y=Pcrit),formula=y~x,data=larall,method="lm",se=FALSE,inherit.aes=FALSE,color="black",lwd=0.5)+
+  scale_color_discrete(labels=c("Experiment 1","Experiment 2"))+
+  annotation_custom(grobTree(textGrob("B",x=0.1,y=0.95,gp=gpar(fontsize=16,fontface="bold"))))+
+  annotation_custom(grobTree(textGrob(expression(paste("R"^2,"=0.028")),x=0.8,y=0.92,gp=gpar(fontsize=12))))+
+  labs(color=NULL,x=expression(paste("pCO"[2]," (",mu,"atm)")),y=expression(paste("P"["crit"]," (mg L"^-1,")")))+
+  coord_cartesian(ylim=c(0.0,4.5))+
+  theme_classic()+
+  theme(legend.position="none")
+print(larpcritplot3)
+
+lrvpcritplot3<-ggplot(lrvall,aes(x=pCO2,y=Pcrit,color=Experiment))+
+  geom_point(size=1.5,shape=1)+
+  geom_smooth(mapping=aes(x=pCO2,y=Pcrit),formula=y~x,data=larall,method="lm",se=FALSE,inherit.aes=FALSE,color="black",lwd=0.5)+
+  scale_color_discrete(labels=c("Experiment 1","Experiment 2"))+
+  annotation_custom(grobTree(textGrob("C",x=0.1,y=0.95,gp=gpar(fontsize=16,fontface="bold"))))+
+  annotation_custom(grobTree(textGrob(expression(paste("R"^2,"=0.76")),x=0.8,y=0.92,gp=gpar(fontsize=12))))+
+  labs(color=NULL,x=expression(paste("pCO"[2]," (",mu,"atm)")),y=expression(paste("P"["crit"]," (mg L"^-1,")")))+
+  coord_cartesian(ylim=c(0.0,4.5))+
+  theme_classic()+
+  theme(legend.position="none")
+print(lrvpcritplot3)
+
+
+
+#Plot Pcrit with respect to pH
+embpcritplotph3<-ggplot(emball,aes(x=pH,y=Pcrit,color=Experiment))+
+  geom_point(size=1.5,shape=1)+
+  geom_smooth(mapping=aes(x=pH,y=Pcrit),formula=y~x,data=emball,method="lm",se=FALSE,inherit.aes=FALSE,color="black",lwd=0.5)+
+  scale_color_discrete(labels=c("Experiment 1","Experiment 2"))+
+  scale_x_reverse(limits=c(8.15,7.00))+
+  annotation_custom(grobTree(textGrob("D",x=0.1,y=0.95,gp=gpar(fontsize=16,fontface="bold"))))+
+  annotation_custom(grobTree(textGrob(expression(paste("R"^2,"=0.07")),x=0.85,y=0.92,gp=gpar(fontsize=12))))+
+  labs(color=NULL,x="pH",y=expression(paste("P"["crit"]," (mg L"^-1,")")))+
+  coord_cartesian(ylim=c(0.0,4.5))+
+  theme_classic()+
+  theme(legend.position="none")
+print(embpcritplotph3)
+
+larpcritplotph3<-ggplot(larall,aes(x=pH,y=Pcrit,color=Experiment))+
+  geom_point(size=1.5,shape=1)+
+  geom_smooth(mapping=aes(x=pH,y=Pcrit),formula=y~x,data=larall,method="lm",se=FALSE,inherit.aes=FALSE,color="black",lwd=0.5)+
+  scale_color_discrete(labels=c("Experiment 1","Experiment 2"))+
+  scale_x_reverse(limits=c(8.15,7.00))+
+  annotation_custom(grobTree(textGrob("E",x=0.1,y=0.95,gp=gpar(fontsize=16,fontface="bold"))))+
+  annotation_custom(grobTree(textGrob(expression(paste("R"^2,"=0.019")),x=0.8,y=0.92,gp=gpar(fontsize=12))))+
+  labs(color=NULL,x="pH",y=expression(paste("P"["crit"]," (mg L"^-1,")")))+
+  coord_cartesian(ylim=c(0.0,4.5))+
+  theme_classic()+
+  theme(legend.position="none")
+print(larpcritplotph3)
+
+lrvpcritplotpH3<-ggplot(lrvall,aes(x=pH,y=Pcrit,color=Experiment))+
+  geom_point(size=1.5,shape=1)+
+  geom_smooth(mapping=aes(x=pH,y=Pcrit),formula=y~x,data=lrvall,method="lm",se=FALSE,inherit.aes=FALSE,color="black",lwd=0.5)+
+  scale_color_discrete(labels=c("Experiment 1","Experiment 2"))+
+  scale_x_reverse(limits=c(8.15,7.00))+
+  annotation_custom(grobTree(textGrob("F",x=0.1,y=0.95,gp=gpar(fontsize=16,fontface="bold"))))+
+  annotation_custom(grobTree(textGrob(expression(paste("R"^2,"=0.11")),x=0.8,y=0.92,gp=gpar(fontsize=12))))+
+  labs(color=NULL,x="pH",y=expression(paste("P"["crit"]," (mg L"^-1,")")))+
+  coord_cartesian(ylim=c(0.0,4.5))+
+  theme_classic()+
+  theme(legend.position="none")
+print(lrvpcritplotpH3)
+
+grid.arrange(embpcritplot3,larpcritplot3,lrvpcritplot3,co2figlegend,embpcritplotph3,larpcritplotph3,lrvpcritplotpH3,ncol=4,widths=c(2,2,2,1))
+
+
+#Make the analysis match the RMR analysis
+#Redo the linear model with just pCO2 as independent variable
+embmodpcritpco2<-lm(Pcrit~pCO2,data=emball)
+summary(embmodpcritpco2)
+shapiro.test(residuals(embmodpcritpco2))
+ols_test_breusch_pagan(embmodpcritpco2)
+
+larmodpcritpco2<-lm(Pcrit~pCO2,data=larall)
+summary(larmodpcritpco2)
+shapiro.test(residuals(larmodpcritpco2))
+ols_test_breusch_pagan(larmodpcritpco2)
+
+lrvmodpcritpco2<-lm(Pcrit~pCO2,data=lrvall)
+summary(lrvmodpcritpco2)
+shapiro.test(residuals(lrvmodpcritpco2))
+ols_test_breusch_pagan(lrvmodpcritpco2)
+
+#Redo the linear model with just pH as independent variable
+embmodpcritpH<-lm(Pcrit~pH,data=emball)
+summary(embmodpcritpH)
+shapiro.test(residuals(embmodpcritpH))
+ols_test_breusch_pagan(embmodpcritpH)
+
+larmodpcritpH<-lm(Pcrit~pH,data=larall)
+summary(larmodpcritpH)
+shapiro.test(residuals(larmodpcritpH))
+ols_test_breusch_pagan(larmodpcritpH)
+
+lrvmodpcritpH<-lm(Pcrit~pH,data=lrvall)
+summary(lrvmodpcritpH)
+shapiro.test(residuals(lrvmodpcritpH))
+ols_test_breusch_pagan(lrvmodpcritpH)
+
+#test for significant differences and calculate group means
+pairwise.t.test(emball$RMR,emball$CatTrmt,p.adj='bonferroni')
+embcatsum<-ddply(emball,c("CatTrmt"),summarise,N=length(na.omit(RMR)),MeanRMR=mean(RMR,na.rm=TRUE),SE=sd(RMR,na.rm=TRUE)/sqrt(N))
+embcatsum
+
+pairwise.t.test(larall$RMR,larall$CatTrmt,p.adj='bonferroni')
+larcatsum<-ddply(larall,c("CatTrmt"),summarise,N=length(na.omit(RMR)),MeanRMR=mean(RMR,na.rm=TRUE),SE=sd(RMR,na.rm=TRUE)/sqrt(N))
+larcatsum
+
+pairwise.t.test(lrvall$RMR,lrvall$CatTrmt,p.adj='bonferroni')
+lrvcatsum<-ddply(lrvall,c("CatTrmt"),summarise,N=length(na.omit(RMR)),MeanRMR=mean(RMR,na.rm=TRUE),SE=sd(RMR,na.rm=TRUE)/sqrt(N))
+lrvcatsum

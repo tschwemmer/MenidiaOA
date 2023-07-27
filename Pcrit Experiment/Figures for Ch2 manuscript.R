@@ -64,14 +64,29 @@ library(gridExtra)
 library(plyr)
 library(ggpubr)
 
+#Replace CO2mean with the correct CO2 means in flax experiment
+emball$CO2mean[emball$Experiment=="flax"&emball$CO2_level=="amb"]<-441.7
+emball$CO2mean[emball$Experiment=="flax"&emball$CO2_level=="med"]<-2299.2
+emball$CO2mean[emball$Experiment=="flax"&emball$CO2_level=="high"]<-4530.9
+larall$CO2mean[larall$Experiment=="flax"&larall$CO2_level=="amb"]<-441.7
+larall$CO2mean[larall$Experiment=="flax"&larall$CO2_level=="med"]<-2299.2
+larall$CO2mean[larall$Experiment=="flax"&larall$CO2_level=="high"]<-4530.9
+lrvall$CO2mean[lrvall$Experiment=="flax"&lrvall$CO2_level=="amb"]<-441.7
+lrvall$CO2mean[lrvall$Experiment=="flax"&lrvall$CO2_level=="med"]<-2299.2
+lrvall$CO2mean[lrvall$Experiment=="flax"&lrvall$CO2_level=="high"]<-4530.9
+emball$Experiment<-factor(emball$Experiment,levels=c("flax","dana"))
+larall$Experiment<-factor(larall$Experiment,levels=c("flax","dana"))
+lrvall$Experiment<-factor(lrvall$Experiment,levels=c("flax","dana"))
+
+
 #Embryo Pcrit
-embpcritsum<-ddply(emb_both,c("CO2mean","TargTemp"),summarise,N=length(na.omit(Pcrit_break)),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),se=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
+embpcritsum<-ddply(emball,c("CO2mean","Experiment"),summarise,N=length(na.omit(Pcrit)),MeanPcrit=mean(Pcrit,na.rm=TRUE),se=sd(Pcrit,na.rm=TRUE)/sqrt(N))
 embpcritsum
 
-embpcritfig<-ggplot(embpcritsum,aes(x=CO2mean,y=MeanPcrit,shape=TargTemp,group=TargTemp))+
+embpcritfig<-ggplot(embpcritsum,aes(x=CO2mean,y=MeanPcrit,shape=Experiment,group=Experiment))+
   geom_point(size=2)+
   scale_shape_manual(values=c(1,16),labels=c("22 (Experiment 2)","24 (Experiment 1)"))+
-  geom_errorbar(aes(ymin=MeanPcrit-se,ymax=MeanPcrit+se),width=100)+
+  geom_errorbar(aes(ymin=MeanPcrit-se,ymax=MeanPcrit+se),width=100,lwd=0.5)+
   annotation_custom(grobTree(textGrob("A",x=0.1,y=0.96,gp=gpar(fontsize=14,fontface="bold"))))+
   labs(shape=expression(paste("Temperature (",degree,"C)")),y=expression(paste("P"["crit"]," (mg l"^" -1",")")),x=expression(paste("pCO"[2], " (",mu,"atm)")))+
   coord_cartesian(ylim=c(0,3.5))+
@@ -82,13 +97,13 @@ pcritlegend<-get_legend(embpcritfig)
 embpcritfig<-embpcritfig+theme(legend.position="none")
 
 #2dph Larvae Pcrit
-larpcritsum<-ddply(lar_both,c("CO2mean","TargTemp"),summarise,N=length(na.omit(Pcrit_break)),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),se=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
+larpcritsum<-ddply(larall,c("CO2mean","Experiment"),summarise,N=length(na.omit(Pcrit)),MeanPcrit=mean(Pcrit,na.rm=TRUE),se=sd(Pcrit,na.rm=TRUE)/sqrt(N))
 larpcritsum
 
-larpcritfig<-ggplot(larpcritsum,aes(x=CO2mean,y=MeanPcrit,shape=TargTemp,group=TargTemp))+
+larpcritfig<-ggplot(larpcritsum,aes(x=CO2mean,y=MeanPcrit,shape=Experiment,group=Experiment))+
   geom_point(size=2)+
   scale_shape_manual(values=c(1,16),labels=c("22 (Experiment 2)","24 (Experiment 1)"))+
-  geom_errorbar(aes(ymin=MeanPcrit-se,ymax=MeanPcrit+se),width=100)+
+  geom_errorbar(aes(ymin=MeanPcrit-se,ymax=MeanPcrit+se),width=100,lwd=0.5)+
   annotation_custom(grobTree(textGrob("B",x=0.1,y=0.96,gp=gpar(fontsize=14,fontface="bold"))))+
   labs(shape=expression(paste("Temperature (",degree,"C)")),y=expression(paste("P"["crit"]," (mg l"^" -1",")")),x=expression(paste("pCO"[2], " (",mu,"atm)")))+
   coord_cartesian(ylim=c(0,3.5))+
@@ -97,13 +112,13 @@ larpcritfig<-ggplot(larpcritsum,aes(x=CO2mean,y=MeanPcrit,shape=TargTemp,group=T
 print(larpcritfig)
 
 #5dph Larvae Pcrit
-lrvpcritsum<-ddply(lrv_both,c("CO2mean","TargTemp"),summarise,N=length(na.omit(Pcrit_break)),MeanPcrit=mean(Pcrit_break,na.rm=TRUE),se=sd(Pcrit_break,na.rm=TRUE)/sqrt(N))
+lrvpcritsum<-ddply(lrvall,c("CO2mean","Experiment"),summarise,N=length(na.omit(Pcrit)),MeanPcrit=mean(Pcrit,na.rm=TRUE),se=sd(Pcrit,na.rm=TRUE)/sqrt(N))
 lrvpcritsum
 
-lrvpcritfig<-ggplot(lrvpcritsum,aes(x=CO2mean,y=MeanPcrit,shape=TargTemp,group=TargTemp))+
+lrvpcritfig<-ggplot(lrvpcritsum,aes(x=CO2mean,y=MeanPcrit,shape=Experiment,group=Experiment))+
   geom_point(size=2)+
   scale_shape_manual(values=c(1,16),labels=c("22 (Experiment 2)","24 (Experiment 1)"))+
-  geom_errorbar(aes(ymin=MeanPcrit-se,ymax=MeanPcrit+se),width=100)+
+  geom_errorbar(aes(ymin=MeanPcrit-se,ymax=MeanPcrit+se),width=100,lwd=0.5)+
   annotation_custom(grobTree(textGrob("C",x=0.1,y=0.96,gp=gpar(fontsize=14,fontface="bold"))))+
   labs(shape=expression(paste("Temperature (",degree,"C)")),y=expression(paste("P"["crit"]," (mg l"^" -1",")")),x=expression(paste("pCO"[2], " (",mu,"atm)")))+
   coord_cartesian(ylim=c(0,3.5))+
@@ -115,6 +130,20 @@ grid.arrange(embpcritfig,larpcritfig,lrvpcritfig,pcritlegend,ncol=4)
 
 ggarrange(embpcritfig,larpcritfig,lrvpcritfig,ncol=3,common.legend=TRUE,legend="right")
 
+#Make emb_both have the correct CO2 levels too
+emb_both$CO2mean[emb_both$TargTemp=="22C"&emb_both$CO2_level=="amb"]<-441.7
+emb_both$CO2mean[emb_both$TargTemp=="22C"&emb_both$CO2_level=="med"]<-2299.2
+emb_both$CO2mean[emb_both$TargTemp=="22C"&emb_both$CO2_level=="high"]<-4530.9
+lar_both$CO2mean[lar_both$TargTemp=="22C"&lar_both$CO2_level=="amb"]<-441.7
+lar_both$CO2mean[lar_both$TargTemp=="22C"&lar_both$CO2_level=="med"]<-2299.2
+lar_both$CO2mean[lar_both$TargTemp=="22C"&lar_both$CO2_level=="high"]<-4530.9
+lrv_both$CO2mean[lrv_both$TargTemp=="22C"&lrv_both$CO2_level=="amb"]<-441.7
+lrv_both$CO2mean[lrv_both$TargTemp=="22C"&lrv_both$CO2_level=="med"]<-2299.2
+lrv_both$CO2mean[lrv_both$TargTemp=="22C"&lrv_both$CO2_level=="high"]<-4530.9
+emb_both$TargTemp<-factor(emb_both$TargTemp,levels=c("22C","24C"))
+lar_both$TargTemp<-factor(lar_both$TargTemp,levels=c("22C","24C"))
+lrv_both$TargTemp<-factor(lrv_both$TargTemp,levels=c("22C","24C"))
+
 #Embryo RMR
 embrmrsum<-ddply(emb_both,c("CO2mean","TargTemp"),summarise,N=length(na.omit(RMR)),MeanRMR=mean(RMR,na.rm=TRUE),se=sd(RMR,na.rm=TRUE)/sqrt(N))
 embrmrsum
@@ -122,7 +151,7 @@ embrmrsum
 embrmrfig<-ggplot(embrmrsum,aes(x=CO2mean,y=MeanRMR,shape=TargTemp,group=TargTemp))+
   geom_point(size=2)+
   scale_shape_manual(values=c(1,16),labels=c("22 (Experiment 2)","24 (Experiment 1)"))+
-  geom_errorbar(aes(ymin=MeanRMR-se,ymax=MeanRMR+se),width=100)+
+  geom_errorbar(aes(ymin=MeanRMR-se,ymax=MeanRMR+se),width=100,lwd=0.5)+
   annotation_custom(grobTree(textGrob("A",x=0.1,y=0.96,gp=gpar(fontsize=14,fontface="bold"))))+
   labs(shape=expression(paste("Temperature (",degree,"C)")),y=expression(paste("Routine MO"[2]," (",mu,"mol ind."^"-1"," h"^"-1",")")),x=expression(paste("pCO"[2], " (",mu,"atm)")))+
   coord_cartesian(ylim=c(0,0.0063))+
@@ -137,7 +166,7 @@ larrmrsum
 larrmrfig<-ggplot(larrmrsum,aes(x=CO2mean,y=MeanRMR,shape=TargTemp,group=TargTemp))+
   geom_point(size=2)+
   scale_shape_manual(values=c(1,16),labels=c("22 (Experiment 2)","24 (Experiment 1)"))+
-  geom_errorbar(aes(ymin=MeanRMR-se,ymax=MeanRMR+se),width=100)+
+  geom_errorbar(aes(ymin=MeanRMR-se,ymax=MeanRMR+se),width=100,lwd=0.5)+
   annotation_custom(grobTree(textGrob("B",x=0.1,y=0.96,gp=gpar(fontsize=14,fontface="bold"))))+
   labs(shape=expression(paste("Temperature (",degree,"C)")),y=expression(paste("Routine MO"[2]," (",mu,"mol mg"^"-1"," h"^"-1",")")),x=expression(paste("pCO"[2], " (",mu,"atm)")))+
   coord_cartesian(ylim=c(0,0.35))+
@@ -152,7 +181,7 @@ lrvrmrsum
 lrvrmrfig<-ggplot(lrvrmrsum,aes(x=CO2mean,y=MeanRMR,shape=TargTemp,group=TargTemp))+
   geom_point(size=2)+
   scale_shape_manual(values=c(1,16),labels=c("22 (Experiment 2)","24 (Experiment 1)"))+
-  geom_errorbar(aes(ymin=MeanRMR-se,ymax=MeanRMR+se),width=100)+
+  geom_errorbar(aes(ymin=MeanRMR-se,ymax=MeanRMR+se),width=100,lwd=0.5)+
   annotation_custom(grobTree(textGrob("C",x=0.1,y=0.96,gp=gpar(fontsize=14,fontface="bold"))))+
   labs(shape=expression(paste("Temperature (",degree,"C)")),y=expression(paste("Routine MO"[2]," (",mu,"mol mg"^"-1"," h"^"-1",")")),x=expression(paste("pCO"[2], " (",mu,"atm)")))+
   coord_cartesian(ylim=c(0,0.35))+
