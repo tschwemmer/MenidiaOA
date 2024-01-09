@@ -4,20 +4,23 @@ library(ggplot2)
 library(grid)
 library(gridExtra)
 
-my_equation1<-function(x){1-exp(-0.3*(x-2.044))}
-my_equation2<-function(x){1-exp(-0.8*(x-2.044))}
-my_equation3<-function(x){1-exp(-1.8*(x-2.044))}
+my_equation1<-function(x){(1*(x-2.044))/(1+(1*(x-2.044)))}
+my_equation2<-function(x){(3*(x-2.044))/(1+(3*(x-2.044)))}
+my_equation3<-function(x){(10*(x-2.044))/(1+(10*(x-2.044)))}
 
 cplot<-ggplot(data.frame(x=c(0,10)),aes(x=x))+
-  stat_function(fun=my_equation1)+
-  stat_function(fun=my_equation2)+
-  stat_function(fun=my_equation3)+
-  coord_cartesian(ylim=c(0,1))+
-  annotation_custom(grobTree(textGrob(expression(paste(italic("Z"),"=0.3")),x=0.49,y=0.49,hjust=0,gp=gpar(col="black",fontsize=11))))+
-  annotation_custom(grobTree(textGrob(expression(paste(italic("Z"),"=0.8")),x=0.4,y=0.68,hjust=0,gp=gpar(col="black",fontsize=11))))+
-  annotation_custom(grobTree(textGrob(expression(paste(italic("Z"),"=1.8")),x=0.26,y=0.91,hjust=0,gp=gpar(col="black",fontsize=11))))+
+  stat_function(fun=my_equation1,xlim=c(2.044,10))+
+  stat_function(fun=my_equation2,xlim=c(2.044,10))+
+  stat_function(fun=my_equation3,xlim=c(2.044,10))+
+  coord_cartesian(xlim=c(0,10),ylim=c(0,1))+
+  annotation_custom(grobTree(textGrob(expression(paste(italic("Z"),"=1")),x=0.44,y=0.78,hjust=0,gp=gpar(col="black",fontsize=9))))+
+  annotation_custom(grobTree(textGrob(expression(paste(italic("Z"),"=3")),x=0.33,y=0.88,hjust=0,gp=gpar(col="black",fontsize=9))))+
+  annotation_custom(grobTree(textGrob(expression(paste(italic("Z"),"=10")),x=0.21,y=0.93,hjust=0,gp=gpar(col="black",fontsize=9))))+
   labs(x=expression(paste("Dissolved Oxygen (mg L"^-1,")")),y=expression(paste("Correction Factor ",italic("c"))))+
-  theme_classic()
+  scale_x_continuous(expand=c(0,0))+
+  scale_y_continuous(expand=c(0,0))+
+  theme_classic()+
+  theme(plot.margin=unit(c(0.2,0.2,0.2,0.2),"inches"))
 print(cplot)
 
 my_equation4<-function(x){1/(x+0.0001)}

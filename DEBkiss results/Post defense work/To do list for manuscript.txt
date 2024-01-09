@@ -1,0 +1,61 @@
+DEB paper to do list
+DONE-Remake Fig 3 with new correction factor
+DONE-Remove Fig 4-6
+DONE-Replace Fig 7 with new results for best fit model (now Fig 4)
+DONE-Remove Table 4 - now the methods or intro will explain mechanistically why we chose the parameters we did and why we multiplied or divided it
+DONE-Remove the idea of "initial criteria" from the methods
+DONE-Replace Table 5 (now Table 4) with one with new results
+	-Maybe have a table showing which way the correction factor is applied to each parameter, similar to in Jager book
+DONE-Replace Table 6 (now Table 5) with one with new results
+-Update intro
+DONE-Update methods
+DONE-Update results
+-Update discussion
+DONE-Update Fig S1 with new results for best fit model
+DONE-Replace equations for correction factors and description in methods (say that for maintenance and survival the parameter is divided by c instead of multiplied).
+DONE-Write abstract
+-Make sure it fits the Ecological Modelling requirements and guidelines
+-Data availability
+-Cover letter and potential reviewers
+-Should I make it say "conversion efficiency" or "yield coefficient" throughout, instead of switching between both?
+
+
+Introduction paragraphs
+-Describe why hypoxia effects are important to study 
+-Physiological effects of hypoxia - maybe good spot to add more about mechanisms
+-Multiple stressor and fluctuation effects on M. menidia
+-Population level - maybe remove this paragraph since we do not do population modeling. it could just be one sentence about how DEB is valuable for getting there. 
+-Introduce DEB and why it is useful
+-Describe DEBkiss
+-State our objectives - use DEBkiss to test hypotheses
+-HERE add paragraph about synthesizing unit
+-Which parameters we hypothesized and why (3 paragraphs) - rework to match new methods and make more concise
+
+Methods
+-Remove idea of criteria, and say instead that we only used the hypothesized parameters based on background info (which will be in discussion) and using inhibition and damage to SU. 
+-Replace the correction factor equation, and add in some of the steps of how we got it
+-Add that we equally weighted the data so that all of the weights in each treatment add up to the same number across treatments. 
+-Explain that we only wanted to compare models that allowed hypoxia to affect all three data types, which means either sJAm or yVA had to be included. 
+-Explain that for maintenance and survival parameters we divided by c instead of multiply because we hypothesized that these would increase with hypoxia. Think about how this translates into effects on the SU...
+-May not need so much emphasis on Akaike weights? Or idk maybe good to leave in since you can make statements about how likely they are relative to each other. 
+
+Discussion paragraphs
+-Main finding: conversion efficiency of assimilates into structure is most likely process responsible for hypoxia effects, and including mortality is best
+-What was lacking: underestimated time to hatching and overestimated size at age? What information would improve fit
+-Assimilation rate gave similar fit to conversion efficiency - CHANGE/REMOVE - difference between the two parameters
+-Maintenance turned out not to be a good explanatory mechanism - add stuff about indirect impacts of damage and increased maintenance going into damage repair - does it mean damage repair isn't happening?
+-Shortcomings of mortality rates as explanatory mechanisms - MOVE EARLIER - add context more relevant to inhibition/damage/SU
+-Implications for populations and ecosystems
+-Sum up what we accomplished 
+
+
+
+
+
+
+Figure settings:
+-4.5x4.5 size
+-600 dpi resolution
+-Min font size 12
+-Arial
+-PDF and TIFF
