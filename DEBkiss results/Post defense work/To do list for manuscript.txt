@@ -7,13 +7,14 @@ DONE-Remove the idea of "initial criteria" from the methods
 DONE-Replace Table 5 (now Table 4) with one with new results
 	-Maybe have a table showing which way the correction factor is applied to each parameter, similar to in Jager book
 DONE-Replace Table 6 (now Table 5) with one with new results
--Update intro
+DONE-Update intro
 DONE-Update methods
 DONE-Update results
 -Update discussion
 DONE-Update Fig S1 with new results for best fit model
 DONE-Replace equations for correction factors and description in methods (say that for maintenance and survival the parameter is divided by c instead of multiplied).
 DONE-Write abstract
+
 -Make sure it fits the Ecological Modelling requirements and guidelines
 -Data availability
 -Cover letter and potential reviewers
@@ -22,7 +23,7 @@ DONE-Write abstract
 
 Introduction paragraphs
 -Describe why hypoxia effects are important to study 
--Physiological effects of hypoxia - maybe good spot to add more about mechanisms
+-Physiological effects of hypoxia 
 -Multiple stressor and fluctuation effects on M. menidia
 -Population level - maybe remove this paragraph since we do not do population modeling. it could just be one sentence about how DEB is valuable for getting there. 
 -Introduce DEB and why it is useful
@@ -47,6 +48,8 @@ Discussion paragraphs
 -Shortcomings of mortality rates as explanatory mechanisms - MOVE EARLIER - add context more relevant to inhibition/damage/SU
 -Implications for populations and ecosystems
 -Sum up what we accomplished 
+
+
 
 
 
