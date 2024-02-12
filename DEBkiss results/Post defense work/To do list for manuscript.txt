@@ -1,4 +1,41 @@
 DEB paper to do list
+
+DONE-Add section numbering as per journal guidelines, and refer to sections using these numbers when helpful in the text. 
+DONE-Add a discussion point saying that future work should look at the CO2 x DO interaction observed for routine metabolism, because previous organismal work suggests that they become oxygen-dependent under chronic hypoxia and that would affect a two-substrate SU. 
+	-I added a new paragraph that discusses both the unrealisticness of static lifelong hypoxia and single-stressor scenario, and how future work building on this model could address the added stressor of acidification. 
+DONE-Move hypotheses/physiological background to the methods, adding a section on connecting deb processes to physiological mechanisms
+	-I moved this section to the new section, and rearranged or reworded it to merge with some redundant info and put in logical order. 
+DONE-Remove or minimize the intro part about fluctuating conditions - save for discussion
+	-I rearranged the paragraph so it introduces why we are interested in hypoxia response of menidia menidia: it is a model species that has been used to quantify effects of intensifying stressors, including interacting, and we would like to understand mechanisms better to make the experimental results more useful. 
+DONE-Rearrange paragraph introducing DEB so that it doesn't sound like we are leading up to saying we modeled population dynamics. "It can be difficult to connect suborganismal processes with organismal outcomes, but DEB helps bridge levels of biological organization and identify mechanisms."
+	-I rearranged it to first introduce DEB theory then lead into its ability to connect levels of biol organization including population level. 
+DONE-Reword the data and fitting section to make it easier to understand
+	-Divided this into two sections and did some rewording. Even though the Parameter Estimation section mentions some data sources most of them are summarized in the Data section. It should be easier to read now. 
+DONE-Remove Lvf parameter from table
+DONE-Back up statement that estimated yVA is atypical or rephrase it. If necessary include background about where the "default" parameters come from. 
+	-I added examples that use this value and the citations of where it is suggested. I also changed the word "typical" to "suggested". 
+-Touch up discussion in various ways
+	-I moved some of the first paragraph to the results section (describing how the parameters were affected by the correction factor). 
+	-Shortened 2nd paragraph, reworded 3rd paragraph to make more sense
+	-Slightly shortened the mortality paragraph
+	-Rearranged maintenance paragraph to more prominently state that our results are consistent with lack of metabolic response to these hypoxia levels. 
+-Write cover letter
+DONE-Add highlights
+-Add acknowledgements, data availability statement, author contributions, competing interests
+-Check references
+-Should I make a figure of yVA~DO with the Z value? And for mortality?
+
+Questions for Roger
+-Should we strictly call yVA "conversion efficiency of assimilates into growth" (shortened to conversion efficiency or yVA)? Remove usage of "yield coefficient" or "yield of growth on assimilates"?
+-Potential reviewers: Yoann Thomas, Ben Martin, 
+
+
+This is beyond the scope of the present study, and is difficult due to the wide variability in sensitivity of growth and survival across experiments on this species (Murray et al., 2014; Murray and Baumann, 2018; Cross et al., 2019; Baumann et al., 2019 or the serial experimentation one). 
+
+
+We further implemented the SU concept to test the hypothesis that elevated demand for maintenance is responsible for the observed impacts of hypoxia. 
+
+
 DONE-Remake Fig 3 with new correction factor
 DONE-Remove Fig 4-6
 DONE-Replace Fig 7 with new results for best fit model (now Fig 4)
@@ -10,7 +47,7 @@ DONE-Replace Table 6 (now Table 5) with one with new results
 DONE-Update intro
 DONE-Update methods
 DONE-Update results
--Update discussion
+DONE-Update discussion
 DONE-Update Fig S1 with new results for best fit model
 DONE-Replace equations for correction factors and description in methods (say that for maintenance and survival the parameter is divided by c instead of multiplied).
 DONE-Write abstract
@@ -42,7 +79,7 @@ Methods
 
 Discussion paragraphs
 -Main finding: conversion efficiency of assimilates into structure is most likely process responsible for hypoxia effects, and including mortality is best
--What was lacking: underestimated time to hatching and overestimated size at age? What information would improve fit
+-What was lacking: underestimated time to hatching and overestimated size at age? change that. What information would improve fit
 -Assimilation rate gave similar fit to conversion efficiency - CHANGE/REMOVE - difference between the two parameters
 -Maintenance turned out not to be a good explanatory mechanism - add stuff about indirect impacts of damage and increased maintenance going into damage repair - does it mean damage repair isn't happening?
 -Shortcomings of mortality rates as explanatory mechanisms - MOVE EARLIER - add context more relevant to inhibition/damage/SU
@@ -51,8 +88,12 @@ Discussion paragraphs
 
 
 
+To correct for differences in sample size across treatments and prevent one treatment group from disproportionately affecting the estimation of Z, we equally weighted the data across treatments so that all weights within a treatment add up to the same number. 
 
 
+
+Read and possibly cite: Moreira et al. (2022) Impacts of ocean warming and acidification on the energy budget of three comercially important fish species.
+Read the papers Roger recommended
 
 
 
