@@ -1,0 +1,14 @@
+Things to try in MATLAB
+-Fixing delM at calculated value instead of trying different values
+-Different dw at hatching or egg dw
+-Different way of calculating dry weight density such as with older fish instead of egg
+	-We used egg volume for delM so if I can find volume at a different age we can use that
+		-I cannot
+
+Still need to do
+
+-Update references lists
+-Update line numbers for track changes version
+-Write email
+-Update figure 1
+-Check equation numbers
